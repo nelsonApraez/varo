@@ -1,0 +1,59 @@
+@model Varo.Web.Models.MetricaExternoViewModel
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.HistoricoMetricasExternas</h3>
+    <div class="v-formulario">
+        <div class="v-selector">
+            <div class="table-wrapper">
+                <table class="table table-bordered" id="tablaHistoricoValorMetrica">
+                    <caption hidden>@Recursos.Lenguaje.HistoricoMetricasExternas</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">@Recursos.Lenguaje.Metricas</th>
+                            <th scope="col">@Recursos.Lenguaje.Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ListadoValorMetricas.Count > 0)
+                        {
+                            foreach (var itemValorMetrica in Model.ListadoValorMetricas)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="@itemValorMetrica.Metrica.Nombre" hidden>
+                                                @Recursos.Lenguaje.Nombre
+                                            </label>
+                                            @Html.TextBox("itemNombreMetrica", itemValorMetrica.Metrica.Nombre,
+                                                new { @class = "form-control", @readonly = true })
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="@itemValorMetrica.Valor" hidden>@Recursos.Lenguaje.Valor</label>
+                                            @Html.TextBox("Valor", itemValorMetrica.Valor,
+                                                new { @class = "form-control", @readonly = true })
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col m4 l4 offset-m8">
+                <div class="v-formulariobotones">
+                    <div class="row">
+                        <div class="right">
+                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                               onclick="location.href = '@Url.Action("Consultar", "MetricaExterno",
+                                    new { idProyecto = Model.IdProyecto})'; return false;">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model  PaginadorViewModel<IEnumerable<ConsultoriaInformacionBasicaViewModel>>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>        <!--Funciones buscador-->
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+<script src="~/Scripts/Consultoria.js"></script>
+
+<link rel="stylesheet" href="~/Content/css/switcher.css" />             <!--Apariencia switch-->
+<link rel="stylesheet" href="~/Content/css/PagedList.css" />            <!--Apariencia paginador-->
+
+<div class="row items_tableros">
+    <div class="col m12 l12">
+        <div class="header_contenido">
+            <h2>@Recursos.Lenguaje.AdministrarConsultoria</h2>
+            <h3>@Recursos.Lenguaje.ListadoDeConsultoriasCreadasHastaLaFecha</h3>
+        </div>
+    </div>
+    <div class="btn btn_agregar">
+        <em class="material-icons">control_point</em>
+        &nbsp;@Html.ActionLink(@Recursos.Lenguaje.AgregarConsultoria, "Crear")
+    </div>
+
+    @using (Ajax.BeginForm("Consultar", "Consultoria",
+        new AjaxOptions
+        {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "listaConsultoria",
+            OnBegin = "mostrarModalEspera()",
+            OnComplete = "ocultarModalEspera()"
+        },
+        new { @class = "formularioBuscador" }))
+    {
+        <input type="hidden" name="filtroActual" value="@ViewBag.filtroActual" />
+        <input type="hidden" name="enEjecucion" value="@ViewBag.enEjecucion" />
+
+        <div class="col m12 l12">
+            <div>
+                <div class="search-group">
+                    @Html.TextBox("terminoBusqueda", ViewBag.filtroActual as string,
+                    new
+                         {
+                        @type = "search",
+                        @placeholder = Recursos.Lenguaje.BuscarConsultoria,
+                        @class = "search-input inactive"
+                         })
+                    <button type="submit" class="button-search">
+                        @Recursos.Lenguaje.Buscar
+                    </button>
+                </div>
+            </div>
+            <div class="switchProyecto">
+                <div class="form-switcher form-switcher-lg form-switcher-sm-phone">
+                    <input type="checkbox" name="checkEnEjecucion" value="true"
+                           id="checkEnEjecucion" @ViewBag.enEjecucion />
+                    <label class="switcher" for="checkEnEjecucion"></label>
+                </div>
+                <label style="margin-top:7px;">@Recursos.Lenguaje.SoloMostrarConsultoriasEnEjecucion</label>
+            </div>
+        </div>
+    }
+    @if (Model.EntidadViewModel != null)
+    {
+        @Html.Partial("_Consultoria", Model)
+    }
+</div>

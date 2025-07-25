@@ -1,0 +1,210 @@
+@model Varo.Web.Models.SolucionesViewModel
+
+@*<script type="text/template" id="htmlFilaNuevaIntegraciones">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IntegracionesContinuas.Nombre,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IntegracionesContinuas.UrlCompilacion,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true }})
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IntegracionesContinuas.NombreProyectoInspeccion,
+                    new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+</script>*@
+
+<script type="text/template" id="htmlAccionesIntegracion">
+    <td>
+        <a class="edit" 
+           title="@Recursos.Lenguaje.Editar"
+           data-toggle="tooltip" 
+           id="btnEditar" 
+           onclick="cargarFilaEditarIntegraciones(this)">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete" 
+           title="@Recursos.Lenguaje.Eliminar"
+           data-toggle="tooltip" 
+           id="btnEliminar" 
+           onclick="EliminarFila(this, '#tablaIntegracionContinua')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        function InsertarHtmlhtmlIntegraciones() {
+            var htmlCampos = document.getElementById('htmlFilaNuevaIntegraciones').innerHTML;
+            var htmlAcciones = document.getElementById('htmlAccionesIntegracion').innerHTML;
+            $("#trParaCrearhtmlIntegraciones").append(htmlCampos);
+            $("#trParaCrearhtmlIntegraciones").append(htmlAcciones);
+        }
+
+        @if (Model.IntegracionesContinuas == null)
+        {
+            @:InsertarHtmlhtmlIntegraciones();
+        }
+    });
+</script>
+
+<div class="table-wrapper">
+    <div class="table-title">
+        <div class="row">
+            <div class="col m12 l12"><h2><strong>@Recursos.Lenguaje.IntegracionesContinuas</strong></h2></div>
+
+        </div>
+    </div>
+    <table class="table table-bordered" id="tablaIntegracionContinua">
+        <caption hidden>@Recursos.Lenguaje.IntegracionesContinuas</caption>
+        <thead>
+            <tr>
+                <th id="" hidden> Id</th>
+                <th id="">@Recursos.Lenguaje.NombreCompilacion</th>
+                <th id="">@Recursos.Lenguaje.UrlCompilacion</th>
+                <th id="">@Recursos.Lenguaje.NombreInspeccion</th>
+                <th id="">@Recursos.Lenguaje.Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model.IntegracionesContinuas != null)
+            {
+                foreach (var itemIntegracionContinua in Model.IntegracionesContinuas.ListaIntegracionesContinuas)
+                {
+                    <tr>
+                        <td hidden>
+                            @Html.Hidden("itemIdProyectoInspeccion", @itemIntegracionContinua.IdProyectoInspeccion)
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="@itemIntegracionContinua.Nombre"></label>
+                                @Html.TextBox("itemNombreCompilacion", itemIntegracionContinua.Nombre,
+                                     new { @class = "form-control", @readonly = true } )
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="@itemIntegracionContinua.UrlCompilacion"></label>
+                                @Html.TextBox("itemUrlCompilacion", itemIntegracionContinua.UrlCompilacion,
+                                   new {
+                                       @class = "form-control",
+                                       @Title = Recursos.Lenguaje.UrlEjemplo + " https://dev.azure.com/igcode/Varo",
+                                       @readonly = true
+                                   })
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="@itemIntegracionContinua.NombreProyectoInspeccion"></label>
+                                @Html.TextBox("itemProyectoInspeccionNombre",
+                                    itemIntegracionContinua.NombreProyectoInspeccion,
+                                    new { @class = "form-control", @readonly = true } )
+                            </div>
+                        </td>
+                        <td>
+                            <a class="edit" title=@Recursos.Lenguaje.Editar data-toggle="tooltip"
+                               id="btnEditar" onclick="cargarFilaEditarIntegraciones(this)">
+                                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                            </a>
+                            <a class="delete" title=@Recursos.Lenguaje.Eliminar data-toggle="tooltip"
+                               id="btnEliminar" onclick="EliminarFila(this,'#tablaIntegracionContinua')">
+                                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr id="trParaCrearhtmlIntegraciones"></tr>
+            }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="right">
+            <button type="button"
+                    class="btn add-new"
+                    id="btnAdicionarIntegracionContinua"
+                    onclick="clearTextBox('#ModalIntegracion');"
+                    data-toggle="modal"
+                    data-target="#ModalIntegracion">
+                @Recursos.Lenguaje.Adicionar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" 
+     id="ModalIntegracion" 
+     tabindex="-1" 
+     role="dialog" 
+     aria-labelledby="myModalLabel" 
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="text-align:left">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.IntegracionesContinuas</h4>
+                <input id="fila" hidden>
+            </div>
+
+            <div class="modal-body">
+                <form style="display:block" id="formIntegraciones" role="form">
+                    <div class="form-group">
+                        <label for="NombreCompilacion">@Recursos.Lenguaje.NombreCompilacion</label>
+                        <input type="text" 
+                               class="form-control requerido" 
+                               id="NombreCompilacion" 
+                               name="NombreCompilacion" 
+                               required />
+                    </div>
+                    <div class="form-group">
+                        <label for="UrlCompilacion">@Recursos.Lenguaje.UrlCompilacion</label>
+                        <input type="url" 
+                               class="form-control requerido" 
+                               id="UrlCompilacion" 
+                               name="UrlCompilacion" 
+                               required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Inspeccion">@Recursos.Lenguaje.NombreInspeccion</label>
+                        @Html.DropDownList("ListProyectoSonar",
+                         Model.ListaInspeccionContinua.OrderBy(x => x.Text),
+                         new {
+                             @class = "form-control",
+                             id = "ListProyectoSonar" })
+                    </div>
+                    <div id="msgError">
+                        <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 l6">
+                                    <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+                                <div class="col m6 l6">
+                                    <button class="v-btn-principal v-btn" type="button" id="btnAdd"
+                                            onclick="AgregarElementoIntegracion('#ModalIntegracion')">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

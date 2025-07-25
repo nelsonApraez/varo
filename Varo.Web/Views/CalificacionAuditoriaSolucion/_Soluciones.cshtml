@@ -1,0 +1,81 @@
+@model Varo.Web.Models.CalificacionAuditoriaSolucionViewModel
+
+<div class="col m12 l12">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col m12 l12"><h2><strong>@Recursos.Lenguaje.Solucion</strong></h2></div>
+
+            </div>
+        </div>
+        <table class="table table-bordered" id="tablaSoluciones">
+            <caption hidden>@Recursos.Lenguaje.RegistrarMultiplesAuditorias</caption>
+            <thead>
+                <tr>
+                    <th scope="col" hidden></th>
+                    <th scope="col" hidden>@Recursos.Lenguaje.Cliente</th>
+                    <th scope="col">@Recursos.Lenguaje.Cliente</th>
+                    <th scope="col" hidden>@Recursos.Lenguaje.Solucion</th>
+                    <th scope="col">@Recursos.Lenguaje.Solucion</th>
+                    <th scope="col">@Recursos.Lenguaje.Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td hidden>
+                        <label for="Fila">Fila</label>
+                        @Html.TextBox("Fila", "")
+                    </td>
+                    <td hidden>
+                        @Html.Hidden("IdCliente", "")
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label for="NombreCliente" hidden></label>
+                            @Html.TextBox("NombreCliente", "",
+                                new { @class = "form-control requerido", @readonly = true })
+                        </div>
+                    </td>
+                    <td hidden>
+                        <label for="IdSolucion" hidden></label>
+                        @Html.TextBox("IdSolucion", "")
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label for="NombreSolucion" hidden></label>
+                            @Html.TextBox("NombreSolucion", "",
+                                new { @class = "form-control requerido", @readonly = true })
+                        </div>
+                    </td>
+                    <td>
+                        <a class="edit"
+                           title=@Recursos.Lenguaje.Editar
+                           data-toggle="tooltip" id="btnEditar"
+                           onclick="cargarFilaEditarSoluciones(this,'#ModalSoluciones')">
+                            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                        </a>
+                        <a class="delete"
+                           title=@Recursos.Lenguaje.Eliminar
+                           data-toggle="tooltip" id="btnEliminar"
+                           onclick="EliminarFila(this, '#tablaSoluciones')">
+                            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="right">
+                <button type="button"
+                        class="btn add-new"
+                        id="btnAdicionarSoluciones"
+                        onclick="clearTextBox('#ModalSoluciones');"
+                        data-toggle="modal"
+                        data-target="#ModalSoluciones">
+                    @Recursos.Lenguaje.Adicionar
+                </button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_ModalSoluciones", Model)
+</div>

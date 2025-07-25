@@ -1,0 +1,231 @@
+@model Varo.Web.Models.MetricasViewModel
+
+<script type="text/template" id="htmlAccionesMejora">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.accionesMejoraViewModel.Causa,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.accionesMejoraViewModel.Accion,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.accionesMejoraViewModel.Responsable.Nombre,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.accionesMejoraViewModel.Estado.Nombre,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+</script>
+
+<script type="text/template" id="htmlAccionesAccionMejora">
+    <td>
+        <a class="edit" 
+           title=@Recursos.Lenguaje.Editar 
+           data-toggle="tooltip" 
+           id="btnEditar" 
+           onclick="cargarFilaEditarAccionMejora(this, '#ModalAccionesMejora')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete" 
+           title=@Recursos.Lenguaje.Eliminar 
+           data-toggle="tooltip" 
+           id="btnEliminar" 
+           onclick="EliminarFila(this,'#tablaAccionesMejora')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function InsertarhtmlAccionesMejora() {
+            var htmlCampos = document.getElementById('htmlAccionesMejora').innerHTML;
+            var htmlAcciones = document.getElementById('htmlAccionesAccionMejora').innerHTML;
+            $("#trParaCrearAccionesMejora").append(htmlCampos);
+            $("#trParaCrearAccionesMejora").append(htmlAcciones);
+        }
+        @if (Model.accionesMejoraViewModel.AccionesMejora.ListaAccionesMejora.Count == 0)
+        {
+            @:InsertarhtmlAccionesMejora();
+        }
+    });
+</script>
+
+<div class="table-title">
+    <div class="row">
+        <div class="col m12 l12">
+            <h2><strong>@Recursos.Lenguaje.AccionMejora</strong></h2>
+        </div>
+    </div>
+</div>
+<table class="table table-bordered" id="tablaAccionesMejora">
+    <caption hidden>@Recursos.Lenguaje.AccionMejora</caption>
+    <thead>
+        <tr>
+            <th id="" hidden>Id</th>
+            <th id="">@Recursos.Lenguaje.Causa</th>
+            <th id="">@Recursos.Lenguaje.AccionMejora</th>
+            <th id="">@Recursos.Lenguaje.Responsable</th>
+            <th id="">@Recursos.Lenguaje.Estado</th>
+            <th id="">@Recursos.Lenguaje.Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.accionesMejoraViewModel.AccionesMejora != null &&
+            Model.accionesMejoraViewModel.AccionesMejora.ListaAccionesMejora.Count > 0)
+        {
+            foreach (var itemAccionesMejora in Model.accionesMejoraViewModel.AccionesMejora.ListaAccionesMejora)
+            {
+        <tr>
+            <td hidden>
+                @itemAccionesMejora.Id
+            </td>
+            <td hidden>
+                @Html.Hidden("itemIdAccionMejora", Model.accionesMejoraViewModel.Id = itemAccionesMejora.Id)
+            </td>
+            <td hidden>
+                @Html.Hidden("itemIdResponsable", itemAccionesMejora.Responsable.Id)
+            </td>
+            <td hidden>
+                @Html.Hidden("itemIdEstado", itemAccionesMejora.Estado.Id)
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.TextBox("itemCausa", itemAccionesMejora.Causa,
+                        new { @class = "form-control", @readonly = true })
+                </div>
+            <td>
+                <div class="form-group">
+                    @Html.TextBox("itemAccionMejora", itemAccionesMejora.Accion,
+                        new { @class = "form-control", @readonly = true })
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.TextBox("itemResponsable", itemAccionesMejora.Responsable.Nombre,
+                        new { @class = "form-control", @readonly = true })
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.TextBox("itemEstado", itemAccionesMejora.Estado.Nombre,
+                        new { @class = "form-control" , @readonly = true })
+                </div>
+            </td>
+
+            <td>
+                <a class="edit"
+                   title=@Recursos.Lenguaje.Editar
+                   data-toggle="tooltip"
+                   id="btnEditar"
+                   onclick="cargarFilaEditarAccionMejora(this, '#ModalAccionesMejora')">
+                    <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                </a>
+                <a class="delete"
+                   title=@Recursos.Lenguaje.Eliminar
+                   data-toggle="tooltip"
+                   id="btnEliminar"
+                   onclick="EliminarFila(this,'#tablaAccionesMejora')">
+                    <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                </a>
+            </td>
+        </tr>
+            }
+        }
+        else
+        {
+            <tr id="trParaCrearAccionesMejora"></tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="right">
+        <button type="button"
+                class="btn add-new"
+                id="btnAdicionarAccionesMejora"
+                onclick="clearTextBox('#ModalAccionesMejora');"
+                data-toggle="modal"
+                data-target="#ModalAccionesMejora">
+            @Recursos.Lenguaje.Adicionar
+        </button>
+    </div>
+</div>
+<div class="modal fade" 
+     id="ModalAccionesMejora" 
+     tabindex="-1" 
+     role="dialog" 
+     aria-labelledby="myModalLabel" 
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="text-align:left">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.AccionMejora</h4>
+                <input id="fila" hidden>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Causa">@Recursos.Lenguaje.Causa</label>
+                        <textarea type="text"
+                                  class="form-control requerido"
+                                  id="Causa"
+                                  name="Causa"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="AccionMejora">@Recursos.Lenguaje.AccionMejora</label>
+                        <textarea type="text"
+                                  class="form-control requerido"
+                                  id="AccionMejora"
+                                  name="AccionMejora"
+                                  onkeypress="validarAlfanumericos(event);"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="responsable">@Recursos.Lenguaje.Responsable</label>
+                        @Html.DropDownList("ListaResponsables",
+                            Model.accionesMejoraViewModel.ListaResponsablesAccionesMejora.OrderBy(x => x.Text),
+                            new { @class = "form-control requerido" } )
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">@Recursos.Lenguaje.Estado</label>
+                        @Html.DropDownList("ListaEstado",
+                            Model.accionesMejoraViewModel.ListaEstadosAccionesMejora.OrderBy(x => x.Text),
+                            new { @class = "form-control requerido" } )
+                    </div>
+                    <div id="msgError">
+                        <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="v-formulariobotones">
+                    <div class="row">
+                        <div class="col m6 l6">
+                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                        <div class="col m6 l6">
+                            <button class="v-btn-principal v-btn" type="button" id="btnAdd"
+                                    onclick="AgregarElementoAccionMejora(
+                                        '#ModalAccionesMejora',
+                                        '#tablaAccionesMejora')">
+                                @Recursos.Lenguaje.Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

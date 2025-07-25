@@ -1,0 +1,168 @@
+﻿@model  PaginadorViewModel<IEnumerable<ProyectoExternoViewModel>>
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            var error = '@error';
+            if (error) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: error,
+                    showConfirmButton: true
+                })
+            }
+        });
+</script>
+
+<div id="listaProyecto">
+    <div class="v-formulario">
+        <div class="v-selector">
+            <div class="table-wrapper">
+                <table class="table table-bordered" id="tablaProyectoExterno">
+                    <caption hidden>@Recursos.Lenguaje.Proyecto</caption>
+                    @if (Model.EntidadViewModel.Count() > 0)
+                    {
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden>Id</th>
+                                <th scope="col" hidden>IdSolucion</th>
+                                <th scope="col">@Recursos.Lenguaje.Nombre</th>
+                                <th scope="col" style="width:180px;">@Recursos.Lenguaje.Acciones</th>
+                            </tr>
+                        </thead>
+                        foreach (ProyectoExternoViewModel itemProyectoExterno in Model.EntidadViewModel)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td hidden>
+                                        <div>
+                                            <label for="@itemProyectoExterno.Id">@Recursos.Lenguaje.Id</label>
+                                            @Html.TextBox("itemId", itemProyectoExterno.Id,
+                                                new { @class = "form-control" })
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="@itemProyectoExterno.Nombre" hidden>
+                                                @Recursos.Lenguaje.NombreProyecto
+                                            </label>
+                                            @Html.TextBox("itemNombre", itemProyectoExterno.Nombre,
+                                                new { @class = "form-control", @readonly = true })
+                                        </div>
+                                    </td>
+                                    <td class="form-group">
+                                        <a class="edit"
+                                           title="Historico"
+                                           data-toggle="tooltip" id="btnHistorico"
+                                           onclick="location.href = '@Url.Action("Consultar", "MetricaExterno",
+                                                new { idProyecto = itemProyectoExterno.Id })'; return false;">
+                                            <img src="~/Content/images/verdetalleGris.png"
+                                                 alt="Metricas"
+                                                 title=@Recursos.Lenguaje.HistoricoMetricasExternas
+                                                 width="20" height="20"
+                                                 style="vertical-align:initial">
+                                        </a>
+                                        @if (itemProyectoExterno.Activo)
+                                        {
+                                            <a class="edit"
+                                               title="Crear"
+                                               data-toggle="tooltip" id="btnCrear"
+                                               onclick="location.href = '@Url.Action("Crear", "MetricaExterno",
+                                                    new { idOrigenProyecto = itemProyectoExterno.IdOrigen })';
+                                                    return false;">
+                                                <img src="~/Content/images/editarmetricas.png"
+                                                     alt="Metricas"
+                                                     title=@Recursos.Lenguaje.MetricasExternas
+                                                     width="20" height="20"
+                                                     style="vertical-align:initial">
+                                            </a>
+                                            <a class="edit"
+                                               title=@Recursos.Lenguaje.Editar
+                                               data-toggle="tooltip" id="btnEditar"
+                                               onclick="cargarFilaEditaProyectoExterno(this,'#ModalDetalleProyectoExterno')">
+                                                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                                            </a>
+                                            <a class="delete"
+                                               title=@Recursos.Lenguaje.Eliminar
+                                               data-toggle="tooltip"
+                                               id="btnEliminar"
+                                               onclick="EliminarElementoProyectoExterno(@itemProyectoExterno.Id)">
+                                                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td style="text-align: left;">
+                                @Recursos.Lenguaje.MensajeBusquedaSinRegistro
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="modal fade"
+             id="ModalDetalleProyectoExterno"
+             tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.Proyecto</h4>
+                        <input id="fila" hidden>
+                        <input id="IdProyectoExterno" name="IdProyectoExterno" hidden>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="NombreProyectoExterno">@Recursos.Lenguaje.Nombre</label>
+                                <input type="text"
+                                       class="form-control requerido"
+                                       id="NombreProyectoExterno"
+                                       name="NombreProyectoExterno">
+                                <span id="ProyectoExternoError" class="error" hidden>
+                                    @Recursos.Lenguaje.CampoRequerido
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 l6">
+                                    <a class="v-btn-segundario v-btn"
+                                       data-dismiss="modal"
+                                       aria-label="Close">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+                                <div class="col m6 l6">
+                                    <button class="v-btn-principal v-btn"
+                                            type="button" id="btnAdd"
+                                            onclick="AgregarElementoProyectoExterno(
+                                                        '#ModalDetalleProyectoExterno',
+                                                        '#tablaProyectoExterno')">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Paginador(Model.Paginador)
+</div>

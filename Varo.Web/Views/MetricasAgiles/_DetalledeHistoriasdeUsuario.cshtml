@@ -1,0 +1,224 @@
+@model Varo.Web.Models.MetricasViewModel
+
+<script type="text/template" id="htmlHistorias">
+    <td>
+        @Html.EditorFor(model => model.historiasViewModel.Numero,
+            new { htmlAttributes = new { 
+                @class = "form-control", 
+                @readOnly = true } })
+    </td>
+    <td>
+        @Html.EditorFor(model => model.historiasViewModel.Nombre,
+            new { htmlAttributes = new { 
+                @class = "form-control", 
+                @readOnly = true } })
+    </td>
+    <td>
+        <label for="EsfuerzoEstimado" hidden>@Recursos.Lenguaje.EsfuerzoEstimado</label>
+        @Html.EditorFor(model => model.historiasViewModel.EsfuerzoEstimado,
+             new { htmlAttributes = new { 
+                 @class = "form-control", 
+                 @readOnly = true } })
+    </td>
+    <td>
+        @Html.EditorFor(model => model.historiasViewModel.EsfuerzoReal,
+             new { htmlAttributes = new {
+                 @class = "form-control validarDecimales itemDetalleHistoriasUsuario",
+                 @required = "required",
+                 @readOnly = true } })
+    </td>
+    <td>
+        @Html.TextAreaFor(model => model.historiasViewModel.Observaciones,
+            new { htmlAttributes = new {
+                @class = "form-control deshabilitarPegar",
+                onkeypress = "validarAlfanumericos(event);",
+                @readOnly = true } })
+    </td>
+</script>
+
+<script type="text/template" id="htmlAccionesDetalleHistorias">
+    <td>
+        <a class="edit" 
+           title=@Recursos.Lenguaje.Editar 
+           data-toggle="tooltip" 
+           id="btnEditar" 
+           onclick="cargarFilaEditarDetalleHistoria(this,'#ModalDetalleHistoria')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete" 
+           title=@Recursos.Lenguaje.Eliminar 
+           data-toggle="tooltip" 
+           id="btnEliminar"
+           onclick="EliminarFila(this, '#tablaHistorias')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<script type="text/javascript">
+      $(document).ready(function () {
+            function InsertarhtmlHistorias() {
+                var htmlCampos = document.getElementById('htmlHistorias').innerHTML;
+                var htmlAcciones = document.getElementById('htmlAccionesDetalleHistorias').innerHTML;
+                $("#trParaCrearHistoria").append(htmlCampos);
+                $("#trParaCrearHistoria").append(htmlAcciones);
+            }
+            @if (Model.historiasViewModel.historias.ListaHistorias.Count == 0)
+        {
+            @:InsertarhtmlHistorias();
+        }
+    });
+</script>
+
+<div class="table-title">
+    <div class="row">
+        <div class="col m12 l12">
+            <h2><strong>@Recursos.Lenguaje.DetalleDeHistoriasDeUsuario</strong></h2>
+        </div>
+    </div>
+</div>
+<table class="table table-bordered" id="tablaHistorias">
+    <caption hidden>@Recursos.Lenguaje.DetalleDeHistoriasDeUsuario</caption>
+    <thead>
+        <tr>
+            <th id="" hidden>Id</th>
+            <th id="" style="width:12%;">@Recursos.Lenguaje.Numero</th>
+            <th id="">@Recursos.Lenguaje.Nombre</th>
+            <th id="" style="width:15%;">@Recursos.Lenguaje.EsfuerzoEstimado</th>
+            <th id="" style="width:12%;">@Recursos.Lenguaje.EsfuerzoReal</th>
+            <th id="">@Recursos.Lenguaje.Observaciones</th>
+            <th id="">@Recursos.Lenguaje.Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.historiasViewModel.historias != null && Model.historiasViewModel.historias.ListaHistorias.Count > 0)
+        {
+            foreach (var itemHistoria in Model.historiasViewModel.historias.ListaHistorias)
+            {
+                <tr>
+                    <td hidden>@itemHistoria.Id</td>
+                    <td hidden>@Html.Hidden("itemId", Model.historiasViewModel.Id = itemHistoria.Id)</td>
+                    <td>
+                        @Html.TextBox("itemNumero", itemHistoria.Numero,
+                            new { @class = "form-control", @readonly = true })
+                    </td>
+                    <td>
+                        @Html.TextBox("itemNombre", itemHistoria.Nombre,
+                            new { @class = "form-control", @readonly = true })
+                    </td>
+                    <td>
+                        @Html.TextBox("itemEsfuerzoEstimado", itemHistoria.EsfuerzoEstimado,
+                            new { @class = "form-control", @readonly = true })
+                    </td>
+                    <td>
+                        @Html.TextBox("itemEsfuerzoReal", itemHistoria.EsfuerzoReal,
+                            new { @class = "form-control", @readonly = true })
+                    </td>
+                    <td>
+                        @Html.TextArea("itemObservaciones", itemHistoria.Observaciones,
+                            new { @class = "form-control", @readonly = true })
+                    </td>
+                    <td>
+                        <a class="edit" 
+                           title=@Recursos.Lenguaje.Editar 
+                           data-toggle="tooltip" id="btnEditar" 
+                           onclick="cargarFilaEditarDetalleHistoria(this,'#ModalDetalleHistoria')">
+                            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                        </a>
+                        <a class="delete" 
+                           title=@Recursos.Lenguaje.Eliminar 
+                           data-toggle="tooltip" id="btnEliminar" 
+                           onclick="EliminarFila(this, '#tablaHistorias')">
+                            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr id="trParaCrearHistoria"></tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="right">
+        <button type="button"
+                class="btn add-new"
+                id="btnAdicionarHistoria"
+                onclick="clearTextBox('#ModalDetalleHistoria');"
+                data-toggle="modal"
+                data-target="#ModalDetalleHistoria">
+            @Recursos.Lenguaje.Adicionar
+        </button>
+    </div>
+</div>
+<div class="modal fade" 
+     id="ModalDetalleHistoria" 
+     tabindex="-1" 
+     role="dialog" 
+     aria-labelledby="myModalLabel" 
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" 
+                    id="myModalLabel">@Recursos.Lenguaje.DetalleDeHistoriasDeUsuario</h4>
+                <input id="fila" hidden>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="Numero">@Recursos.Lenguaje.Numero</label>
+                    <input type="text" class="form-control requerido" id="Numero" />
+                </div>
+                <div class="form-group">
+                    <label for="Nombre">@Recursos.Lenguaje.Nombre</label>
+                    <input type="text" 
+                           class="form-control requerido" 
+                           id="Nombre" 
+                           onkeypress="validarAlfanumericos(event);" />
+                </div>
+                <div class="form-group">
+                    <label for="EsfuerzoEstimado">@Recursos.Lenguaje.EsfuerzoEstimado</label>
+                    <input type="text" 
+                           class="form-control requerido validarDecimales itemDetalleHistoriasUsuario" 
+                           id="EsfuerzoEstimado" />
+                </div>
+                <div class="form-group">
+                    <label for="EsfuerzoReal">@Recursos.Lenguaje.EsfuerzoReal</label>
+                    <input class="form-control validarDecimales itemDetalleHistoriasUsuario requerido" 
+                           id="EsfuerzoReal" />
+                </div>
+                <div class="form-group">
+                    <label for="Observaciones">@Recursos.Lenguaje.Observaciones</label>
+                    <textarea class="form-control" 
+                              id="Observaciones" 
+                              maxlength="500" 
+                              onkeypress="validarAlfanumericos(event);"></textarea>
+                </div>
+                <div id="msgError">
+                    <span id="Error" 
+                          class="error" 
+                          hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="v-formulariobotones">
+                    <div class="row">
+                        <div class="col m6 l6">
+                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                        <div class="col m6 l6">
+                            <button class="v-btn-principal v-btn" type="button" id="btnAdd"
+                                    onclick="AgregarElementoDetalleHistoria('#ModalDetalleHistoria', '#tablaHistorias')">
+                                @Recursos.Lenguaje.Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

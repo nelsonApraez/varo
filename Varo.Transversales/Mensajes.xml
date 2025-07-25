@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mensajes>
+  <!--Mensajes de Negocio-->
+  <mensaje tipo="1" codigo="1">Mensaje de ejemplo.</mensaje>
+
+  <!--Mensajes técnicos-->
+  <mensaje tipo="1" codigo="1000">MensajeControlado</mensaje>
+</mensajes>

@@ -1,0 +1,308 @@
+@model Varo.Web.Models.CalificacionAuditoriaSolucionViewModel
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(false);
+}
+
+<script type="text/template" id="htmlCalificacionAuditorias">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Url,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Calificacion,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Fecha,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Proceso,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Observacion,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+</script>
+
+<script type="text/template" id="htmlAccionesCalificacion">
+    <td hidden>
+        <div class="form-group">@Html.EditorFor(model => model.IdSolucion)</div>
+    </td>
+    <td>
+        <a class="edit"
+           title=@Recursos.Lenguaje.Editar
+           data-toggle="tooltip"
+           id="btnEditar"
+           onclick="cargarFilaEditarCalificacionAuditoria(this,'#ModalAuditoria')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete"
+           title=@Recursos.Lenguaje.Eliminar
+           data-toggle="tooltip" id="btnEliminar"
+           onclick="EliminarFila(this, '#tablaCalificacionAuditoria')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function InsertarHtmlCalificacionAuditorias() {
+            var htmlCampos = document.getElementById('htmlCalificacionAuditorias').innerHTML;
+            var htmlAccion = document.getElementById('htmlAccionesCalificacion').innerHTML;
+            $("#trParaCrearCalificacionAuditoria").append(htmlCampos);
+            $("#trParaCrearCalificacionAuditoria").append(htmlAccion);
+        }
+        @if (Model.calificacionAuditorias.ListaCalificacionAuditorias.Count == 0)
+        {
+            @:InsertarHtmlCalificacionAuditorias();
+        }
+    });
+</script>
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.CalificacionAuditoria</h3>
+    @using (Html.BeginForm("Crear", "CalificacionAuditoriaSolucion", FormMethod.Post,
+        new
+        {
+            @id = "formularioCrearCalificacionAuditoria",
+            @class = "formularioCrearCalificacionAuditoria",
+            @name = "formularioCrearCalificacionAuditoria"
+        }))
+    {
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <table class="table table-bordered"
+                           id="tablaCalificacionAuditoria">
+                        <caption hidden>@Recursos.Lenguaje.CalificacionAuditoria</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden>Id</th>
+                                <th scope="col">@Recursos.Lenguaje.UrlCalificacion</th>
+                                <th scope="col" style="width:12%;">@Recursos.Lenguaje.Calificacion</th>
+                                <th scope="col" style="width:12%;">@Recursos.Lenguaje.Fecha</th>
+                                <th scope="col" style="width:15%;">@Recursos.Lenguaje.Proceso</th>
+                                <th scope="col">@Recursos.Lenguaje.Observacion</th>
+                                <th scope="col" hidden>IdSolucion</th>
+                                <th scope="col">@Recursos.Lenguaje.Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.calificacionAuditorias.ListaCalificacionAuditorias.Count > 0)
+                            {
+                                foreach (var itemCalificacionAuditorias
+                                    in Model.calificacionAuditorias.ListaCalificacionAuditorias)
+                                {
+                                    <tr>
+                                        <td hidden>@itemCalificacionAuditorias.Id</td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Url", itemCalificacionAuditorias.Url,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Calificacion", itemCalificacionAuditorias.Calificacion,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Fecha",
+                                                    itemCalificacionAuditorias.Fecha.ToString("yyyy-MM-dd"),
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Proceso", itemCalificacionAuditorias.Proceso,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextArea("Observacion", itemCalificacionAuditorias.Observacion,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemIdSolucion",
+                                                    Model.IdSolucion = itemCalificacionAuditorias.IdSolucion)
+                                                @Html.EditorFor(model => model.IdSolucion,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a class="edit"
+                                               title=@Recursos.Lenguaje.Editar
+                                               data-toggle="tooltip" id="btnEditar"
+                                               onclick="cargarFilaEditarCalificacionAuditoria(this,'#ModalAuditoria')">
+                                                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                                            </a>
+                                            <a class="delete"
+                                               title=@Recursos.Lenguaje.Eliminar
+                                               data-toggle="tooltip"
+                                               id="btnEliminar"
+                                               onclick="EliminarFila(this, '#tablaCalificacionAuditoria')">
+                                                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="trParaCrearCalificacionAuditoria"></tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="right">
+                            <button type="button"
+                                    class="btn add-new"
+                                    id="btnAdicionarCalificacionAuditoria"
+                                    onclick="clearTextBox('#ModalAuditoria');"
+                                    data-toggle="modal"
+                                    data-target="#ModalAuditoria">
+                                @Recursos.Lenguaje.Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 l6">
+                                    <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                                       href="@Url.Action("Editar", "Solucion",
+                                            new { id = Model.IdSolucion, vista = "_FormularioCreacionEdicion" })">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+                                <div class="col m6 l6">
+                                    <button class="v-btn-principal v-btn" type="submit">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade"
+                 id="ModalAuditoria"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.CalificacionAuditoria</h4>
+                            <input id="fila" hidden>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="itemUrl">@Recursos.Lenguaje.UrlCalificacion</label>
+                                <input type="text"
+                                       class="form-control requerido"
+                                       id="itemUrl"
+                                       name="itemUrl" />
+                            </div>
+                            <div class="form-group">
+                                <label for="itemCalificacion">@Recursos.Lenguaje.Calificacion</label>
+                                <span class="c-tooltip"
+                                      style="color:darkgray"
+                                      data-tooltip="@Recursos.Lenguaje.TooltipCalificacionAuditoria">
+                                    <em class="fa fa-info-circle" style="color:darkgray"></em>
+                                </span>
+                                <input type="number"
+                                       class="form-control requerido"
+                                       id="itemCalificacion"
+                                       name="itemCalificacion" />
+                            </div>
+                            <div class="form-group">
+                                <label for="itemFecha">@Recursos.Lenguaje.Fecha</label>
+                                <input type="date"
+                                       class="form-control requerido"
+                                       id="itemFecha"
+                                       name="itemFecha"
+                                       placeholder="{0:MM/dd/yyyy}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="itemProceso">@Recursos.Lenguaje.Proceso</label>
+                                <textarea class="form-control requerido"
+                                          id="itemProceso"
+                                          name="itemProceso"
+                                          maxlength="500">
+                                    </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="itemObservacion">@Recursos.Lenguaje.Observaciones</label>
+                                <textarea class="form-control"
+                                          id="itemObservacion"
+                                          name="itemObservacion"
+                                          maxlength="500">
+                                    </textarea>
+                            </div>
+                            <div id="msgError">
+                                <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col m6 l6">
+                                        <a class="v-btn-segundario v-btn"
+                                           data-dismiss="modal"
+                                           aria-label="Close">
+                                            @Recursos.Lenguaje.Cancelar
+                                        </a>
+                                    </div>
+                                    <div class="col m6 l6">
+                                        <button class="v-btn-principal v-btn"
+                                                type="button"
+                                                id="btnAdd"
+                                                onclick="AgregarElementoCalificacionAuditoria(
+                                                        '#ModalAuditoria',
+                                                        '#tablaCalificacionAuditoria')">
+                                            @Recursos.Lenguaje.Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

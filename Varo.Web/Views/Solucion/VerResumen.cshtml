@@ -1,0 +1,296 @@
+@model Varo.Web.Models.ResumenSolucionViewModel
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.ResumenSolucion</h3>
+    <div class="v-formulario">
+        <div class="v-selector">
+            @if (Model != null)
+            {
+                <section class="v-detalles">
+                    <div class="row">
+                        <div>
+                            <h6>@Recursos.Lenguaje.Cliente</h6>
+                            <p>@(Model.Cliente)</p>
+                        </div>
+                        <div>
+                            <h6>@Recursos.Lenguaje.Proyecto</h6>
+                            <p>@(Model.NombreSolucion)</p>
+                        </div>
+                        <div>
+                            <h6>@Recursos.Lenguaje.Linea</h6>
+                            <p>@(Model.LineaSolucion)</p>
+                        </div>
+                        <div>
+                            <h6>@Recursos.Lenguaje.Tipo</h6>
+                            <p>@(Model.TipoSolucion)</p>
+                        </div>
+                        <div>
+                            <h6>@Recursos.Lenguaje.Frameworks</h6>
+                            <p>@(Model.Framework)</p>
+                        </div>
+                        <div>
+                            <h6>@Recursos.Lenguaje.Estado</h6>
+                            <p>@(Model.Estado)</p>
+                        </div>
+                    </div>
+
+                </section>
+                <div class="row">
+                    <div class="col m6 l6">
+                        <section class="v-detalles">
+                            <div class="v-framework">
+                                <h4>@Recursos.Lenguaje.PracticasTecnicas</h4>
+                                @Html.Partial("_Tableros", Model)
+                            </div>
+                        </section>
+                        <section class="v-detalles">
+                            <div class="v-framework">
+                                <h4>@Recursos.Lenguaje.CalidadDeCodigo</h4>
+                                <div class="v-lenguaje">
+                                    <div class="pull-right">
+                                        <h5>@Recursos.Lenguaje.LineasDeCodigo</h5>
+                                        <div class="porcentaje">
+                                            @(Model.Lineas)
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="inidcadorLeft" style="margin-right: 90px;">
+                                        <h5>@Recursos.Lenguaje.Bugs</h5>
+                                        <div class="porcentaje">
+                                            @(Model.Bugs)
+                                        </div>
+                                    </div>
+                                    <div class="indicadorCenter">
+                                        <h5>@Recursos.Lenguaje.Vulnerabilidades</h5>
+                                        <div class="porcentaje">
+                                            @(Model.Vulnerabilidades)
+                                        </div>
+                                    </div>
+                                    <div class="indicadorRight" >
+                                        <h5>@Recursos.Lenguaje.Hotspots</h5>
+                                        <div class="porcentaje">
+                                            @(Model.Hotspots)
+                                        </div>
+                                    </div>
+                                    <div class="inidcadorLeft" style="margin-right: 0px;">
+                                        <h5>@Recursos.Lenguaje.DeudaTecnica</h5>
+                                        <div class="porcentaje">
+                                            @(Model.CodeSmell)
+                                        </div>
+                                    </div>
+                                    <div class="indicadorCenter" >
+                                        <h5>@Recursos.Lenguaje.Cobertura</h5>
+                                        <div class="porcentaje">
+                                            @(Model.Cobertura)
+                                        </div>
+                                    </div>
+                                    <div class="indicadorRight">
+                                        <h5>@Recursos.Lenguaje.CodigoDuplicado</h5>
+                                        <div class="porcentaje">
+                                            @(Model.CodigoDuplicado)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </section>
+                        <section class="v-detalles">
+                            <div class="v-framework">
+                                <h4>@Recursos.Lenguaje.UltimaCalificacionAuditoria</h4>
+                                <div class="v-lenguaje" style="height: 100px;">
+                                    <div class="inidcadorLeft">
+                                        <h5>@Recursos.Lenguaje.Calificacion</h5>
+                                        @(Model.CalificacionAuditoria)
+                                    </div>
+                                    <div class="indicadorCenter">
+                                        <h5>@Recursos.Lenguaje.Fecha</h5>
+                                        @{string fechaAuditoria;
+                                            if (Model.UrlAuditoria == null)
+                                            {
+                                                fechaAuditoria = string.Empty;
+                                            }
+                                            else
+                                            {
+                                                fechaAuditoria = Model.FechaCalificacionAuditoria.ToShortDateString();
+                                            }
+                                        }
+                                        @fechaAuditoria
+                                    </div>
+                                    <div class="indicadorRight">
+                                        <a href="@(Model.UrlAuditoria)" target="_blank">
+                                            @if (Model.UrlAuditoria != null)
+                                            {
+                                                <img src="~/Content/images/verdetalle.png"
+                                                     alt="Ver Detalle"
+                                                     title=@Recursos.Lenguaje.VerDetalle
+                                                     width="32" height="32">
+                                            }
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="v-detalles">
+                            <div class="v-framework">
+                                <h4>@Recursos.Lenguaje.UltimaCalificacionSeguridad</h4>
+                                <div class="v-lenguaje" style="height: 100px;">
+                                    <div class="inidcadorLeft">
+                                        <h5>@Recursos.Lenguaje.Calificacion</h5>
+                                        @(Model.CalificacionSeguridad)
+                                    </div>
+                                    <div class="indicadorCenter">
+                                        <h5>@Recursos.Lenguaje.Fecha</h5>
+                                        @{string fechaSeguridad;
+                                            if (Model.UrlSeguridad == null)
+                                            {
+                                                fechaSeguridad = string.Empty;
+                                            }
+                                            else
+                                            {
+                                                fechaSeguridad = Model.FechaCalificacionSeguridad.ToShortDateString();
+                                            }
+                                        }
+                                        @fechaSeguridad
+                                    </div>
+                                    <div class="indicadorRight">
+                                        <a href="@(Model.UrlSeguridad)" target="_blank">
+                                            @if (Model.UrlSeguridad != null)
+                                            {
+                                                <img src="~/Content/images/verdetalle.png"
+                                                     alt="Ver Detalle"
+                                                     title=@Recursos.Lenguaje.VerDetalle
+                                                     width="32" height="32">
+                                            }
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="v-detalles">
+                            <div class="v-framework">
+                                <h4>@Recursos.Lenguaje.UltimaCalificacionDesempeño</h4>
+                                <div class="v-lenguaje" style="height: 100px;">
+                                    <div class="inidcadorLeft">
+                                        <h5>@Recursos.Lenguaje.Calificacion</h5>
+                                        @(Model.CalificacionDesemepeno)
+                                    </div>
+                                    <div class="indicadorCenter">
+                                        <h5>@Recursos.Lenguaje.Fecha</h5>
+                                        @{string fechaDesempeno;
+                                            if (Model.UrlDesemepeno == null)
+                                            {
+                                                fechaDesempeno = string.Empty;
+                                            }
+                                            else
+                                            {
+                                                fechaDesempeno = Model.FechaCalificacionDesempeno.ToShortDateString();
+                                            }
+                                        }
+                                        @fechaDesempeno
+                                    </div>
+                                    <div class="indicadorRight">
+                                        <a href="@(Model.UrlDesemepeno)" target="_blank">
+                                            @if (Model.UrlDesemepeno != null)
+                                            {
+                                                <img src="~/Content/images/verdetalle.png"
+                                                     alt="Ver Detalle"
+                                                     title=@Recursos.Lenguaje.VerDetalle
+                                                     width="32" height="32">
+                                            }
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col m6 l6">
+                        <section class="v-detalles">
+                            <div class="v-framework">
+                                <h4>@Recursos.Lenguaje.Tecnologia</h4>
+                                <div class="v-lenguaje">
+                                    <h6>@Recursos.Lenguaje.Idioma</h6>
+                                    @foreach (Varo.Soluciones.Entidades.TecnologiaSolucion tecnologia
+                                        in Model.Tecnologias)
+                                    {
+                                        if (tecnologia.TipoTecnologia.Id == 1)
+                                        {
+                                            <div class="v-logo">
+                                                <img src="@(Model.RutaLogo + tecnologia.Logo)" alt=""
+                                                     class="img-responsive" width="60" height="60">
+                                                <p>@(tecnologia.Nombre)</p>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="v-lenguaje">
+                                    <h6>@Recursos.Lenguaje.OrigenesDeDatos</h6>
+                                    @foreach (Varo.Soluciones.Entidades.TecnologiaSolucion tecnologia
+                                        in Model.Tecnologias)
+                                    {
+                                        if (tecnologia.TipoTecnologia.Id == 2)
+                                        {
+                                            <div class="v-logo">
+                                                <img src="@(Model.RutaLogo + tecnologia.Logo)" alt=""
+                                                     class="img-responsive" width="60" height="60">
+                                                <p>@(tecnologia.Nombre)</p>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="v-lenguaje">
+                                    <h6>@Recursos.Lenguaje.Frameworks</h6>
+                                    @foreach (Varo.Soluciones.Entidades.TecnologiaSolucion tecnologia
+                                        in Model.Tecnologias)
+                                    {
+                                        if (tecnologia.TipoTecnologia.Id == 3)
+                                        {
+                                            <div class="v-logo">
+                                                <img src="@(Model.RutaLogo + tecnologia.Logo)" alt=""
+                                                     class="img-responsive" width="60" height="60">
+                                                <p>@(tecnologia.Nombre)</p>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="v-lenguaje">
+                                    <h6>@Recursos.Lenguaje.Plataformas</h6>
+                                    @foreach (Varo.Soluciones.Entidades.TecnologiaSolucion tecnologia
+                                        in Model.Tecnologias)
+                                    {
+                                        if (tecnologia.TipoTecnologia.Id == 4)
+                                        {
+                                            <div class="v-logo">
+                                                <img src="@(Model.RutaLogo + tecnologia.Logo)" alt=""
+                                                     class="img-responsive" width="60" height="60">
+                                                <p>@(tecnologia.Nombre)</p>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="v-lenguaje">
+                                    <h6>@Recursos.Lenguaje.HerramientasDeTrabajo</h6>
+                                    @foreach (Varo.Soluciones.Entidades.TecnologiaSolucion tecnologia
+                                        in Model.Tecnologias)
+                                    {
+                                        if (tecnologia.TipoTecnologia.Id == 5)
+                                        {
+                                            <div class="v-logo">
+                                                <img src="@(Model.RutaLogo + tecnologia.Logo)" alt=""
+                                                     class="img-responsive" width="60" height="60">
+                                                <p>@(tecnologia.Nombre)</p>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @Html.Raw(ViewBag.MensajeError)
+            }
+        </div>
+    </div>
+</div>

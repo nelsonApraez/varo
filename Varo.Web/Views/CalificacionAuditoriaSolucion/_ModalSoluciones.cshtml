@@ -1,0 +1,62 @@
+@model Varo.Web.Models.CalificacionAuditoriaSolucionViewModel
+
+<div class="modal fade"
+     id="ModalSoluciones"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"
+                    id="myModalLabel">
+                    @Recursos.Lenguaje.Solucion
+                </h4>
+                <input id="fila" hidden>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col m6 l6">
+                        <label for="cliente">@Recursos.Lenguaje.Cliente</label>
+                        @Html.DropDownList("ListClientes",
+                            @Model.ListaClientes.OrderBy(x => x.Text),
+                            new {
+                                @class = "form-control requerido",
+                                id = "ListClientes",
+                                @onChange = "consultarSolucionesPorIdCliente($('#ListSoluciones'), this.value, '',0);"
+                            })
+                    </div>
+                    <div class="form-group col m6 l6">
+                        <label for="solucion">@Recursos.Lenguaje.Solucion</label>
+                        @Html.DropDownList("ListSoluciones",
+                            Model.ListaSoluciones.OrderBy(x => x.Text),
+                            new {
+                                @class = "form-control requerido",
+                                id = "ListSoluciones" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="v-formulariobotones">
+                    <div class="row">
+                        <div class="col m6 l6">
+                            <a class="v-btn-segundario v-btn"
+                               data-dismiss="modal"
+                               aria-label="Close">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                        <div class="col m6 l6">
+                            <button class="v-btn-principal v-btn"
+                                    type="button" id="btnAdd"
+                                    onclick="AgregarSolucion('#ModalSoluciones', '#tablaSoluciones')">
+                                @Recursos.Lenguaje.Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

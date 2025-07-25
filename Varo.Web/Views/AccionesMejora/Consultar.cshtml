@@ -1,0 +1,40 @@
+@model Varo.Web.Models.AccionesMejoraViewModel
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script> <!--Funciones buscador-->
+<script src="~/Scripts/sweetalert2.all.js"></script> <!--Función mensajes solución-->
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.AccionesMejora</h3>
+    <div>
+        @using (Ajax.BeginForm("Consultar", "AccionesMejora",
+            new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "listaAccionesMejora"
+            },
+            new { @class = "formularioBuscador" }))
+        {
+            <input type="hidden" name="filtroActual" value="@ViewBag.filtroActualAccionesMejora" />
+            <input type="hidden" name="idSolucion" value="@Model.IdSolucion" />
+            <div style="width:100%;">
+                <div class="search-group">
+                    @Html.TextBox("terminoBusqueda", ViewBag.filtroActualAccionesMejora as string,
+                    new
+                         {
+                        @type = "search",
+                        @placeholder = @Recursos.Lenguaje.BuscarAccionesMejora,
+                        @class = "search-input inactive"
+                         })
+                    <button type="submit" class="button button-brand-primary button-search">
+                        @Recursos.Lenguaje.Buscar
+                    </button>
+                </div>
+            </div>
+        }
+        @if (Model != null)
+        {
+            @Html.Partial("_AccionesMejora", Model)
+        }
+    </div>
+</div>

@@ -1,0 +1,111 @@
+@model Varo.Web.Models.SeguimientoViewModel
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.Seguimientos</h3>
+    @using (Html.BeginForm("Crear", "AccionesMejora", FormMethod.Post,
+        new { @id = "formularioSeguimiento", @class = "formularioSeguimiento", @name = "formularioSeguimiento" }))
+    {
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <table class="table table-bordered" id="tablaSeguimiento">
+                        <caption hidden>@Recursos.Lenguaje.Seguimientos</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden>Id</th>
+                                <th scope="col" hidden>IdAccionesMejora</th>
+                                <th scope="col" hidden>IdSolucion</th>
+                                <th scope="col">@Recursos.Lenguaje.Observacion</th>
+                                <th scope="col">@Recursos.Lenguaje.Fecha</th>
+                                <th scope="col">@Recursos.Lenguaje.Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.seguimiento.ListaSeguimiento.Count > 0)
+                            {
+                                foreach (var itemSeguimiento in Model.seguimiento.ListaSeguimiento)
+                                {
+                                    <tr>
+                                        <td hidden>@itemSeguimiento.Id</td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemId", Model.Id = itemSeguimiento.Id)
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.IdAccionesMejora,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.IdSolucion,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemObservacion",
+                                                    Model.Observacion = itemSeguimiento.Observacion)
+                                                @Html.TextBoxFor(model => model.Observacion,
+                                                    new { @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(model => model.Observacion, null,
+                                                    new { @class = "text-danger" })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemFecha",
+                                                    Model.Fecha = itemSeguimiento.Fecha)
+                                                @Html.TextBoxFor(model => model.Fecha, "{0:MM/dd/yyyy}",
+                                                   new { @readonly = "readonly" })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemUsuario",
+                                                     Model.Usuario = itemSeguimiento.Usuario)
+                                                @Html.TextBoxFor(model => model.Usuario,
+                                                     new { @readonly = "readonly" })
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="trParaCrearSeguimiento">
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                               href="@Url.Action("Consultar", "AccionesMejora",
+                                    new {
+                                        idSolucion = Model.IdSolucion,
+                                        vista = "Consultar" })">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

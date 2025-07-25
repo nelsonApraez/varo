@@ -1,0 +1,822 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Abiertos" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="AC" xml:space="preserve">
+    <value>CA</value>
+  </data>
+  <data name="Acciones" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="AccionesMejora" xml:space="preserve">
+    <value>Improvement actions</value>
+  </data>
+  <data name="Acción" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="AcciónMejora" xml:space="preserve">
+    <value>Improvement Action</value>
+  </data>
+  <data name="Aceptar" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Actuales" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="Adicionar" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Administrar" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="AdministrarSolución" xml:space="preserve">
+    <value>Manage Solution</value>
+  </data>
+  <data name="AgregarSolución" xml:space="preserve">
+    <value>Add Solution</value>
+  </data>
+  <data name="Auditoria" xml:space="preserve">
+    <value>Audit</value>
+  </data>
+  <data name="Auditorias" xml:space="preserve">
+    <value>Audits</value>
+  </data>
+  <data name="Año" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Bugs" xml:space="preserve">
+    <value>Bugs</value>
+  </data>
+  <data name="Buscar" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="BuscarSolucion" xml:space="preserve">
+    <value>Search Solution</value>
+  </data>
+  <data name="CalidaddeCódigo" xml:space="preserve">
+    <value>Code Quality</value>
+  </data>
+  <data name="CalidaddelCódigo" xml:space="preserve">
+    <value>Code Quality</value>
+  </data>
+  <data name="Calificacion" xml:space="preserve">
+    <value>Qualification</value>
+  </data>
+  <data name="Calificación" xml:space="preserve">
+    <value>Qualification</value>
+  </data>
+  <data name="CalificaciónAuditoría" xml:space="preserve">
+    <value>Audit Rating</value>
+  </data>
+  <data name="CalificacióndeAuditoría" xml:space="preserve">
+    <value>Audit Rating</value>
+  </data>
+  <data name="CalificacióndeDesempeño" xml:space="preserve">
+    <value>Performance Rating</value>
+  </data>
+  <data name="CalificacióndeSeguridad" xml:space="preserve">
+    <value>Security Rating</value>
+  </data>
+  <data name="CalificaciónDesempeño" xml:space="preserve">
+    <value>Performance Rating</value>
+  </data>
+  <data name="CalificaciónSeguridad" xml:space="preserve">
+    <value>Security Rating</value>
+  </data>
+  <data name="Cambiodeidioma" xml:space="preserve">
+    <value>Change of language</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Cargando" xml:space="preserve">
+    <value>Loading..</value>
+  </data>
+  <data name="Categoria" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Cerrados" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="Ciudad" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Cliente" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="Cobertura" xml:space="preserve">
+    <value>Coverage</value>
+  </data>
+  <data name="Codesmell" xml:space="preserve">
+    <value>Code smell</value>
+  </data>
+  <data name="Compromisos" xml:space="preserve">
+    <value>Issues</value>
+  </data>
+  <data name="Continuar" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Controldecódigo" xml:space="preserve">
+    <value>Source code control</value>
+  </data>
+  <data name="Controldedocumentación" xml:space="preserve">
+    <value>Documentation control</value>
+  </data>
+  <data name="Correo" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="creado" xml:space="preserve">
+    <value>created</value>
+  </data>
+  <data name="Códigoduplicado" xml:space="preserve">
+    <value>Duplicate code</value>
+  </data>
+  <data name="DC" xml:space="preserve">
+    <value>CD</value>
+  </data>
+  <data name="DefectosExternos" xml:space="preserve">
+    <value>External Defects</value>
+  </data>
+  <data name="DefectosInternos" xml:space="preserve">
+    <value>Internal Defects</value>
+  </data>
+  <data name="Densidad" xml:space="preserve">
+    <value>Density</value>
+  </data>
+  <data name="Departamento" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Descripción" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Desempeño" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="Desplieguecontinuo" xml:space="preserve">
+    <value>Continuous deployment</value>
+  </data>
+  <data name="DetalledeHistoriasdeUsuario" xml:space="preserve">
+    <value>User Stories Detail</value>
+  </data>
+  <data name="Deudatécnica" xml:space="preserve">
+    <value>Technical debt</value>
+  </data>
+  <data name="DocsCod" xml:space="preserve">
+    <value>Docs / Cod</value>
+  </data>
+  <data name="Duplicado" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="Editar" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Eliminar" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error.</value>
+  </data>
+  <data name="EsfuerzoEstimado" xml:space="preserve">
+    <value>Estimated Effort</value>
+  </data>
+  <data name="EsfuerzoEstimados" xml:space="preserve">
+    <value>Estimated Efforts</value>
+  </data>
+  <data name="EsfuerzoLogrados" xml:space="preserve">
+    <value>Achieved Efforts</value>
+  </data>
+  <data name="EsfuerzoReal" xml:space="preserve">
+    <value>Real Effort</value>
+  </data>
+  <data name="Estabilidad" xml:space="preserve">
+    <value>Stability</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="Estadoactualdelassoluciones" xml:space="preserve">
+    <value>Solutions Current status</value>
+  </data>
+  <data name="Etiquetas" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Excelente" xml:space="preserve">
+    <value>Excellent</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Fechaanálisis" xml:space="preserve">
+    <value>Analysis date</value>
+  </data>
+  <data name="FechadeCierre" xml:space="preserve">
+    <value>Deadline</value>
+  </data>
+  <data name="FechadelAnálisis" xml:space="preserve">
+    <value>Analysis Date</value>
+  </data>
+  <data name="FechaFinal" xml:space="preserve">
+    <value>Final date</value>
+  </data>
+  <data name="FechaInicial" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="Frameworks" xml:space="preserve">
+    <value>Frameworks</value>
+  </data>
+  <data name="Gerente" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="Gestióndeerrores" xml:space="preserve">
+    <value>Error handling</value>
+  </data>
+  <data name="Gestióndetareas" xml:space="preserve">
+    <value>Task management</value>
+  </data>
+  <data name="Guardadoexitoso" xml:space="preserve">
+    <value>Successful saving.</value>
+  </data>
+  <data name="Herramientasdetrabajo" xml:space="preserve">
+    <value>Working tools</value>
+  </data>
+  <data name="HistoriasyEsfuerzo" xml:space="preserve">
+    <value>Stories and Effort</value>
+  </data>
+  <data name="Hitos" xml:space="preserve">
+    <value>Milestones</value>
+  </data>
+  <data name="Hitosdelasolución" xml:space="preserve">
+    <value>Solution milestones</value>
+  </data>
+  <data name="HitosdeSoluciones" xml:space="preserve">
+    <value>Solution Milestones</value>
+  </data>
+  <data name="HUsEstimadas" xml:space="preserve">
+    <value>Estimated USs</value>
+  </data>
+  <data name="HUsLogradas" xml:space="preserve">
+    <value>USs Achieved</value>
+  </data>
+  <data name="IC" xml:space="preserve">
+    <value>CI</value>
+  </data>
+  <data name="IndicadoresTécnicos" xml:space="preserve">
+    <value>Technical Indicators</value>
+  </data>
+  <data name="InformacióndelCliente" xml:space="preserve">
+    <value>Customer information</value>
+  </data>
+  <data name="InformaciónGeneral" xml:space="preserve">
+    <value>General information</value>
+  </data>
+  <data name="Inspeccióncontinua" xml:space="preserve">
+    <value>Continuous inspection</value>
+  </data>
+  <data name="Integracióncontinua" xml:space="preserve">
+    <value>Continuous integration</value>
+  </data>
+  <data name="Lenguaj" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Linea" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="Listadodesolucionescreadashastalafecha" xml:space="preserve">
+    <value>List of solutions created to date</value>
+  </data>
+  <data name="ListaProyectosExistentes" xml:space="preserve">
+    <value>Existing Projects List</value>
+  </data>
+  <data name="Líneadenegocio" xml:space="preserve">
+    <value>Business line</value>
+  </data>
+  <data name="Líneatecnológica" xml:space="preserve">
+    <value>Technology line</value>
+  </data>
+  <data name="Marcodetrabajo" xml:space="preserve">
+    <value>Framework</value>
+  </data>
+  <data name="Mes" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Metricas" xml:space="preserve">
+    <value>Metrics</value>
+  </data>
+  <data name="MetricasAgiles" xml:space="preserve">
+    <value>Agile Metrics</value>
+  </data>
+  <data name="MetricasExternas" xml:space="preserve">
+    <value>External Metrics</value>
+  </data>
+  <data name="Monitoreo" xml:space="preserve">
+    <value>Monitoring</value>
+  </data>
+  <data name="Nombre" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NombreCompilación" xml:space="preserve">
+    <value>Compilation Name</value>
+  </data>
+  <data name="Nombredelcontacto" xml:space="preserve">
+    <value>Contact name</value>
+  </data>
+  <data name="NombreDespliegue" xml:space="preserve">
+    <value>Deployment Name</value>
+  </data>
+  <data name="NombreInspección" xml:space="preserve">
+    <value>Inspection Name</value>
+  </data>
+  <data name="NombreProyecto" xml:space="preserve">
+    <value>Project name</value>
+  </data>
+  <data name="Noseencontraronregistros" xml:space="preserve">
+    <value>No records found.</value>
+  </data>
+  <data name="Novedades" xml:space="preserve">
+    <value>Novelties</value>
+  </data>
+  <data name="Número" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="Observaciones" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="Observación" xml:space="preserve">
+    <value>Observation</value>
+  </data>
+  <data name="Oficina" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="Origenesdedatos" xml:space="preserve">
+    <value>Data Sources</value>
+  </data>
+  <data name="Pais" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="PFA" xml:space="preserve">
+    <value>TA</value>
+  </data>
+  <data name="Plataformas" xml:space="preserve">
+    <value>Platforms</value>
+  </data>
+  <data name="Proyecto" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="ProyectoNuevo" xml:space="preserve">
+    <value>New project</value>
+  </data>
+  <data name="Pruebas" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="PruebasFuncionales" xml:space="preserve">
+    <value>Functional Tests</value>
+  </data>
+  <data name="PruebasFuncionalesAutomatizadas" xml:space="preserve">
+    <value>Automated Functional Tests</value>
+  </data>
+  <data name="PruebasFuncionalesAutomatizadas2" xml:space="preserve">
+    <value>Automated functional tests</value>
+  </data>
+  <data name="Pruebasunitariasautomatizadas" xml:space="preserve">
+    <value>Automated unit tests</value>
+  </data>
+  <data name="PrácticasdeCalidad" xml:space="preserve">
+    <value>Quality Practices</value>
+  </data>
+  <data name="PrácticasTécnicas" xml:space="preserve">
+    <value>Technical Practices</value>
+  </data>
+  <data name="PUA" xml:space="preserve">
+    <value>UT</value>
+  </data>
+  <data name="RegistrarMétricasExternas" xml:space="preserve">
+    <value>Record External Metrics</value>
+  </data>
+  <data name="RegistrarMétricasExterno" xml:space="preserve">
+    <value>Record External Metrics</value>
+  </data>
+  <data name="Reportados" xml:space="preserve">
+    <value>Reported</value>
+  </data>
+  <data name="Reportes" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Responsable" xml:space="preserve">
+    <value>Accountable</value>
+  </data>
+  <data name="Responsabletécnico" xml:space="preserve">
+    <value>Technical Accountable</value>
+  </data>
+  <data name="Responsabletécnico2" xml:space="preserve">
+    <value>Technical Accountable</value>
+  </data>
+  <data name="Resumen" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Riesgos" xml:space="preserve">
+    <value>Risks</value>
+  </data>
+  <data name="Rol" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Seguimientos" xml:space="preserve">
+    <value>Tracings</value>
+  </data>
+  <data name="Seguridad" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="Seleccioneelidioma" xml:space="preserve">
+    <value>Select language</value>
+  </data>
+  <data name="Seprodujounerroralprocesarsusolicitud" xml:space="preserve">
+    <value>An error occurred while processing your request.</value>
+  </data>
+  <data name="Solomostrarproyectosenestadoejecución" xml:space="preserve">
+    <value>Show only projects in execution state</value>
+  </data>
+  <data name="Soluciones" xml:space="preserve">
+    <value>Solutions</value>
+  </data>
+  <data name="Sprint" xml:space="preserve">
+    <value>Sprint</value>
+  </data>
+  <data name="TablerodePrácticasTécnicas" xml:space="preserve">
+    <value>Technical Practices Board</value>
+  </data>
+  <data name="Tableros" xml:space="preserve">
+    <value>Dashboards</value>
+  </data>
+  <data name="TareasErrores" xml:space="preserve">
+    <value>Tasks / Errors</value>
+  </data>
+  <data name="Tecnico" xml:space="preserve">
+    <value>Technical</value>
+  </data>
+  <data name="Tecnología" xml:space="preserve">
+    <value>Technology</value>
+  </data>
+  <data name="Tecnologías" xml:space="preserve">
+    <value>Technologies</value>
+  </data>
+  <data name="Teléfono" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Tipificación" xml:space="preserve">
+    <value>Typing</value>
+  </data>
+  <data name="Tipo" xml:space="preserve">
+    <value>Kind</value>
+  </data>
+  <data name="Turegistrohasido" xml:space="preserve">
+    <value>Your registration has been</value>
+  </data>
+  <data name="Tusoluciónhasido" xml:space="preserve">
+    <value>Your solution has been</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UrlCompilacion" xml:space="preserve">
+    <value>Compilation Url</value>
+  </data>
+  <data name="UrlDespliegue" xml:space="preserve">
+    <value>Display Url</value>
+  </data>
+  <data name="Urldocumentación" xml:space="preserve">
+    <value>Documentation URL</value>
+  </data>
+  <data name="UrlEvidenciaCompletado" xml:space="preserve">
+    <value>Completed Evidence URL</value>
+  </data>
+  <data name="Urlinspección" xml:space="preserve">
+    <value>Inspection URL</value>
+  </data>
+  <data name="Urlrepositoriocodigofuente" xml:space="preserve">
+    <value>Source code Repository URL</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UsuariodereddelGerente" xml:space="preserve">
+    <value>Manager network user</value>
+  </data>
+  <data name="UsuariodereddelResponsable" xml:space="preserve">
+    <value>Accountable network user</value>
+  </data>
+  <data name="Utilitarios" xml:space="preserve">
+    <value>Utilities</value>
+  </data>
+  <data name="UX" xml:space="preserve">
+    <value>UX</value>
+  </data>
+  <data name="VerDetalle" xml:space="preserve">
+    <value>See Detail</value>
+  </data>
+  <data name="VerResumenSolución" xml:space="preserve">
+    <value>View Summary Solution</value>
+  </data>
+  <data name="VistaPrevia" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Vulnerabilidades" xml:space="preserve">
+    <value>Vulnerabilities</value>
+  </data>
+  <data name="Consultor" xml:space="preserve">
+    <value>Advisor</value>
+  </data>
+  <data name="ConsultoriaHaSido" xml:space="preserve">
+    <value>Your advisory has been</value>
+  </data>
+  <data name="LabelConsultarConsultoriaALaFecha" xml:space="preserve">
+    <value>List of advisories created to date</value>
+  </data>
+  <data name="LabelMostrarConsultoriasEnEjecucion" xml:space="preserve">
+    <value>Only show advisories in execution status</value>
+  </data>
+  <data name="LineaDeConsultoria" xml:space="preserve">
+    <value>Advisory Line</value>
+  </data>
+  <data name="Sharepoint" xml:space="preserve">
+    <value>Sharepoint</value>
+  </data>
+  <data name="TituloAdministrarConsultoria" xml:space="preserve">
+    <value>Manage advisories</value>
+  </data>
+  <data name="TituloAgregarConsultoria" xml:space="preserve">
+    <value>Add advisory</value>
+  </data>
+  <data name="TituloEditarConsultoria" xml:space="preserve">
+    <value>Edit advisory</value>
+  </data>
+  <data name="TituloVistaPreviaConsultoria" xml:space="preserve">
+    <value>Advisory Report</value>
+  </data>
+  <data name="UsuarioDeRedConsultor" xml:space="preserve">
+    <value>Advisor network user</value>
+  </data>
+  <data name="AgregarConsultoria" xml:space="preserve">
+    <value>Add advisory</value>
+  </data>
+  <data name="BuscarConsultoria" xml:space="preserve">
+    <value>Search advisories</value>
+  </data>
+  <data name="Consultoria" xml:space="preserve">
+    <value>Advisories</value>
+  </data>
+  <data name="BusquedaSinRegistro" xml:space="preserve">
+    <value>No records found.</value>
+  </data>
+  <data name="Buscarsolución" xml:space="preserve">
+    <value>Find a solution</value>
+  </data>
+  <data name="CasosAutomatizados" xml:space="preserve">
+    <value>Automated cases</value>
+  </data>
+  <data name="CasosDefinidos" xml:space="preserve">
+    <value>Defined cases</value>
+  </data>
+  <data name="Desplieguescontinuos" xml:space="preserve">
+    <value>Continuous deployments</value>
+  </data>
+  <data name="EditarSolución" xml:space="preserve">
+    <value>Edit Solution</value>
+  </data>
+  <data name="InformeSolución" xml:space="preserve">
+    <value>Solution Report</value>
+  </data>
+  <data name="Integracionescontinuas" xml:space="preserve">
+    <value>Continuous integrations</value>
+  </data>
+  <data name="Lineasdecódigo" xml:space="preserve">
+    <value>Lines of code</value>
+  </data>
+  <data name="Nombreanalista" xml:space="preserve">
+    <value>Analyst name</value>
+  </data>
+  <data name="Solucion" xml:space="preserve">
+    <value>Solution</value>
+  </data>
+  <data name="Usuarioredanalista" xml:space="preserve">
+    <value>Analyst network user</value>
+  </data>
+  <data name="Español" xml:space="preserve">
+    <value>Español</value>
+  </data>
+  <data name="Ingles" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="CasosaAutomatizar" xml:space="preserve">
+    <value>Cases to automate</value>
+  </data>
+  <data name="UrlDiseñodeCasos" xml:space="preserve">
+    <value>Case design URL</value>
+  </data>
+  <data name="UrlEvidencias" xml:space="preserve">
+    <value>Evidences URL</value>
+  </data>
+  <data name="UrlRepositorio" xml:space="preserve">
+    <value>Automation repository URL</value>
+  </data>
+  <data name="EstaenPipeline" xml:space="preserve">
+    <value>Is it into the CD pipeline?</value>
+  </data>
+  <data name="MonitoreoContinuo" xml:space="preserve">
+    <value>Continuous monitoring</value>
+  </data>
+  <data name="NombreMonitoreo" xml:space="preserve">
+    <value>Monitoring Name</value>
+  </data>
+  <data name="UrlMonitoreo" xml:space="preserve">
+    <value>Monitoring URL</value>
+  </data>
+  <data name="Consultorias" xml:space="preserve">
+    <value>Advisories</value>
+  </data>
+  <data name="Incendios" xml:space="preserve">
+    <value>Fires</value>
+  </data>
+  <data name="Solucionados" xml:space="preserve">
+    <value>Solved</value>
+  </data>
+  <data name="MensajeCrearConsultoria" xml:space="preserve">
+    <value>The advisory has been created</value>
+  </data>
+  <data name="MensajeEditarConsultoria" xml:space="preserve">
+    <value>The advisory has been modified</value>
+  </data>
+  <data name="MensajeEliminadoExitoso" xml:space="preserve">
+    <value>The advisory was successfully eliminated</value>
+  </data>
+  <data name="MensajeRegistroAgregado" xml:space="preserve">
+    <value>Your registration has been added</value>
+  </data>
+  <data name="MensajeRegistroModificado" xml:space="preserve">
+    <value>Your registration has been modified</value>
+  </data>
+  <data name="MensajeSolucionCreada" xml:space="preserve">
+    <value>Your solution has been added</value>
+  </data>
+  <data name="MensajeSolucionModificada" xml:space="preserve">
+    <value>Your solution has been modified</value>
+  </data>
+  <data name="MensajeRegistroCreado" xml:space="preserve">
+    <value>Your registration has been created</value>
+  </data>
+  <data name="MensajeErrorEliminarConsultoria" xml:space="preserve">
+    <value>The advisory cannot be removed. Check if there is information entered</value>
+  </data>
+  <data name="MensajeErrorEliminarSolucion" xml:space="preserve">
+    <value>The solution cannot be removed. Check if there is information entered</value>
+  </data>
+  <data name="MensajeExitoEliminarSolucion" xml:space="preserve">
+    <value>The solution was successfully removed.</value>
+  </data>
+  <data name="MensajeDatosIncompletos" xml:space="preserve">
+    <value>The section {0} not be saved because it has empty fields.</value>
+  </data>
+  <data name="RestriccionComa" xml:space="preserve">
+    <value>Don't use commas in this seccion's fields.</value>
+  </data>
+  <data name="RolScrumMaster" xml:space="preserve">
+    <value>Role Scrum Master</value>
+  </data>
+  <data name="ScrumMaster" xml:space="preserve">
+    <value>Scrum master</value>
+  </data>
+  <data name="UsuariodereddelScrumMaster" xml:space="preserve">
+    <value>Scrum master network user</value>
+  </data>
+  <data name="MensajeFechasDuplicadas" xml:space="preserve">
+    <value>There are sprints or dates that are duplicated.</value>
+  </data>
+  <data name="MensajeErrorEliminarMetricaAgil" xml:space="preserve">
+    <value>Cannot delete metric. Check if there is registered information.</value>
+  </data>
+  <data name="MensajeEliminarMetrica" xml:space="preserve">
+    <value>Unable to delete the metric. Check if there is a recorded follow-up.</value>
+  </data>
+  <data name="MensajeFechaNoConcuerda" xml:space="preserve">
+    <value>Sprint dates don't match.</value>
+  </data>
+  <data name="MensajeControlado" xml:space="preserve">
+    <value>Ups. An unexpected error occurred. Contact your system administrator.</value>
+  </data>
+</root>

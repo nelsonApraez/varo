@@ -1,0 +1,57 @@
+@model Varo.Web.Models.MetricasViewModel
+
+<div class="table-title">
+    <div class="row">
+        <div class="col m12 l12">
+            <h2><strong>@Recursos.Lenguaje.HistoriasyEsfuerzo</strong></h2>
+        </div>
+        <div hidden>
+            @Html.EditorFor(model => model.historiasyEsfuerzosViewModel.Id)
+        </div>
+        <div hidden>
+            @Html.EditorFor(model => model.historiasyEsfuerzosViewModel.IdMetricaAgil)
+        </div>
+        <div hidden>
+            @Html.EditorFor(model => model.historiasyEsfuerzosViewModel.IdSolucion)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col m4 l4">
+        <label for="hUEstimadas">@Recursos.Lenguaje.HUsEstimadas</label>
+        @Html.EditorFor(model => model.historiasyEsfuerzosViewModel.HistoriasEstimadas,
+            new { htmlAttributes = new { @class = "form-control validarEnteros" } })
+        @Html.ValidationMessageFor(model => model.historiasyEsfuerzosViewModel.HistoriasEstimadas, null,
+            new { @class = "text-danger" })
+    </div>
+    <div class="col m3 l3">
+        <label for="hUsLogradas">@Recursos.Lenguaje.HUsLogradas</label>
+        @Html.EditorFor(model => model.historiasyEsfuerzosViewModel.HistoriasLogradas,
+            new { htmlAttributes = new { @class = "form-control validarEnteros" } })
+        @Html.ValidationMessageFor(model => model.historiasyEsfuerzosViewModel.HistoriasLogradas, 
+            null, new { @class = "text-danger" })
+    </div>
+    <div class="col m3 l3">
+        <label for="esfuerzoEstimados">@Recursos.Lenguaje.EsfuerzoEstimados</label>
+        @Html.EditorFor(model => model.historiasyEsfuerzosViewModel.EsfuerzoEstimado,
+            new { htmlAttributes = new { @class = "form-control validarDecimales itemDetalleHistoriasUsuario" } })
+        @Html.ValidationMessageFor(model => model.historiasyEsfuerzosViewModel.EsfuerzoEstimado, null,
+            new { @class = "text-danger" })
+    </div>
+    <div class="col m2 l2">
+        <label for="esfuerzoLogrados">@Recursos.Lenguaje.EsfuerzoLogrados</label>
+        @Html.EditorFor(model => model.historiasyEsfuerzosViewModel.EsfuerzoLogrado,
+            new { htmlAttributes = new { @class = "form-control validarDecimales itemDetalleHistoriasUsuario" } })
+        @Html.ValidationMessageFor(model => model.historiasyEsfuerzosViewModel.EsfuerzoLogrado, null,
+            new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="col m12 l12">
+        <label for="observacion">@Recursos.Lenguaje.Observacion</label>
+        @Html.TextAreaFor(model => model.historiasyEsfuerzosViewModel.Observaciones,
+            new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.historiasyEsfuerzosViewModel.Observaciones, null,
+            new { @class = "text-danger" })
+    </div>
+</div>

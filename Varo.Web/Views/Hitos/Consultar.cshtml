@@ -1,0 +1,392 @@
+@model Varo.Web.Models.HitosViewModel
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(false);
+}
+
+<script type="text/template" id="htmlHitos">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Tipo.Nombre,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td hidden>
+        @Html.EditorFor(model => model.Tipo.Id,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Descripcion,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.FechaCierre,
+        new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Estado.Nombre,
+        new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td hidden>
+        @Html.EditorFor(model => model.Estado.Id,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Observaciones,
+        new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+</script>
+
+<script type="text/template" id="htmlAccionesHitos">
+    <td hidden>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IdSolucion)
+        </div>
+    </td>
+    <td>
+        <a class="edit"
+           title=@Recursos.Lenguaje.Editar
+           data-toggle="tooltip"
+           id="btnEditar"
+           onclick="cargarFilaEditarHitos(this, '#ModalHitos')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete"
+           title=@Recursos.Lenguaje.Eliminar
+           data-toggle="tooltip" id="btnEliminar"
+           onclick="EliminarFila(this, '#tablaHitos')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       function InsertarHtmlHitos() {
+           var htmlCampos = document.getElementById('htmlHitos').innerHTML;
+           var htmlAcciones = document.getElementById('htmlAccionesHitos').innerHTML;
+           $("#trParaCrearHitos").append(htmlCampos);
+           $("#trParaCrearHitos").append(htmlAcciones);
+        }
+        @if (Model.Hito.ListaHitos.Count == 0)
+        {
+            @:InsertarHtmlHitos();
+        }
+    });
+</script>
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.Hitos</h3>
+    @using (Html.BeginForm("Crear", "Hitos", FormMethod.Post,
+        new {
+            @id = "formularioCrearHitos",
+            @class = "formularioCrearHitos",
+            @name = "formularioCrearHitos" }))
+    {
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <table class="table table-bordered" id="tablaHitos">
+                        <caption hidden>@Recursos.Lenguaje.Hitos</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden>Id</th>
+                                <th scope="col" style="width:12%;">@Recursos.Lenguaje.Tipo</th>
+                                <th scope="col">@Recursos.Lenguaje.Descripcion</th>
+                                <th scope="col" style="width:13%;">@Recursos.Lenguaje.FechaDeCierre</th>
+                                <th scope="col" style="width:7%;">@Recursos.Lenguaje.Estado</th>
+                                <th scope="col">@Recursos.Lenguaje.Observaciones</th>
+                                <th scope="col" hidden> IdSolucion</th>
+                                <th scope="col">@Recursos.Lenguaje.Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Hito.ListaHitos.Count > 0)
+                            {
+                                foreach (var itemHitos in Model.Hito.ListaHitos)
+                                {
+                                    <tr>
+                                        <td hidden>@itemHitos.Id</td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Tipo", itemHitos.Tipo.Nombre,
+                                                    new { @class = "form-control requerido", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            @Html.TextBox("IdTipo", itemHitos.Tipo.Id)
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Descripcion", itemHitos.Descripcion,
+                                                    new { @class = "form-control requerido", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("FechaCierre",
+                                                    itemHitos.FechaCierre.ToString("yyyy-MM-dd"),
+                                                    new { @class = "form-control requerido", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Estado", itemHitos.Estado.Nombre,
+                                                 new { @class = "form-control requerido", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            @Html.TextBox("IdEstado", itemHitos.Estado.Id)
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextArea("Observaciones", itemHitos.Observaciones,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemIdSolucion", Model.IdSolucion = itemHitos.IdSolucion)
+                                                @Html.EditorFor(model => model.IdSolucion,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a class="edit"
+                                               title=@Recursos.Lenguaje.Editar
+                                               data-toggle="tooltip"
+                                               id="btnEditar"
+                                               onclick="cargarFilaEditarHitos(this, '#ModalHitos')">
+                                                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                                            </a>
+                                            <a class="delete"
+                                               title=@Recursos.Lenguaje.Eliminar
+                                               data-toggle="tooltip"
+                                               id="btnEliminar"
+                                               onclick="EliminarFila(this, '#tablaHitos')">
+                                                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="trParaCrearHitos"></tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="right">
+                            <button type="button"
+                                    class="btn add-new"
+                                    id="btnAdicionarHitos"
+                                    onclick="clearTextBox('#ModalHitos');"
+                                    data-toggle="modal"
+                                    data-target="#ModalHitos">
+                                @Recursos.Lenguaje.Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m4 l4">
+                                    <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                                       href="@Url.Action("Editar", "Solucion",
+                                                new { id = Model.IdSolucion, vista = "_FormularioCreacionEdicion" })">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+                                <div class="col m4 l4">
+                                    <button type="button"
+                                            class="v-btn v-btn-principal"
+                                            id="btnNotificaciones"
+                                            data-toggle="modal"
+                                            data-target="#ModalNotificacion">
+                                        @Recursos.Lenguaje.Notificar
+                                    </button>
+                                </div>
+                                <div class="col m4 l4">
+                                    <button class="v-btn-principal v-btn" type="submit">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade"
+                 id="ModalHitos"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.Hitos</h4>
+                            <input id="fila" hidden>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="itemTipoAmbiente">@Recursos.Lenguaje.Tipo</label>
+                                @Html.DropDownList("ListaTipo", Model.ListaTipo.OrderBy(x => x.Text),
+                                    new { @class = "form-control requerido" })
+                            </div>
+                            <div class="form-group">
+                                <label for="itemDescripcion">@Recursos.Lenguaje.Descripcion</label>
+                                <textarea type="text"
+                                          class="form-control requerido"
+                                          id="itemDescripcion"
+                                          name="itemDescripcion"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="itemFechaCierre">@Recursos.Lenguaje.FechaDeCierre</label>
+                                <input type="date"
+                                       class="form-control requerido"
+                                       id="itemFechaCierre"
+                                       name="itemFechaCierre"
+                                       placeholder="{0:MM/dd/yyyy}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="itemEstado">@Recursos.Lenguaje.Estado</label>
+                                @Html.DropDownList("ListaEstados", Model.ListaEstados.OrderBy(x => x.Text),
+                                    new { @class = "form-control requerido" })
+                            </div>
+                            <div class="form-group">
+                                <label for="itemObservaciones">@Recursos.Lenguaje.Observaciones</label>
+                                <textarea type="text"
+                                          class="form-control"
+                                          id="itemObservaciones"
+                                          name="itemObservaciones"></textarea>
+                            </div>
+                            <div id="msgError">
+                                <span id="Error" class="error" hidden>
+                                    @Recursos.Lenguaje.CampoRequerido
+                                </span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col m6 l6">
+                                        <a class="v-btn-segundario v-btn"
+                                           data-dismiss="modal"
+                                           aria-label="Close">
+                                            @Recursos.Lenguaje.Cancelar
+                                        </a>
+                                    </div>
+                                    <div class="col m6 l6">
+                                        <button class="v-btn-principal v-btn"
+                                                type="button" id="btnAdd"
+                                                onclick="AgregarElementoHitos(
+                                                        '#ModalHitos',
+                                                        '#tablaHitos')">
+                                            @Recursos.Lenguaje.Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade"
+                 id="ModalNotificacion"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="ModalNotificaciones"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="ModalNotificaciones">@Recursos.Lenguaje.NotificarHitos</h4>
+                            <input id="fila" hidden>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="itemGerente">@Recursos.Lenguaje.Gerente</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="itemGerente"
+                                       disabled
+                                       value="@Model.UsuarioRedGerente" />
+                            </div>
+                            <div class="form-group">
+                                <label for="itemLiderTecnico">@Recursos.Lenguaje.ResponsableTecnico</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="itemLiderTecnico"
+                                       disabled
+                                       value="@Model.UsuarioRedResponsable" />
+                            </div>
+                            <div class="form-group">
+                                <label for="itemScrumMaster">@Recursos.Lenguaje.ScrumMaster</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="itemScrumMaster"
+                                       disabled
+                                       value="@Model.UsuarioRedScrumMaster" />
+                            </div>
+                            <div class="form-group">
+                                <label for="emailArquitectura">@Recursos.Lenguaje.Arquitecto</label>
+                                @Html.TextBox("emailArquitecto", Model.EmailArquitecto,
+                                    new { @class = "form-control", @id = "emailArquitecto" })
+                            </div>
+                            <div class="form-group">
+                                <label for="adicionales">@Recursos.Lenguaje.Adicionales</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="adicionales" />
+                            </div>
+                            <div id="msgError">
+                                <span id="Error" class="error" hidden>
+                                    @Recursos.Lenguaje.CampoRequerido
+                                </span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col m6 l6">
+                                        <a class="v-btn-segundario v-btn"
+                                           data-dismiss="modal"
+                                           aria-label="Close">
+                                            @Recursos.Lenguaje.Cancelar
+                                        </a>
+                                    </div>
+                                    <div class="col m6 l6">
+                                        <button class="v-btn-principal v-btn"
+                                                type="button" id="btnAdd"
+                                                onclick="EnviarCorreo('@Model.IdSolucion')"
+                                                onkeypress="EnviarCorreo('@Model.IdSolucion')">
+                                            @Recursos.Lenguaje.Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

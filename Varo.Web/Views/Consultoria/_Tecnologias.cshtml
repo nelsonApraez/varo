@@ -1,0 +1,153 @@
+@model Varo.Web.Models.ConsultoriaViewModel
+
+<script type="text/template" id="htmlAcciones">
+    <td>
+        <a class="edit"
+           title=@Recursos.Lenguaje.Editar
+           data-toggle="tooltip"
+           id="btnEditar"
+           onclick="cargarFilaEditarTecnologia(this)">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete"
+           title=@Recursos.Lenguaje.Eliminar
+           data-toggle="tooltip"
+           id="btnEliminar"
+           onclick="EliminarFila(this,'#tablaTecnologia')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<div class="table-wrapper">
+    <div class="table-title">
+        <div class="row">
+            <div class="col m12 l12">
+                <h2><strong>@Recursos.Lenguaje.Tecnologias</strong></h2>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered" id="tablaTecnologia">
+        <caption hidden>@Recursos.Lenguaje.Tecnologias</caption>
+        <thead>
+            <tr>
+                <th id="" hidden>Id</th>
+                <th id="">@Recursos.Lenguaje.Tipo</th>
+                <th id="">@Recursos.Lenguaje.Tecnologias</th>
+                <th id="">@Recursos.Lenguaje.Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.TecnologiasViewModel.ListaTecnologiasViewModel != null)
+            {
+                foreach (var itemTecnologiaViewModel in Model.TecnologiasViewModel.ListaTecnologiasViewModel)
+                {
+                    <tr>
+                        <td hidden>
+                            @Html.Hidden("itemIdTecnologia", @itemTecnologiaViewModel.Tecnologia.Id)
+                        </td>
+                        <td hidden>
+                            @Html.Hidden("itemIdTipo", @itemTecnologiaViewModel.TipoTecnologia.Id)
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="@itemTecnologiaViewModel.TipoTecnologia.Nombre"></label>
+                                @Html.TextBox("itemTipoNombre", itemTecnologiaViewModel.TipoTecnologia.Nombre,
+                                          new { @class = "form-control", @readonly = true })
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="@itemTecnologiaViewModel.Tecnologia.Nombre"></label>
+                                @Html.TextBox("itemTecnologiaNombre", itemTecnologiaViewModel.Tecnologia.Nombre,
+                                       new { @class = "form-control", @readonly = true })
+                            </div>
+                        </td>
+                        <td>
+                            <a class="edit" title=@Recursos.Lenguaje.Editar data-toggle="tooltip"
+                               id="btnEditar" onclick="cargarFilaEditarTecnologia(this)">
+                                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                            </a>
+                            <a class="delete" title=@Recursos.Lenguaje.Eliminar data-toggle="tooltip"
+                               id="btnEliminar" onclick="EliminarFila(this,'#tablaTecnologia')">
+                                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="right">
+            <button type="button"
+                    class="btn add-new"
+                    id="btnAdicionarTecnologia"
+                    onclick="clearTextBox('#ModalTecnologia');"
+                    data-toggle="modal"
+                    data-target="#ModalTecnologia">
+                @Recursos.Lenguaje.Adicionar
+            </button>
+        </div>
+    </div>
+</div>
+<div class="modal fade"
+     id="ModalTecnologia"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="text-align:left">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.Tecnologias</h4>
+                <input hidden id="fila">
+            </div>
+            <div class="modal-body">
+                <form id="formModal">
+                    <div class="form-group">
+                        <label for="Nombre">@Recursos.Lenguaje.Tipo</label>
+                        @Html.DropDownList("ListTipo",
+                         Model.TecnologiasViewModel.ListaTiposDeTecnologia.OrderBy(x => x.Value),
+                         new {
+                             @class = "form-control requerido",
+                             id = "ListTipo",
+                             @onChange = "consultarTecnologiasPorIdTipoTecnologiaModal($('#ListTecnologias'), this.value, '',0);",
+                             @required = true })
+
+                    </div>
+                    <div class="form-group">
+                        <label for="Inspeccion">@Recursos.Lenguaje.Tecnologia</label>
+                        @Html.DropDownList("ListTecnologias",
+                         Model.TecnologiasViewModel.ListaTecnologias.OrderBy(x => x.Text),
+                         new {
+                             @class = "form-control requerido",
+                             id = "ListTecnologias",
+                             @required = true })
+                    </div>
+                    <div id="msgError">
+                        <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="v-formulariobotones">
+                    <div class="row">
+                        <div class="col m6 l6">
+                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                        <div class="col m6 l6">
+                            <button class="v-btn-principal v-btn" type="button" id="btnAdd"
+                                    onclick="AgregarElementoTecnologia('#ModalTecnologia')">
+                                @Recursos.Lenguaje.Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

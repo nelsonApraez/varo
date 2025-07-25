@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PostSharp.6.0.26\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.6.0.26\build\PostSharp.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8EA89A79-9333-458D-8EDA-1A9EA8DC0F78}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Varo.Soluciones</RootNamespace>
+    <AssemblyName>Varo.Soluciones</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pruebas|AnyCPU'">
+    <OutputPath>bin\Pruebas\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Prod|AnyCPU'">
+    <OutputPath>bin\Prod\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp, Version=6.0.26.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Redist.6.0.26\lib\net45\PostSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entidades\Ambientes.cs" />
+    <Compile Include="Entidades\CalidadCodigo.cs" />
+    <Compile Include="Entidades\AccionesMejora.cs" />
+    <Compile Include="Entidades\CalificacionDesempeno.cs" />
+    <Compile Include="Entidades\CalificacionSeguridad.cs" />
+    <Compile Include="Entidades\ValorMetricaSolucion.cs" />
+    <Compile Include="Entidades\EstimacionHorasSolucion.cs" />
+    <Compile Include="Entidades\Notificaciones.cs" />
+    <Compile Include="Entidades\DefectosExternos.cs" />
+    <Compile Include="Entidades\Defectos.cs" />
+    <Compile Include="Entidades\EquipoSolucion.cs" />
+    <Compile Include="Entidades\FiltroProyecto.cs" />
+    <Compile Include="Entidades\Incendios.cs" />
+    <Compile Include="Entidades\DefectosInternos.cs" />
+    <Compile Include="Entidades\MonitoreosContinuos.cs" />
+    <Compile Include="Entidades\HistoriasyEsfuerzos.cs" />
+    <Compile Include="Entidades\Historias.cs" />
+    <Compile Include="Entidades\Seguimiento.cs" />
+    <Compile Include="Entidades\Metrica.cs" />
+    <Compile Include="Entidades\MetricasAgiles.cs" />
+    <Compile Include="Entidades\Proyecto.cs" />
+    <Compile Include="Entidades\TecnologiaSolucion.cs" />
+    <Compile Include="Entidades\TipoHito.cs" />
+    <Compile Include="Entidades\Hitos.cs" />
+    <Compile Include="Entidades\CalificacionAuditoria.cs" />
+    <Compile Include="Entidades\DesplieguesContinuos.cs" />
+    <Compile Include="Entidades\InspeccionesContinuas.cs" />
+    <Compile Include="Entidades\IntegracionesContinuas.cs" />
+    <Compile Include="Entidades\ListaSolucion.cs" />
+    <Compile Include="Entidades\Prueba.cs" />
+    <Compile Include="Entidades\PracticasCalidad.cs" />
+    <Compile Include="Entidades\SolucionInformacionBasica.cs" />
+    <Compile Include="Entidades\Solucion.cs" />
+    <Compile Include="Entidades\ValorMetrica.cs" />
+    <Compile Include="Entidades\ValorMetricaExterna.cs" />
+    <Compile Include="Entidades\ValorMetricaProyecto.cs" />
+    <Compile Include="Negocio\INegocioCalidadCodigo.cs" />
+    <Compile Include="Negocio\INegocioAccionMejora.cs" />
+    <Compile Include="Negocio\INegocioAmbientes.cs" />
+    <Compile Include="Negocio\INegocioMetricaSistemica.cs" />
+    <Compile Include="Negocio\INegocioNotificaciones.cs" />
+    <Compile Include="Negocio\INegocioEquipoSolucion.cs" />
+    <Compile Include="Negocio\INegocioIncendio.cs" />
+    <Compile Include="Negocio\INegocioDefectoExterno.cs" />
+    <Compile Include="Negocio\INegocioEstimacionHoras.cs" />
+    <Compile Include="Negocio\INegocioMonitoreoContinuo.cs" />
+    <Compile Include="Negocio\INegocioHistoria.cs" />
+    <Compile Include="Negocio\INegocioDefectoInterno.cs" />
+    <Compile Include="Negocio\INegocioHistoriayEsfuerzo.cs" />
+    <Compile Include="Negocio\INegocioProyectoExterno.cs" />
+    <Compile Include="Negocio\INegocioSeguimiento.cs" />
+    <Compile Include="Negocio\INegocioMetricaAgil.cs" />
+    <Compile Include="Negocio\INegocioHito.cs" />
+    <Compile Include="Negocio\INegocioAuditoria.cs" />
+    <Compile Include="Negocio\INegocioPrueba.cs" />
+    <Compile Include="Negocio\INegocioMetricaExterna.cs" />
+    <Compile Include="Negocio\INegocioDespliegueContinuo.cs" />
+    <Compile Include="Negocio\INegocioInspeccionContinua.cs" />
+    <Compile Include="Negocio\INegocioIntegracionContinua.cs" />
+    <Compile Include="Negocio\INegocioPracticaCalidad.cs" />
+    <Compile Include="Negocio\INegocioSoluciones.cs" />
+    <Compile Include="Negocio\INegocioTecnologiaSolucion.cs" />
+    <Compile Include="Negocio\NegocioCalidadCodigo.cs" />
+    <Compile Include="Negocio\NegocioAccionMejora.cs" />
+    <Compile Include="Negocio\NegocioAmbientes.cs" />
+    <Compile Include="Negocio\NegocioMetricaSistemica.cs" />
+    <Compile Include="Negocio\NegocioNotificaciones.cs" />
+    <Compile Include="Negocio\NegocioEquipoSolucion.cs" />
+    <Compile Include="Negocio\NegocioIncendio.cs" />
+    <Compile Include="Negocio\NegocioDefectoExterno.cs" />
+    <Compile Include="Negocio\NegocioEstimacionHoras.cs" />
+    <Compile Include="Negocio\NegocioMonitoreoContinuo.cs" />
+    <Compile Include="Negocio\NegocioHistoria.cs" />
+    <Compile Include="Negocio\NegocioDefectoInterno.cs" />
+    <Compile Include="Negocio\NegocioHistoriayEsfuerzo.cs" />
+    <Compile Include="Negocio\NegocioProyectoExterno.cs" />
+    <Compile Include="Negocio\NegocioSeguimiento.cs" />
+    <Compile Include="Negocio\NegocioMetricaAgil.cs" />
+    <Compile Include="Negocio\NegocioHito.cs" />
+    <Compile Include="Negocio\NegocioAuditoria.cs" />
+    <Compile Include="Negocio\NegocioPrueba.cs" />
+    <Compile Include="Negocio\NegocioMetricaExterna.cs" />
+    <Compile Include="Negocio\NegocioDespliegueContinuo.cs" />
+    <Compile Include="Negocio\NegocioInspeccionContinua.cs" />
+    <Compile Include="Negocio\NegocioIntegracionContinua.cs" />
+    <Compile Include="Negocio\NegocioPracticaCalidad.cs" />
+    <Compile Include="Negocio\NegocioSoluciones.cs" />
+    <Compile Include="Negocio\NegocioTecnologiaSolucion.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorio\IRepositorioCalidadCodigo.cs" />
+    <Compile Include="Repositorio\IRepositorioAccionMejora.cs" />
+    <Compile Include="Repositorio\IRepositorioNotificaciones.cs" />
+    <Compile Include="Repositorio\IRepositorioDefectoExterno.cs" />
+    <Compile Include="Repositorio\IRepositorioAmbientes.cs" />
+    <Compile Include="Repositorio\IRepositorioEquipoSolucion.cs" />
+    <Compile Include="Repositorio\IRepositorioIncendio.cs" />
+    <Compile Include="Repositorio\IRepositorioEstimacionHoras.cs" />
+    <Compile Include="Repositorio\IRepositorioMonitoreoContinuo.cs" />
+    <Compile Include="Repositorio\IRepositorioHistoria.cs" />
+    <Compile Include="Repositorio\IRepositorioDefectoInterno.cs" />
+    <Compile Include="Repositorio\IRepositorioHistoriayEsfuerzo.cs" />
+    <Compile Include="Repositorio\IRepositorioSeguimiento.cs" />
+    <Compile Include="Repositorio\IRepositorioMetricaAgil.cs" />
+    <Compile Include="Repositorio\IRepositorioHito.cs" />
+    <Compile Include="Repositorio\IRepositorioAuditoria.cs" />
+    <Compile Include="Repositorio\IRepositorioPrueba.cs" />
+    <Compile Include="Repositorio\IRepositorioIntegracionContinua.cs" />
+    <Compile Include="Repositorio\IRepositorioDespliegueContinuo.cs" />
+    <Compile Include="Repositorio\IRepositorioPracticaCalidad.cs" />
+    <Compile Include="Repositorio\IRepositorioSolucion.cs" />
+    <Compile Include="Repositorio\IRepositorioTecnologiaSolucion.cs" />
+    <Compile Include="Repositorio\RepositorioCalidadCodigo.cs" />
+    <Compile Include="Repositorio\RepositorioAccionMejora.cs" />
+    <Compile Include="Repositorio\RepositorioNotificaciones.cs" />
+    <Compile Include="Repositorio\RepositorioDefectoExterno.cs" />
+    <Compile Include="Repositorio\RepositorioAmbientes.cs" />
+    <Compile Include="Repositorio\RepositorioEquipoSolucion.cs" />
+    <Compile Include="Repositorio\RepositorioIncendio.cs" />
+    <Compile Include="Repositorio\RepositorioEstimacionHoras.cs" />
+    <Compile Include="Repositorio\RepositorioMonitoreoContinuo.cs" />
+    <Compile Include="Repositorio\RepositorioHistoria.cs" />
+    <Compile Include="Repositorio\RepositorioDefectoInterno.cs" />
+    <Compile Include="Repositorio\RepositorioHistoriayEsfuerzo.cs" />
+    <Compile Include="Repositorio\RepositorioSeguimiento.cs" />
+    <Compile Include="Repositorio\RepositorioMetricaAgil.cs" />
+    <Compile Include="Repositorio\RepositorioHito.cs" />
+    <Compile Include="Repositorio\RepositorioAuditoria.cs" />
+    <Compile Include="Repositorio\RepositorioPrueba.cs" />
+    <Compile Include="Repositorio\RepositorioDespliegueContinuo.cs" />
+    <Compile Include="Repositorio\RepositorioIntegracionContinua.cs" />
+    <Compile Include="Repositorio\RepositorioPracticaCalidad.cs" />
+    <Compile Include="Repositorio\RepositorioSolucion.cs" />
+    <Compile Include="Repositorio\RepositorioTecnologiaSolucion.cs" />
+    <Compile Include="SistemasExternos\AdaptadorInspeccionTecnica.cs" />
+    <Compile Include="SistemasExternos\AdaptadorSombreroBlanco.cs" />
+    <Compile Include="SistemasExternos\AdaptadorSonarExterno.cs" />
+    <Compile Include="SistemasExternos\IAdaptadorInspeccionTecnica.cs" />
+    <Compile Include="SistemasExternos\IAdaptadorSombreroBlanco.cs" />
+    <Compile Include="SistemasExternos\IAdaptadorSonarExterno.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Varo.Maestros\Varo.Maestros.csproj">
+      <Project>{c507aad6-4483-461e-b18f-b59600c21e7d}</Project>
+      <Name>Varo.Maestros</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Varo.Transversales\Varo.Transversales.csproj">
+      <Project>{ef459a40-64af-457a-964c-14f3566ad791}</Project>
+      <Name>Varo.Transversales</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\PostSharp.6.0.26\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.6.0.26\build\PostSharp.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.6.0.26\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.6.0.26\build\PostSharp.targets'))" />
+  </Target>
+  <Import Project="..\packages\PostSharp.6.0.26\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.6.0.26\build\PostSharp.targets')" />
+</Project>

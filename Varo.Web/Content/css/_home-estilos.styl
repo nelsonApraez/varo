@@ -1,0 +1,376 @@
+html, body
+  height 100%
+
+body
+    margin 0px
+    padding 0px
+    background-color #f2f5f7
+    font-size 16px
+    font-family: 'Roboto', sans-serif
+    
+
+
+header
+    background-color #0093ca
+    position fixed
+    z-index: 4
+    width 100%
+    height 60px
+    h1
+        margin 0px 0px 0px 50px
+        padding 0px
+
+section
+  .container
+    padding: 0px
+    
+.v-contenedor
+  margin: 0 15px
+  height 100%
+
+
+/************* Menu ****************/
+
+.ig-contenedor
+    height 100%
+
+    .row    
+        height 100%
+
+    .ig-contenidos
+        padding: 80px 0px 10px 0px
+
+
+.nav-side-menu
+    font-size 16px
+    font-weight 300
+    background-color #fff
+    height 100%
+    padding-top: 60px
+
+    
+    
+    .v-usuario
+        background-color white
+        display block
+        text-align left
+        font-size 14px
+        margin 20px 20px
+
+        h5
+          font-size: 18px
+
+        p
+            color #0093ca
+    .toggle-btn
+        display none
+    li
+        padding-left 20px
+        border-left 3px solid #fff
+        padding-top 7px
+        &:hover
+            border-left 3px solid #0093ca
+            background-color rgba(0, 147, 202, 0.2)
+
+            a
+                color #0093ca
+        a
+            text-decoration none
+            color #464646
+            vertical-align top
+            padding-left: 20px
+            i
+                padding 3px 7px 0px 0px
+                font-size 26px
+                vertical-align top
+
+.nav-side-menu ul,
+.nav-side-menu li
+    list-style none
+    padding 5px 0px 5px 0px
+    margin 0px
+    line-height 35px
+    cursor pointer
+
+.sub-menu
+  li
+    a
+      padding-left: 0px
+
+.nav-side-menu ul .active,
+.nav-side-menu li .active
+    border-left 3px solid #0093ca
+    background-color rgba(0, 147, 202, 0.1)
+    color white
+
+.nav-side-menu ul .sub-menu li.active,
+.nav-side-menu li .sub-menu li.active
+    color white
+    color white
+
+.nav-side-menu ul .sub-menu li,
+.nav-side-menu li .sub-menu li
+    border-left 3px solid white
+    background-color white
+    line-height 28px
+    margin-left 0px
+    padding-left 60px
+
+.nav-side-menu ul .sub-menu li:hover,
+.nav-side-menu li .sub-menu li:hover
+    border-left 3px solid #0093ca
+    background-color rgba(0, 147, 202, 0.2)
+    color #0093ca
+
+
+.nav-side-menu 
+    .menu-list
+        .menu-content 
+            .v-cerrar
+                position: absolute
+                bottom: 20px
+                width: 135px
+                a
+                    color red
+                    font-size: 16px
+                &:hover
+                    background-color: transparent
+                    border: none
+                    padding-left: 3px
+                   
+            
+
+/*************** Home estilos ***********/
+
+.v-titulo
+    color #464646
+    margin: 10px
+    margin: 10px 0px 25px 15px
+    text-align: center
+    h4
+        font-size 22px
+        text-align left
+        margin 0px
+        i
+            font-size 28px
+            vertical-align top
+    p
+        font-size 16px
+        text-transform initial
+
+.v-buscador
+    form
+        width: 100%
+        input
+            width 84%
+            background-color unset
+            border none
+            border-bottom 1px solid #0093CA
+            &::placeholder
+                color #0093CA
+        button
+            background-color unset
+            border none
+            color #0093CA
+            padding: 0px
+            &:hover
+                cursor pointer
+            &::selection
+                outline unset
+
+.v-categoria
+    form
+        select
+            background-color unset
+            border none
+            border-bottom 1px solid #0093CA
+            color #0093CA
+            width 100%
+            padding 5px
+            appearance: none;
+
+
+
+section
+    .accordion
+        margin-top: 40px
+                
+    .v-agregar
+        margin-right 15px
+        a
+            background-color #63ce46
+            border none
+            color white
+            padding 7px 10px
+            border-radius 7px
+            font-weight 400
+            font-size 16px
+            text-decoration none
+
+            &:hover
+                background-color: rgba( verde, 0.8)
+                cursor pointer
+
+
+    .v-card
+        margin 10px 15px 0px 0px
+        background-color white
+        padding: 15px 15px 10px 15px
+        cursor pointer
+        box-shadow: 1px 2px 3px #E2E2E2
+        
+
+        .collapse, .collapsing
+            .row
+                div
+                    padding: 0px
+                    h6,p
+                        padding: 10px 15px
+                    p
+                        padding: 0px 15px
+
+    
+
+        .tabcontenedor
+            padding: 15px
+        
+        .v-card-header
+            background-color white
+            
+            h5
+                font-weight: 400
+                font-size: 18px   
+            a
+                i
+                    margin 0px 5px
+                    color: azul
+      
+    h6
+        background-color: rgba(0, 147, 202, 0.2)
+        color azul  
+        font-weight: 400
+    p
+        color: 464646
+        margin-bottom: 5px
+        font-weight: 300
+
+/************* Modal Agregar ****************/
+
+
+
+
+        
+        
+        
+
+
+/*********** Formulario *************/
+
+form
+    width 100%
+    height 100%
+    .v-formulario
+        .form-group
+            margin-top: 20px
+            padding: 0px 15px
+
+        label
+            margin-top: 20px
+            font-size: 14px
+            font-weight: 300
+            color: grisoscuro
+
+        .form-control, select
+            background-color: transparent 
+            border none 
+            border-bottom: 1px solid gray 
+            border-radius: 0
+        
+        select
+            border 1px solid gray
+
+  .v-formcontentselec
+    margin: 40px 0px 0px 0px
+
+    .v-selector
+      padding-bottom: 40px
+      border-bottom: 1px solid grisclarito
+    
+    h6
+      color: grisoscuro
+      font-weight: 300
+      display block
+      margin: 15px 0px 15px 15px
+
+    .form-group
+      display inline-block
+      vertical-align: top
+      padding: 0px 15px
+      width: 100%
+
+      .form-control
+        background-color: transparent
+        border: none 
+        border-bottom: 1px solid grisoscuro
+        border-radius: 0
+        box-shadow: unset
+
+.v-formulariobotones
+  margin: 80px 0px
+  padding: 0px 15px
+  
+  .v-btn
+    font-size: 18px
+    text-align: center
+    width 100%
+    display block
+    padding: 8px 20px 
+    text-decoration: none
+    
+
+  .v-btn-principal
+    background-color: verde 
+    font-weight: 400
+    color: white
+    border-radius: 7px
+
+    &:hover
+      background-color: rgba(verde, 0.8)
+
+  .v-btn-segundario
+    font-weight: 300
+    color: gray
+    
+    &:hover
+      font-weight: 400
+      color  grisoscuro
+.modal-dialog 
+    .v-modalcontenido
+        background-color: white
+        text-align: center
+        padding: 40px 90px
+        border-radius: 8px
+    img 
+        margin-bottom: 50px
+    h4
+        color: verde 
+        font-size: 38px
+    p
+        margin-bottom: 50px
+        color: grisoscuro
+        font-size: 18px
+
+    button
+        color: white
+        background-color: verde 
+        padding: 5px 15px
+        border-radius: 5px
+
+
+
+
+
+
+
+
+

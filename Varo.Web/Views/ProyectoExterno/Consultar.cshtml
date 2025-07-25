@@ -1,0 +1,66 @@
+﻿@model  PaginadorViewModel<IEnumerable<ProyectoExternoViewModel>>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>        <!--Funciones buscador-->
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+
+<link rel="stylesheet" href="~/Content/css/PagedList.css" />            <!--Apariencia paginador-->
+<link rel="stylesheet" href="~/Content/css/switcher.css" />             <!--Apariencia switch-->
+
+<div class="items_tableros" style="margin-top: 10px;">
+    <div class="header_contenido">
+        <h2>@Recursos.Lenguaje.Proyectos</h2>
+    </div>
+    <div class="btn btn_agregar">
+        <em class="material-icons">
+            control_point
+        </em>
+        <a title=@Recursos.Lenguaje.AgregarProyecto
+           id="btnAdd"
+           onclick="clearTextBox('#ModalDetalleProyectoExterno');"
+           data-toggle="modal"
+           data-target="#ModalDetalleProyectoExterno">
+            @Recursos.Lenguaje.AgregarProyecto
+        </a>
+    </div>
+    @using (Ajax.BeginForm("Consultar", "ProyectoExterno",
+        new AjaxOptions
+        {
+            HttpMethod = "GET",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "listaProyecto",
+            OnBegin = "mostrarModalEspera()",
+            OnComplete = "ocultarModalEspera()"
+        }, new { @class = "formularioBuscador" }))
+    {
+        <input type="hidden" name="filtroActual" value="@ViewBag.filtroActualProyecto" />
+        <input type="hidden" name="enEjecucion" value="@ViewBag.enEjecucion" />
+        <div style="width:100%;">
+            <div class="col m12 l12">
+                <div class="search-group">
+                    @Html.TextBox("terminoBusqueda", ViewBag.filtroActualProyecto as string,
+                    new
+                         {
+                        @type = "search",
+                        @placeholder = Recursos.Lenguaje.BuscarProyecto,
+                        @class = "search-input inactive"
+                         })
+                    <button type="submit" class="button-search">
+                        @Recursos.Lenguaje.Buscar
+                    </button>
+                </div>
+                <div class="switchProyecto">
+                    <div class="form-switcher form-switcher-lg form-switcher-sm-phone">
+                        <input type="checkbox" name="checkEnEjecucion" value="true"
+                               id="checkEnEjecucion" @ViewBag.enEjecucion />
+                        <label class="switcher" for="checkEnEjecucion"></label>
+                    </div>
+                    <label style="margin-top:7px;">@Recursos.Lenguaje.MostrarProyectosActivos</label>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model != null)
+    {
+        @Html.Partial("_Proyectos", Model)
+    }
+</div>

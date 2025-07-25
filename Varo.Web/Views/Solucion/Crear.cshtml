@@ -1,0 +1,20 @@
+@model Varo.Web.Models.SolucionesViewModel
+
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+
+<div class="ig-header">
+    <h2 class="v-titulo">@Recursos.Lenguaje.AgregarSolucion</h2>
+    <div class="row">
+        @using (Html.BeginForm("Crear", "Solucion", FormMethod.Post,
+            new { @id = "formularioCrearSolucion", @class = "formularioCrearEditar" }))
+        {
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+            @Html.Partial("_FormularioCreacionEdicion")
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

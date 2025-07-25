@@ -1,0 +1,81 @@
+@model Varo.Web.Models.ResumenSolucionViewModel
+
+            <div class="item_card">
+                @if (Model.ImagenNivelMadurez != string.Empty)
+                {
+                    <img style="float:right; padding:5px;"
+                         src="~/Content/images/@Html.Raw(Model.ImagenNivelMadurez)"
+                         height="40" width="40" alt="Nivel Madurez" />
+                }
+                <div class="proceso_card">
+                    <form action="#">
+                        <div class="@(Model.ControlArtefactos==null ? "step na" :
+                                            Model.ControlArtefactos==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.DocsCod</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.GestionBacklog==null ? "step na" :
+                                            Model.GestionBacklog==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.TareasErrores</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.IntegracionContinua==null ? "step na" :
+                                            Model.IntegracionContinua==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.IC</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.InspeccionContinua==null ? "step na" :
+                                            Model.InspeccionContinua==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.AC</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.PruebasUnitariasAutomatizadas==null ? "step na" :
+                                            Model.PruebasUnitariasAutomatizadas==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.PUA</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.PruebasFuncionalesAutomatizadas==null ? "step na" :
+                                            Model.PruebasFuncionalesAutomatizadas==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.PE2E</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.DespliegueContinuo==null ? "step na" :
+                                            Model.DespliegueContinuo==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.DC</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.MonitoreoContinuo==null ? "step na" :
+                                            Model.MonitoreoContinuo==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.MC</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.InfraestructuraComoCodigo==null ? "step na" :
+                                            Model.InfraestructuraComoCodigo==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.IaC</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.SeguridadContinua==null ? "step na" :
+                                            Model.SeguridadContinua==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.SC</label>
+                            </div>
+                        </div>
+                        <div class="@(Model.RendimientoContinuo==null ? "step na" :
+                                            Model.RendimientoContinuo==true ? "step check" : "step")">
+                            <div>
+                                <label>@Recursos.Lenguaje.RC</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+ 

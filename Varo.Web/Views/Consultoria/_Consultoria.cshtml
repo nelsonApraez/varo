@@ -1,0 +1,228 @@
+﻿@model  PaginadorViewModel<IEnumerable<ConsultoriaInformacionBasicaViewModel>>
+
+@{
+    var respuesta = TempData["agregadaModificada"] ?? string.Empty;
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var respuesta = '@respuesta';
+        var error = '@error';
+
+        if (error) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: error,
+                showConfirmButton: true
+            })
+        }
+        if (respuesta) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuesta,
+                showConfirmButton: true
+            });
+        }
+    });
+</script>
+
+@if (Model.EntidadViewModel.Count() > 0)
+{
+    <!-- items a ser paginados -->
+    <div id="listaConsultoria">
+        <div class="col m12 l12">
+            @foreach (ConsultoriaInformacionBasicaViewModel consultoria in Model.EntidadViewModel)
+            {
+                <div class="card item_admin col s3 m3">
+                    <div class="card-header header_item_admin">
+                        <h3>@Html.DisplayFor(modelItem => consultoria.NombreProyecto)</h3>
+                        <span>@Html.DisplayFor(modelItem => consultoria.NombreCliente)</span>
+                        <div class="cinta">
+                            <span>@Html.DisplayFor(modelItem => consultoria.NombreLineaConsultoria)</span>
+                        </div>
+                    </div>
+                    <div class="card-body contenido_item_admin">
+                        <p>
+                            <strong>@Recursos.Lenguaje.Gerente:</strong>
+                            @Html.DisplayFor(modelItem => consultoria.NombreGerente)
+                        </p>
+                        <p>
+                            <strong>@Recursos.Lenguaje.Consultor:</strong>
+                            @Html.DisplayFor(modelItem => consultoria.NombreResponsable)
+                        </p>
+                        <p>
+                            <strong>@Recursos.Lenguaje.Estado:</strong>
+                            @Html.DisplayFor(modelItem => consultoria.NombreEstado)
+                        </p>
+                    </div>
+                    <div class="card-footer enlaces_item_admin">
+                        <div>
+                            <a name="vista" class="link_footer_card"
+                               data-id="@consultoria.Id"
+                               data-vista="_VistaPrevia"
+                               data-toggle="modal" data-target="#vistaPrevia">
+                                <img src="~/Content/images/verdetalleGris.png"
+                                     alt="@Recursos.Lenguaje.VerDetalle"
+                                     title="@Recursos.Lenguaje.VerDetalle"
+                                     width="32" height="32"
+                                     onclick="mostrarModalEspera();"
+                                     onKeyPress="mostrarModalEspera();"
+                                     onmouseover="hoverVistaPrevia(this);"
+                                     onmouseout="unhoverVistaPrevia(this);"
+                                     onfocus="hoverVistaPrevia(this);"
+                                     onblur="unhoverVistaPrevia(this);">
+                            </a>
+                        </div>
+                        <div>
+                            <a class="link_footer_card" href="@Url.Action("Editar", "Consultoria",
+                            new { id = consultoria.Id, vista = "_FormularioCreacionEdicion" })">
+                                <img src="~/Content/images/editGris.PNG"
+                                     alt="@Recursos.Lenguaje.Editar"
+                                     title="@Recursos.Lenguaje.Editar"
+                                     width="32" height="32"
+                                     onmouseover="hoverEdit(this);"
+                                     onmouseout="unhoverEdit(this);"
+                                     onfocus="hoverEdit(this);"
+                                     onblur="unhoverEdit(this);">
+                            </a>
+                        </div>
+                        <div>
+                            <a class="link_footer_card" href="@Url.Action("Clonar", "Solucion",
+                                new { id = consultoria.Id})">
+                                <img src="~/Content/images/cloneGris.png"
+                                     alt="@Recursos.Lenguaje.CrearSolucion"
+                                     title="@Recursos.Lenguaje.CrearSolucion"
+                                     width="32" height="32"
+                                     onmouseover="hoverClonar(this);"
+                                     onmouseout="unhoverClonar(this);"
+                                     onfocus="hoverClonar(this);"
+                                     onblur="unhoverClonar(this);">
+                            </a>
+                        </div>
+                        <div>
+                            <a class="link_footer_card"
+                               onclick="eliminarConsultoria('@consultoria.Id')"
+                               onkeypress="eliminarConsultoria('@consultoria.Id')">
+                                <img src="~/Content/images/eliminar.svg"
+                                     alt="@Recursos.Lenguaje.Eliminar"
+                                     title="@Recursos.Lenguaje.Eliminar"
+                                     width="32" height="32">
+                            </a>
+                        </div>
+                        <div class="dropdown">
+                            <a id="dropdownMenuButton"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <img style="cursor: pointer;"
+                                     src="~/Content/images/menu_bar.png"
+                                     width="32" height="32"
+                                     title="@Recursos.Lenguaje.Mas"
+                                     onKeyPress="hoverMore(this);"
+                                     onclick="hoverMore(this);"
+                                     onmouseout="unhoverMore(this);"
+                                     onfocus="hoverMore(this);"
+                                     onblur="unhoverMore(this);"
+                                     alt="@Recursos.Lenguaje.Mas" />
+                            </a>
+                            <div class="dropdown-menu"
+                                 aria-labelledby="dropdownMenuItemsConsultoria">
+                                <div class="dist-30-inline">
+                                    <a class="link_footer_card"
+                                       onclick="window.open('@Html.DisplayFor(
+                                            modelItem => consultoria.UrlDocumentacion)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => consultoria.UrlDocumentacion)', '_blank')">
+                                        <img src="~/Content/images/sharepointGris.png"
+                                             width="32" height="32"
+                                             onmouseover="hoverSharepoint(this);"
+                                             onmouseout="unhoverSharepoint(this);"
+                                             onfocus="hoverSharepoint(this);"
+                                             onblur="unhoverSharepoint(this);"
+                                             title="@Recursos.Lenguaje.UrlDocumentacion"
+                                             alt="@Recursos.Lenguaje.UrlDocumentacion" />
+                                    </a>
+                                </div>
+                                <div class="dist-30-inline">
+                                    <a class="link_footer_card"
+                                       onclick="window.open('@Html.DisplayFor(
+                                            modelItem => consultoria.UrlLeccionesAprendidas)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => consultoria.UrlLeccionesAprendidas)', '_blank')">
+                                        <img src="~/Content/images/LeccionesAprendidasGris.png"
+                                             class="pointer"
+                                             width="32" height="32" 
+                                             onmouseover="hoverLeccionesAprendidas(this);"
+                                             onmouseout="unhoverLeccionesAprendidas(this);"
+                                             onfocus="hoverLeccionesAprendidas(this);"
+                                             onblur="unhoverLeccionesAprendidas(this);"
+                                             title="@Recursos.Lenguaje.UrlLeccionesAprendidas"
+                                             alt="@Recursos.Lenguaje.UrlLeccionesAprendidas" />
+                                    </a>
+                                </div>
+                                <div class="dist-30-inline">
+                                    <a class="link_footer_card"
+                                       onclick="window.open('@Html.DisplayFor(
+                                            modelItem => consultoria.UrlGestionAseguramientoCalidad)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => consultoria.UrlGestionAseguramientoCalidad)', '_blank')">
+                                        <img src="~/Content/images/thorGris.png"
+                                             class="pointer"
+                                             width="32" height="32"
+                                             onmouseover="hoverAseguramientoCalidad(this);"
+                                             onmouseout="unhoverAseguramientoCalidad(this);"
+                                             onfocus="hoverAseguramientoCalidad(this);"
+                                             onblur="unhoverAseguramientoCalidad(this);"
+                                             title="@Recursos.Lenguaje.UrlAseguramientoCalidad"
+                                             alt="@Recursos.Lenguaje.UrlAseguramientoCalidad" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.Paginador(Model.Paginador)
+    </div>
+    <div id="vistaPrevia" class="modal fade" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="detallevistaPrevia">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>@Recursos.Lenguaje.MensajeBusquedaSinRegistro</p>
+}
+
+<script type="text/javascript">
+    $("[name=vista]").click(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var idConsultoria = $(this).attr("data-id");
+        var vista =  $(this).attr("data-vista");
+        $.ajax({
+            url: '@Url.Action("Editar", "Consultoria")?id=' + idConsultoria +'&vista=' + vista,
+            cache: false,
+            type: "get",
+            contentType: 'application/json',
+            success: function (data) {
+                ocultarModalEspera();
+                $("#detallevistaPrevia").html(data);
+                $('#vistaPrevia').modal('show');
+             }
+         });
+     });
+</script>

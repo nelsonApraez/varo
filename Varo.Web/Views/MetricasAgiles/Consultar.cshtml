@@ -1,0 +1,55 @@
+@model Varo.Web.Models.MetricasAgilesViewModel
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>        <!--Funciones buscador-->
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.MetricasAgiles</h3>
+    <div class="table-wrapper">
+        <div class="col m12 l12">
+            <button id="btnAccionesMejora" class="link_footer_card disabled metrica"
+                    onclick="location.href='@Url.Action("Consultar", "AccionesMejora",
+                        new { idSolucion = Model.IdSolucion })';return false;"
+                    onmouseover="removeClaseButton('#btnAccionesMejora');"
+                    onmouseout="addClaseButton('#btnAccionesMejora');"
+                    onBlur="addClaseButton('#btnAccionesMejora');"
+                    onfocus="addClaseButton('#btnAccionesMejora');">
+                <img src="~/Content/images/accionesmejora.png"
+                     alt=@Recursos.Lenguaje.AccionesMejora
+                     title=@Recursos.Lenguaje.AccionesMejora
+                     width="32" height="32">
+                @Recursos.Lenguaje.AccionesMejora
+            </button>
+        </div>
+    </div>
+    <div>
+        @using (Ajax.BeginForm("Consultar", "MetricasAgiles",
+            new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "listaMetricasAgiles"
+            },
+            new { @class = "formularioBuscador" }))
+        {
+            <input type="hidden" name="filtroActual" value="@ViewBag.filtroActualMetricasAgiles" />
+            <input type="hidden" name="idSolucion" value="@Model.IdSolucion" />
+            <div style="width:100%">
+                <div class="search-group">
+                    @Html.TextBox("terminoBusqueda", ViewBag.filtroActualMetricasAgiles as string,
+                    new
+                         {
+                        @type = "search",
+                        @placeholder = @Recursos.Lenguaje.BuscarMetricasAgiles,
+                        @class = "search-input inactive"
+                         })
+                    <button type="submit" class="button-search">@Recursos.Lenguaje.Buscar</button>
+                </div>
+            </div>
+        }
+        @if (Model != null)
+        {
+            @Html.Partial("_MetricasAgiles", Model)
+        }
+    </div>
+</div>

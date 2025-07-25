@@ -1,0 +1,153 @@
+@model Varo.Web.Models.SolucionesViewModel
+
+<script src="~/Scripts/FormularioEdicion.js"></script>
+
+<div class="v-formulario">
+    <div class="v-selector readOnly">
+        <div class="table-wrapper wrapperLeft">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col m12 l12">
+                        <h2><strong>@Recursos.Lenguaje.InformacionGeneral</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="proyecto">@Recursos.Lenguaje.Nombre</label>
+                        @Html.EditorFor(model => model.NombreProyecto,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="proyecto">@Recursos.Lenguaje.Estado</label>
+                        @Html.EditorFor(model => model.Estado.Nombre,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.Oficina</label>
+                        @Html.EditorFor(model => model.Oficina.Nombre,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="proyecto">@Recursos.Lenguaje.Gerente</label>
+                        @Html.EditorFor(model => model.NombreGerente,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="proyecto">@Recursos.Lenguaje.ResponsableTecnico</label>
+                        @Html.EditorFor(model => model.NombreResponsable,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="proyecto">@Recursos.Lenguaje.ScrumMaster </label>
+                        @Html.EditorFor(model => model.NombreScrumMaster,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m12 l12">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.DescripcionProposito</label>
+                        @Html.EditorFor(model => model.Descripcion,
+                            new { htmlAttributes = new { @class = "form-control textarea-sinscroll" } })
+                    </div>
+                </div>
+                <div class="col m12 l12">
+                    <div class="form-group">
+                        <label for="proyecto">@Recursos.Lenguaje.Observacion </label>
+                        @Html.EditorFor(model => model.Observacion,
+                            new { htmlAttributes = new { @class = "form-control textarea-sinscroll" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-wrapper wrapperLeft">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col m12 l12">
+                        <h2><strong>@Recursos.Lenguaje.InformacionDelCliente</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-end">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.Cliente</label>
+                        @Html.EditorFor(model => model.Cliente.Name,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.NombreDelContacto</label>
+                        @Html.EditorFor(model => model.NombreContactoCliente,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.Correo</label>
+                        @Html.EditorFor(model => model.CorreoContactoCliente,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.Telefono</label>
+                        @Html.EditorFor(model => model.TelefonoContactoCliente,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-wrapper wrapperLeft">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col m12 l12">
+                        <h2><strong>@Recursos.Lenguaje.Tipificacion</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-end">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.Tipo</label>
+                        @Html.EditorFor(model => model.Tipo.Nombre,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.LineaTecnologica</label>
+                        @Html.EditorFor(model => model.LineaSolucion.Nombre,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.MarcoDeTrabajo</label>
+                        @Html.EditorFor(model => model.MarcoTrabajo.Nombre,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="gerente">@Recursos.Lenguaje.LineaDeNegocio</label>
+                        @Html.EditorFor(model => model.LineaNegocio.Nombre,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,339 @@
+@model Varo.Web.Models.MetricasAgilesViewModel
+
+@{
+    var respuestaModulos = TempData["MensajeCrearModulos"] ?? string.Empty;
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+<script type="text/javascript">
+    //No se puede enviar esta funcion al .js ya que contiene un decorador y
+    //estos no funcionan en los archivos .js
+   $(document).ready(function () {
+        var respuestaModulo = '@respuestaModulos';
+        var error = '@error';
+
+        if (error) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: error,
+                showConfirmButton: true
+            });
+        }
+        if (respuestaModulo) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuestaModulo,
+                showConfirmButton: true
+            });
+       }
+
+       function InsertarhtmlMetricasAgiles() {
+           var htmlCampos = document.getElementById('htmlMetricasAgiles').innerHTML;
+           var htmlAcciones = document.getElementById('htmlAccionesMetricaAgil').innerHTML;
+           $("#trParaCrearMetricaAgil").append(htmlCampos);
+           $("#trParaCrearMetricaAgil").append(htmlAcciones);
+        }
+        @if (Model.metricasAgiles.ListaMetricasAgiles.Count == 0)
+        {
+            @:InsertarhtmlMetricasAgiles();
+        }
+    });
+</script>
+
+<script type="text/template" id="htmlMetricasAgiles">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.NombreEquipo,
+                new { htmlAttributes = new { 
+                   @class = "form-control",
+                   @readOnly= true,
+                   @name= "itemEquipo",
+                   @id = "itemEquipo",
+                   @Value = "" } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Sprint,
+                new { htmlAttributes = new { 
+                    @class = "form-control",
+                    @readOnly= true,
+                    @name="itemSprint",
+                    @id = "itemSprint",
+                    Value = "" } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.FechaInicial,
+                new { htmlAttributes = new {
+                    @class = "form-control",
+                    @readOnly = true,
+                    @name = "itemFechaInicial",
+                    @id = "itemFechaInicial" } })
+        </div>
+    </td>
+
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.FechaFinal,
+                new { htmlAttributes = new {
+                    @class = "form-control",
+                    @readOnly = true,
+                    @name = "itemFechaFinal",
+                    @id = "itemFechaFinal" } })
+        </div>
+    </td>
+</script>
+
+<script type="text/template" id="htmlAccionesMetricaAgil">
+    <td hidden>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IdSolucion,
+                new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </td>
+    <td>
+        <a class="edit"
+           title=@Recursos.Lenguaje.Editar
+           data-toggle="tooltip"
+           id="btnEditar"
+           onclick="cargarFilaEditarMetricaAgil(this, '#ModalMetricaAgil')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete"
+           title=@Recursos.Lenguaje.Eliminar
+           data-toggle="tooltip"
+           id="btnEliminar"
+           onclick="EliminarFila(this, '#tablaMetricasAgiles')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+@using (Html.BeginForm("Crear", "MetricasAgiles", FormMethod.Post,
+    new {
+        @id = "formularioMetricasAgiles",
+        @class = "formularioMetricasAgiles",
+        @name = "formularioMetricasAgiles" }))
+{
+    <div id="listaMetricasAgiles">
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <table class="table table-bordered" id="tablaMetricasAgiles">
+                        <caption hidden>@Recursos.Lenguaje.MetricasAgiles</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden>Id</th>
+                                <th scope="col" hidden>Delete</th>
+                                <th scope="col" hidden>IdSolucion</th>
+                                <th scope="col">@Recursos.Lenguaje.Equipo</th>
+                                <th scope="col">@Recursos.Lenguaje.Sprint</th>
+                                <th scope="col">@Recursos.Lenguaje.FechaInicial</th>
+                                <th scope="col">@Recursos.Lenguaje.FechaFinal</th>
+                                <th scope="col" style="width:127px;">@Recursos.Lenguaje.Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.metricasAgiles.ListaMetricasAgiles.Count > 0)
+                            {
+                                foreach (var itemMetricaAgil in Model.metricasAgiles.ListaMetricasAgiles)
+                                {
+                                    <tr>
+                                        <td hidden>@itemMetricaAgil.Id</td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemId",Model.Id = itemMetricaAgil.Id)
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemIdSolucion",
+                                                    Model.IdSolucion = itemMetricaAgil.IdSolucion)
+                                                @Html.EditorFor(model => model.IdSolucion,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            @Html.Hidden("itemIdEquipo", @itemMetricaAgil.IdEquipo)
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemEquipo", itemMetricaAgil.NombreEquipo,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemSprint", itemMetricaAgil.Sprint,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemFechaInicial",
+                                                    itemMetricaAgil.FechaInicial.ToString("yyyy-MM-dd"),
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemFechaFinal",
+                                                    itemMetricaAgil.FechaFinal.ToString("yyyy-MM-dd"),
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>@itemMetricaAgil.IdSolucion</td>
+                                        <td>
+                                            <div class="form-group">
+                                                <a id="btnMetricas" 
+                                                   data-toggle="tooltip"
+                                                   onclick="location.href = '@Url.Action("Obtener", "MetricasAgiles",
+                                                        new {
+                                                            idSolucion = @itemMetricaAgil.IdSolucion,
+                                                            sprint = @itemMetricaAgil.Sprint,
+                                                            idMetricaAgil=@itemMetricaAgil.Id })'; return false;">
+                                                    <img src="~/Content/images/editarmetricas.png"
+                                                         alt="Metricas"
+                                                         title="@Recursos.Lenguaje.MetricasAgiles"
+                                                         width="20" height="20"
+                                                         style="vertical-align:initial">
+                                                </a>
+                                                <a class="edit"
+                                                   title="@Recursos.Lenguaje.Editar"
+                                                   data-toggle="tooltip"
+                                                   id="btnEditar"
+                                                   onclick="cargarFilaEditarMetricaAgil(this, '#ModalMetricaAgil')">
+                                                    <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                                                </a>
+                                                <a class="delete"
+                                                   title=@Recursos.Lenguaje.Eliminar
+                                                   data-toggle="tooltip"
+                                                   id="btnEliminar"
+                                                   onclick="EliminarFila(this, '#tablaMetricasAgiles')">
+                                                    <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="trParaCrearMetricaAgil"></tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="right">
+                            <button type="button"
+                                    class="btn add-new"
+                                    id="btnAdicionarMetricaAgil"
+                                    onclick="clearTextBox('#ModalMetricaAgil');"
+                                    data-toggle="modal"
+                                    data-target="#ModalMetricaAgil">
+                                @Recursos.Lenguaje.Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 l6">
+                                    <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                                       href="@Url.Action("Editar", "Solucion",
+                                            new { id = Model.IdSolucion, vista = "_FormularioCreacionEdicion" })">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+                                <div class="col m6 l6">
+                                    <button class="v-btn-principal v-btn" type="submit">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade"
+                 id="ModalMetricaAgil"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.MetricasAgiles</h4>
+                            <input id="fila" hidden>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="tipo">@Recursos.Lenguaje.Equipo</label>
+                                @Html.DropDownList("ListEquipos",
+                                    Model.ListaEquipos.OrderBy(x => x.Text),
+                                    new { @class = "form-control", id = "ListEquipos" })
+                            </div>
+                            <div class="form-group">
+                                <label for="Sprint">@Recursos.Lenguaje.Sprint</label>
+                                <input type="text" class="form-control requerido" id="Sprint" />
+                            </div>
+                            <div class="form-group">
+                                <label for="FechaInicial">@Recursos.Lenguaje.FechaInicial</label>
+                                <input type="date"
+                                       class="form-control requerido"
+                                       id="FechaInicial"
+                                       placeholder="{0:MM/dd/yyyy}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="FechaFinal">@Recursos.Lenguaje.FechaFinal</label>
+                                <input type="date"
+                                       class="form-control requerido"
+                                       id="FechaFinal"
+                                       placeholder="{0:MM/dd/yyyy}" />
+                            </div>
+                            <div id="msgError">
+                                <span id="ErrorFechas" class="error" hidden>@Recursos.Lenguaje.MensajeErrorFechaSprint</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col m6 l6">
+                                        <a class="v-btn-segundario v-btn"
+                                           data-dismiss="modal"
+                                           aria-label="Close">
+                                            @Recursos.Lenguaje.Cancelar
+                                        </a>
+                                    </div>
+                                    <div class="col m6 l6">
+                                        <button class="v-btn-principal v-btn"
+                                                type="button" id="btnAdd"
+                                                onclick="AgregarElementoMetricaAgil(
+                                                        '#ModalMetricaAgil',
+                                                        '#tablaMetricasAgiles')">
+                                            @Recursos.Lenguaje.Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

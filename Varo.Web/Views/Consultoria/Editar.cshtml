@@ -1,0 +1,66 @@
+@model Varo.Web.Models.ConsultoriaViewModel
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/menu.js"></script>
+<script src="~/Scripts/ListadosDeshabilitados.js"></script>
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+
+<link rel="stylesheet" href="~/Content/css/estiloMenu.css" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}
+
+@{var vista = Model.Vista;}
+@{var titulo = "";}
+
+@switch (vista)
+{
+    case "_VistaPrevia":
+        titulo = @Recursos.Lenguaje.VistaPreviaConsultoria;
+        break;
+    case "_FormularioCreacionEdicion":
+        titulo = @Recursos.Lenguaje.EditarConsultoria;
+        break;
+    default:
+        break;
+}
+
+<div class="ig-header">
+    @if (vista == "_FormularioCreacionEdicion")
+    {
+        <div id="menu-container">
+            <div id="menu-wrapper">
+                <div id="hamburger-menu"><span></span><span></span><span></span></div>
+                <!-- hamburger-menu -->
+            </div>
+            <ul class="menu-list accordion">
+                <li id="nav1" class="toggle accordion-toggle">
+                    <a class="menu-link" href='@Url.Action("Consultar", "CalificacionAuditoriaConsultoria",
+             new { idConsultoria = Model.Id })'>
+                        <img src="~/Content/images/auditoria.png" width="30" height="30" alt="Admin">
+                        <span>
+                            @Recursos.Lenguaje.Auditoria
+                        </span>
+                    </a>
+                </li>
+                <li id="nav2" class="toggle accordion-toggle">
+                    <a class="menu-link" href='@Url.Action("Consultar", "EstimacionHorasConsultoria",
+             new { idConsultoria = Model.Id })'>
+                        <img src="~/Content/images/time.png" width="30" height="30" alt="Admin">
+                        <span>@Recursos.Lenguaje.EstimacionHoras</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    }
+    <h2 class="v-titulo">@titulo</h2>
+    <div class="row">
+        @using (Html.BeginForm("Editar", "Consultoria", FormMethod.Post,
+            new { @id = "formularioCrearConsultoria", @class = "formularioCrearEditar" }))
+        {
+            @Html.Partial(vista);
+        }
+    </div>
+</div>

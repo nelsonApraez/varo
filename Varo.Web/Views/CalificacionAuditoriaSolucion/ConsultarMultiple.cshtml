@@ -1,0 +1,140 @@
+@model Varo.Web.Models.CalificacionAuditoriaSolucionViewModel
+
+<!--Función mensajes solución-->
+<script src="~/Scripts/sweetalert2.all.js"></script>
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(false);
+    var respuestaModulos = TempData["MensajeCrearModulos"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    //No se puede enviar esta funcion al .js ya que contiene un decorador y
+    //estos no funcionan en los archivos .js
+    $(document).ready(function () {
+        var respuestaModulos = '@respuestaModulos';
+
+        if ( respuestaModulos) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuestaModulos,
+                showConfirmButton: true
+            });
+        }
+    });
+</script>
+
+<script type="text/template" id="htmlAccionesSoluciones">
+    <td>
+        <a class="edit"
+           title=@Recursos.Lenguaje.Editar
+           data-toggle="tooltip" id="btnEditar"
+           onclick="cargarFilaEditarSoluciones(this,'#ModalSoluciones')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete"
+           title=@Recursos.Lenguaje.Eliminar
+           data-toggle="tooltip" id="btnEliminar"
+           onclick="EliminarFila(this, '#tablaSoluciones')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.RegistrarMultiplesAuditorias</h3>
+    @using (Html.BeginForm("CrearMultiples", "CalificacionAuditoriaSolucion", FormMethod.Post,
+        new
+        {
+            @id = "formularioCrearCalificacionAuditoria",
+            @class = "formularioCrearCalificacionAuditoria",
+            @name = "formularioCrearCalificacionAuditoria"
+        }))
+    {
+        <div class="v-formulario col m12 l12">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col m12 l12">
+                                <h2><strong>@Recursos.Lenguaje.Calificacion</strong></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m12 l12">
+                            <div class="form-group">
+                                <label for="Url">@Recursos.Lenguaje.Url</label>
+                                @Html.TextBox("Url", Model.Url,
+                                    new { @class = "form-control", @type = "url" })
+                            </div>
+                        </div>
+                        <div class="col m4 l4">
+                            <div class="form-group">
+                                <label for="Calificacion">@Recursos.Lenguaje.Calificacion</label>
+                                @Html.TextBox("Calificacion", Model.Calificacion,
+                                    new { @class = "form-control", @type = "number" })
+                            </div>
+                        </div>
+                        <div class="col m4 l4">
+                            <div class="form-group">
+                                <label for="Fecha">@Recursos.Lenguaje.Fecha</label>
+                                @Html.TextBox("Fecha", Model.Fecha.ToString("yyyy-MM-dd"),
+                                    new { @class = "form-control", @type = "date" })
+                            </div>
+                        </div>
+                        <div class="col m4 l4">
+                            <div class="form-group">
+                                <label for="Proceso">@Recursos.Lenguaje.Proceso</label>
+                                @Html.TextArea("Proceso", Model.Proceso,
+                                    new { @class = "form-control", @style = "height: 45px;" })
+                            </div>
+                        </div>
+                        <div class="col m12 l12">
+                            <div class="form-group">
+                                <label for="Observacion">@Recursos.Lenguaje.Observaciones</label>
+                                @Html.TextArea("Observacion", Model.Observacion,
+                                    new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @Html.Partial("_Soluciones", Model)
+
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 l6">
+                                    <a class="v-btn-segundario v-btn"
+                                       data-dismiss="modal"
+                                       aria-label="Close"
+                                       href="/CalificacionAuditoriaSolucion/ConsultarMultiple">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+
+                                <div class="col m6 l6">
+                                    <button class="v-btn-principal v-btn"
+                                            type="submit"
+                                            onclick="ValidarFechaRequerida();">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

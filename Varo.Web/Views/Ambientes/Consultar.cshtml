@@ -1,0 +1,283 @@
+@model Varo.Web.Models.AmbientesViewModel
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(false);
+}
+
+<script type="text/template" id="htmlAmbientes">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.TipoAmbiente.Nombre,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td hidden>
+        @Html.EditorFor(model => model.TipoAmbiente.Id,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Ubicacion,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Responsable,
+        new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+</script>
+
+<script type="text/template" id="htmlAccionesAmbientes">
+    <td hidden>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IdSolucion)
+        </div>
+    </td>
+    <td>
+        <a class="edit"
+           title=@Recursos.Lenguaje.Editar
+           data-toggle="tooltip"
+           id="btnEditar"
+           onclick="cargarFilaEditarAmbientes(this, '#ModalAmbientes')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete"
+           title=@Recursos.Lenguaje.Eliminar
+           data-toggle="tooltip" id="btnEliminar"
+           onclick="EliminarFila(this, '#tablaAmbientes')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       function InsertarHtmlAmbientes() {
+           var htmlCampos = document.getElementById('htmlAmbientes').innerHTML;
+           var htmlAcciones = document.getElementById('htmlAccionesAmbientes').innerHTML;
+           $("#trParaCrearAmbientes").append(htmlCampos);
+           $("#trParaCrearAmbientes").append(htmlAcciones);
+        }
+        @if (Model.Ambientes.ListaAmbientes.Count == 0)
+        {
+            @:InsertarHtmlAmbientes();
+        }
+    });
+</script>
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.Ambientes</h3>
+    @using (Html.BeginForm("Crear", "Ambientes", FormMethod.Post,
+        new
+        {
+            @id = "formularioCrearAmbientes",
+            @class = "formularioCrearAmbientes",
+            @name = "formularioCrearAmbientes"
+        }))
+    {
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <table class="table table-bordered" id="tablaAmbientes">
+                        <caption hidden>@Recursos.Lenguaje.Ambientes</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden>Id</th>
+                                <th scope="col">@Recursos.Lenguaje.Ambiente</th>
+                                <th scope="col">@Recursos.Lenguaje.Ubicacion</th>
+                                <th scope="col">@Recursos.Lenguaje.Responsable</th>
+                                <th scope="col" hidden>IdSolucion</th>
+                                <th scope="col">@Recursos.Lenguaje.Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Ambientes.ListaAmbientes.Count > 0)
+                            {
+                                foreach (var itemAmbientes in Model.Ambientes.ListaAmbientes)
+                                {
+                                    <tr>
+                                        <td hidden>@itemAmbientes.Id</td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("TipoAmbiente", itemAmbientes.TipoAmbiente.Nombre,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            @Html.Hidden("IdTipoAmbiente",
+                                                Model.TipoAmbiente.Id = itemAmbientes.TipoAmbiente.Id)
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Ubicacion", itemAmbientes.Ubicacion,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("Responsable", itemAmbientes.Responsable,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemIdSolucion",
+                                                    Model.IdSolucion = itemAmbientes.IdSolucion)
+                                                @Html.EditorFor(model => model.IdSolucion,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a class="edit"
+                                               title=@Recursos.Lenguaje.Editar
+                                               data-toggle="tooltip"
+                                               id="btnEditar"
+                                               onclick="cargarFilaEditarAmbientes(this, '#ModalAmbientes')">
+                                                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                                            </a>
+                                            <a class="delete"
+                                               title=@Recursos.Lenguaje.Eliminar
+                                               data-toggle="tooltip"
+                                               id="btnEliminar"
+                                               onclick="EliminarFila(this, '#tablaAmbientes')">
+                                                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="trParaCrearAmbientes"></tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="right">
+                            <button type="button"
+                                    class="btn add-new"
+                                    id="btnAdicionarAmbientes"
+                                    onclick="clearTextBox('#ModalAmbientes');"
+                                    data-toggle="modal"
+                                    data-target="#ModalAmbientes">
+                                @Recursos.Lenguaje.Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 L6">
+                                    <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                                       href="@Url.Action("Editar", "Solucion",
+                                            new { id = Model.IdSolucion, vista = "_FormularioCreacionEdicion" })">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+
+                                <div class="col m6 L6">
+                                    <button class="v-btn-principal v-btn" type="submit">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade"
+                 id="ModalAmbientes"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title"
+                                id="myModalLabel">
+                                @Recursos.Lenguaje.Ambientes
+                            </h4>
+                            <input id="fila" hidden>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="itemTipoAmbiente">@Recursos.Lenguaje.Ambiente</label>
+                                <span class="c-tooltip"
+                                      style="color:darkgray"
+                                      data-tooltip="@Recursos.Lenguaje.TooltipAmbiente">
+                                    <em class="fa fa-info-circle" style="color:darkgray"></em>
+                                </span>
+                                @Html.DropDownList("ListaTipoAmbiente", Model.ListaTipoAmbiente.OrderBy(x => x.Text),
+                                    new { @class = "form-control requerido" })
+                            </div>
+                            <div class="form-group">
+                                <label for="itemUbicacion">@Recursos.Lenguaje.Ubicacion</label>
+                                <span class="c-tooltip"
+                                      style="color:darkgray"
+                                      data-tooltip="@Recursos.Lenguaje.TooltipUbicacionAmbiente">
+                                    <em class="fa fa-info-circle" style="color:darkgray"></em>
+                                </span>
+                                <input type="text"
+                                       class="form-control requerido"
+                                       id="itemUbicacion"
+                                       name="itemUbicacion" />
+                            </div>
+                            <div class="form-group">
+                                <label for="itemResponsable">@Recursos.Lenguaje.Responsable</label>
+                                <span class="c-tooltip"
+                                      style="color:darkgray"
+                                      data-tooltip="@Recursos.Lenguaje.TooltipResponsableAmbiente">
+                                    <em class="fa fa-info-circle" style="color:darkgray"></em>
+                                </span>
+                                <input type="text"
+                                       class="form-control requerido"
+                                       id="itemResponsable"
+                                       name="itemResponsable" />
+                            </div>
+                            <div id="msgError">
+                                <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col m6 l6">
+                                        <a class="v-btn-segundario v-btn"
+                                           data-dismiss="modal"
+                                           aria-label="Close">
+                                            @Recursos.Lenguaje.Cancelar
+                                        </a>
+                                    </div>
+                                    <div class="col m6 l6">
+                                        <button class="v-btn-principal v-btn"
+                                                type="button" id="btnAdd"
+                                                onclick="AgregarElementoAmbientes(
+                                                        '#ModalAmbientes',
+                                                        '#tablaAmbientes')">
+                                            @Recursos.Lenguaje.Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

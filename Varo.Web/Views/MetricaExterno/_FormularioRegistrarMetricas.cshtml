@@ -1,0 +1,129 @@
+@model Varo.Web.Models.MetricaExternoViewModel
+
+@{
+    var respuesta = TempData["respuestaCreacion"] ?? string.Empty;
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var respuesta = '@respuesta';
+        var error = '@error';
+
+        if (error) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: error,
+                showConfirmButton: true
+            }).then(() => {
+                location.href = 'Crear';
+            });
+        }
+        if (respuesta) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuesta,
+                showConfirmButton: true
+            }).then(() => {
+                location.href = 'Crear';
+            });           
+        }
+    });
+</script>
+
+<div class="v-formulario">
+    <div class="v-selector">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col m12 l12">
+                        <h2><strong>@Recursos.Lenguaje.InformacionGeneral</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div hidden>
+                    @Html.EditorFor(model => model.IdOrigenProyecto)
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="ano">@Recursos.Lenguaje.Año</label>
+                        @Html.EditorFor(model => model.Ano,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="mes">@Recursos.Lenguaje.Mes</label>
+                        @Html.EditorFor(model => model.Mes,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="fecha">@Recursos.Lenguaje.FechaDelAnalisis</label>
+                        @Html.EditorFor(model => model.FechaAnalisis,
+                            new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col m12 l12">
+                        <h2><strong>@Recursos.Lenguaje.Metricas</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var metrica in Model.ListadoMetricas)
+                {
+                    <div class="col m3 l3">
+                        <div class="form-group">
+                            <label for="@metrica.Nombre">@metrica.Nombre</label>
+                            <input name="@metrica.Nombre" type="number" step="0.001" min="0" id="@metrica.Nombre"/>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="right">
+                <div class="v-formulariobotones">
+                    <div class="row">
+                        <div class="col m6 l6">
+                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                               href="@Url.Action("Consultar", "ProyectoExterno")">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                        <div class="col m6 l6">
+                            <button class="v-btn-principal v-btn" type="submit">
+                                @Recursos.Lenguaje.Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showContent() {
+        proyectoExistente = document.getElementById("proyectoExiste");
+        ProyectoNuevo = document.getElementById("proyectoNuevo");
+        check = document.getElementById("customCheck");
+        if (check.checked) {
+            $('#proyectoExiste').attr('disabled', true);
+            $('#proyectoNuevo').attr('disabled', false);
+        }
+        else {
+            $('#proyectoNuevo').attr('disabled', true);
+            $('#proyectoExiste').attr('disabled', false);
+        }
+    }
+</script>

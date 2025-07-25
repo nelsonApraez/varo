@@ -1,0 +1,275 @@
+
+@model Varo.Web.Models.PruebasViewModel
+
+<script src="~/Scripts/select2.js"></script>
+<script src="~/Scripts/SolucionPruebasFA.js"></script>
+
+<link href="~/Content/css/materialize.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap4.0.css" rel="stylesheet" />
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<link href="~/Content/css/estilos.css" rel="stylesheet" />
+<link href="~/Content/css/custom.css" rel="stylesheet" />
+
+
+@{
+    var respuesta = TempData["agregadaModificada"] ?? string.Empty;
+}
+
+
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 34px !important;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border-top: 0px !important;
+        border-left: 0px !important;
+        border-right: 0px !important;
+        border-bottom: 1px solid #808080 !important;
+        border-radius: 0px !important;
+    }
+</style>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pruebas FA</title>
+</head>
+
+<body id="idPruebas">
+    <div class="ig-header">
+        <h3 class="v-titulo">Pruebas FA</h3>
+        @using (Html.BeginForm("Consultar", "PruebasFA", FormMethod.Post, new { @id = "formularioPruebasSolucion", @class = "formularioPruebasSolucion", @name = "formularioPruebasSolucion" }))
+        {
+            <div class="v-formulario">
+                <div class="table-wrapper">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group listaDropDown">
+                                <label for="gerente"> Cliente</label>
+                                @Html.DropDownListFor(model => model.ClienteSeleccionado, Model.ListaClientes.OrderBy(x => x.Text),
+                                    new
+                                    {
+                                        @class = "form-control select2",
+                                        id = "DropDownListClientes",
+                                        name = "DropDownListClientes",
+                                        @onChange = "ObtenerPorId(this.value)"
+                                    })
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group listaDropDown">
+                                <label for="gerente"> Solución</label>
+                                @Html.DropDownListFor(model => model.SolucionSeleccionada, Model.ListaSoluciones.OrderBy(x => x.Text),
+                                    new
+                                         {
+                                        id = "DropDownListSoluciones",
+                                        @disabled = "disabled",
+                                        @class = "form-control select2",
+                                        @onChange = "ConsultarPorId(this.value)"
+                                    })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gerente">Usuario de red del Analista</label>
+                                <div class="row">
+                                    @Html.EditorFor(model => model.UsuarioRedTecnico,
+                                       new { htmlAttributes = new { @class = "col-md-11 form-control", id = "UsuarioRedResponsable", name = "UsuarioRedResponsable" } })
+                                    <button type="button" class="col-md-1 btn-buscar"
+                                            onclick="obtenerNombreResponsablePorUsuarioRed()"
+                                            onkeypress="obtenerNombreResponsablePorUsuarioRed()">
+                                        <i class="material-icons" aria-hidden="true"> search</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gerente">Nombre Analista</label>
+                                @Html.EditorFor(model => model.NombreUsuarioTecnico,
+                                    new { htmlAttributes = new { id = "NombreResponsable", name = "NombreResponsable", @readonly = "readonly", @class = "form-control" } })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gerente">Fecha Ingreso</label>
+                                @Html.EditorFor(model => model.CreacionPrueba,
+                               new { htmlAttributes = new { id = "FechaPrueba", name = "FechaPrueba", type = "date", @class = "form-control" } })
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gerente"> Casos Definidos</label>
+                                @Html.EditorFor(model => model.CasosDefinidos,
+                                    new { htmlAttributes = new { @class = "form-control", @onChange = "ActualizarCasosPendientes()" } })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gerente"> Casos Automatizados</label>
+                                @Html.EditorFor(model => model.CasosAutomatizados,
+                                    new { htmlAttributes = new { @class = "form-control", @onChange = "ActualizarCasosPendientes()" } })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gerente"> Casos Pendientes</label>
+                                @Html.EditorFor(model => model.CasosPendientes,
+                                    new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="gerente"> Observaciones</label>
+                                @Html.EditorFor(model => model.Observaciones, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 offset-md-8">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.ActionLink("Cancelar", "Consultar", "PruebasFA", null,
+                                            new { @class = "v-btn-segundario v-btn" })
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <button id="btnGuardar" type="button" class="v-btn-principal v-btn"
+                                                onclick="Crear();"
+                                                onKeyPress="Crear()">
+                                            Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tablaPrb" class="table-wrapper ">
+                    <table>
+                        <caption style="visibility:hidden" >Pruebas FA</caption>
+                        <thead>
+                            <tr class="tablePruebas">
+                                <th style="display:none;">IdCliente</th>
+                                <th >Cliente</th>
+                                <th style="display: none;">IdSolucion</th>
+                                <th>Solucion</th>
+                                <th style="display:none;" >UsuarioRedAnalista</th>
+                                <th >Analista</th>
+                                <th >Fecha Ingreso</th>
+                                <th >Casos Definidos</th>
+                                <th >Casos Automatizados</th>
+                                <th >Casos Pendientes</th>
+                                <th >Observaciones</th>
+                                <th >Editar</th>
+                                <th >Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Pruebas != null)
+                            {
+                                foreach (var pruebasSoluciones in Model.Pruebas)
+                                {
+                                    <tr>
+                                        <td style="display:none;">
+                                            @pruebasSoluciones.IdCliente
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.NombreCliente
+                                        </td>
+
+                                        <td style="display: none;">
+                                            @pruebasSoluciones.IdSolucion
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.NombreSolucion
+                                        </td>
+
+                                        <td style="display:none;">
+                                            @pruebasSoluciones.UsuarioRedTecnico
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.NombreUsuarioTecnico
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.CreacionPrueba.ToShortDateString()
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.CasosDefinidos
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.CasosAutomatizados
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.CasosPendientes
+                                        </td>
+
+                                        <td>
+                                            @pruebasSoluciones.Observaciones
+                                        </td>
+
+                                        <td>
+                                            <a class="edit" title="Editar" data-toggle="tooltip"
+                                               id="btnEditarPrueba" onclick="EditarPruebasSolucion(this);" 
+                                                                    onKeyPress="EditarPruebasSolucion(this)">
+                                                <i style="cursor:pointer" class="material-icons"
+                                                   aria-hidden="true">create</i>
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a style="cursor:pointer" class="delete" onclick="Eliminar(this);" 
+                                                                                    onKeyPress="Eliminar(this)" 
+                                               title="Eliminar" data-toggle="tooltip"
+                                               id="idBorrarPrueba">
+                                                <i class="material-icons "
+                                                   aria-hidden="true">&#xE872;</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

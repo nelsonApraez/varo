@@ -1,0 +1,262 @@
+﻿@model  PaginadorViewModel<IEnumerable<SolucionesInformacionBasicaViewModel>>
+
+@{
+    var respuesta = TempData["agregadaModificada"] ?? string.Empty;
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var respuesta = '@respuesta';
+        var error = '@error';
+
+        if (error) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: error,
+                showConfirmButton: true
+            })
+        }
+        if (respuesta) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuesta,
+                showConfirmButton: true
+            });
+        }
+    });
+</script>
+
+@if (Model.EntidadViewModel.Count() > 0)
+{
+    <!-- items a ser paginados -->
+    <div id="listaSolucion">
+        <div class="col m12 l12 lista_admin">
+            @foreach (SolucionesInformacionBasicaViewModel solucion in Model.EntidadViewModel)
+            {
+                <div class="card item_admin col s3 m3">
+                    <div class="card-header header_item_admin">
+                        <h3>@Html.DisplayFor(modelItem => solucion.nombreProyecto)</h3>
+                        <span>@Html.DisplayFor(modelItem => solucion.nombreCliente)</span>
+                        <div class="cinta">
+                            <span>@Html.DisplayFor(modelItem => solucion.nombreLineaSolucion)</span>
+                        </div>
+                    </div>
+                    <div class="contenido_item_admin card-body">
+                        <p>
+                            <strong>@Recursos.Lenguaje.Gerente:</strong>
+                            @Html.DisplayFor(modelItem => solucion.nombreGerente)
+                        </p>
+                        <p>
+                            <strong>@Recursos.Lenguaje.ResponsableTecnico:</strong>
+                            @Html.DisplayFor(modelItem => solucion.nombreResponsable)
+                        </p>
+                        <p>
+                            <strong>@Recursos.Lenguaje.ScrumMaster:</strong>
+                            @Html.DisplayFor(modelItem => solucion.nombreScrumMaster)
+                        </p>
+                        <p>
+                            <strong>@Recursos.Lenguaje.Estado:</strong>
+                            @Html.DisplayFor(modelItem => solucion.nombreEstado)
+                        </p>
+                    </div>
+                    <div class="enlaces_item_admin card-footer">
+                        <div>
+                            <a name="vista" data-id="@solucion.id" data-vista="_VistaPrevia"
+                               data-toggle="modal" data-target="#vistaPrevia">
+                                <img src="~/Content/images/verdetalleGris.png"
+                                     class="pointer"
+                                     alt="@Recursos.Lenguaje.VerDetalle"
+                                     title="@Recursos.Lenguaje.VerDetalle"
+                                     width="32" height="32"
+                                     onclick="mostrarModalEspera();"
+                                     onKeyPress="mostrarModalEspera();"
+                                     onmouseover="hoverVistaPrevia(this);"
+                                     onmouseout="unhoverVistaPrevia(this);"
+                                     onfocus="hoverVistaPrevia(this);"
+                                     onblur="unhoverVistaPrevia(this);" />
+                            </a>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("VerResumen", "Solucion",
+                                new { idSolucion = solucion.id })">
+                                <img src="~/Content/images/estadisticasGris.PNG"
+                                     alt="@Recursos.Lenguaje.VerResumenSolucion"
+                                     title="@Recursos.Lenguaje.VerResumenSolucion"
+                                     width="32" height="32"
+                                     onmouseover="hoverEstadisticas(this);"
+                                     onmouseout="unhoverEstadisticas(this);"
+                                     onfocus="hoverEstadisticas(this);"
+                                     onblur="unhoverEstadisticas(this);" />
+                            </a>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("Editar", "Solucion",
+                                new { id = solucion.id, vista = "_FormularioCreacionEdicion" })">
+                                <img src="~/Content/images/editGris.PNG"
+                                     alt="@Recursos.Lenguaje.Editar"
+                                     title="@Recursos.Lenguaje.Editar"
+                                     width="32" height="32"
+                                     onmouseover="hoverEdit(this);"
+                                     onmouseout="unhoverEdit(this);"
+                                     onfocus="hoverEdit(this);"
+                                     onblur="unhoverEdit(this);" />
+                            </a>
+                        </div>
+                        <div>
+                            <a onclick="eliminarSolucion('@solucion.id')"
+                               onkeypress="eliminarSolucion('@solucion.id')">
+                                <img src="~/Content/images/eliminar.svg"
+                                     class="pointer"
+                                     alt="@Recursos.Lenguaje.Eliminar"
+                                     title="@Recursos.Lenguaje.Eliminar"
+                                     width="32" height="32" />
+                            </a>
+                        </div>
+                        <div class="dropdown">
+                            <a id="dropdownMenuButton"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <img style="cursor: pointer;"
+                                     src="~/Content/images/menu_bar.png"
+                                     width="32" height="32"
+                                     title="@Recursos.Lenguaje.Mas"
+                                     onclick="hoverMore(this);"
+                                     onmouseout="unhoverMore(this);"
+                                     onkeypress="hoverMore(this);"
+                                     onblur="unhoverMore(this);"
+                                     alt="@Recursos.Lenguaje.Mas" />
+                            </a>
+                            <div class="dropdown-menu"
+                                 aria-labelledby="dropdownMenuItemsSolucion">
+                                <div class="dist-30-inline">
+                                    <a onclick="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlDocumentacion)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlDocumentacion)', '_blank')">
+                                        <img src="~/Content/images/sharepointGris.png"
+                                             class="pointer"
+                                             width="32" height="32" 
+                                             onmouseover="hoverSharepoint(this);"
+                                             onmouseout="unhoverSharepoint(this);"
+                                             onfocus="hoverSharepoint(this);"
+                                             onblur="unhoverSharepoint(this);"
+                                             title="@Recursos.Lenguaje.UrlDocumentacion"
+                                             alt="@Recursos.Lenguaje.UrlDocumentacion" />
+                                    </a>
+                                </div>
+                                <div class="dist-30-inline">
+                                    <a onclick="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlRepositorioCodigoFuente)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlRepositorioCodigoFuente)', '_blank')">
+                                        <img src="~/Content/images/vstsGris.png"
+                                             class="pointer"
+                                             width="32" height="32" 
+                                             onmouseover="hoverVsts(this);"
+                                             onmouseout="unhoverVsts(this);"
+                                             onfocus="hoverVsts(this);"
+                                             onblur="unhoverVsts(this);"
+                                             title="@Recursos.Lenguaje.UrlRepositorioCodigoFuente"
+                                             alt="@Recursos.Lenguaje.UrlRepositorioCodigoFuente" />
+                                    </a>
+                                </div>
+                                <div class="dist-30-inline">
+                                    <a onclick="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlInspeccion)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlInspeccion)', '_blank')">
+                                        <img src="~/Content/images/sonarGris.png"
+                                             class="pointer"
+                                             width="32" height="32" 
+                                             onmouseover="hoverSonar(this);"
+                                             onmouseout="unhoverSonar(this);"
+                                             onfocus="hoverSonar(this);"
+                                             onblur="unhoverSonar(this);"
+                                             title="@Recursos.Lenguaje.UrlInspeccion"
+                                             alt="@Recursos.Lenguaje.UrlInspeccion" />
+                                    </a>
+                                </div>
+                                <div class="dist-30-inline">
+                                    <a onclick="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlLeccionesAprendidas)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlLeccionesAprendidas)', '_blank')">
+                                        <img src="~/Content/images/LeccionesAprendidasGris.png"
+                                             class="pointer"
+                                             width="32" height="32" 
+                                             onmouseover="hoverLeccionesAprendidas(this);"
+                                             onmouseout="unhoverLeccionesAprendidas(this);"
+                                             onfocus="hoverLeccionesAprendidas(this);"
+                                             onblur="unhoverLeccionesAprendidas(this);"
+                                             title="@Recursos.Lenguaje.UrlLeccionesAprendidas"
+                                             alt="@Recursos.Lenguaje.UrlLeccionesAprendidas" />
+                                    </a>
+                                </div>
+                                <div class="dist-30-inline">
+                                    <a onclick="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlGestionAseguramientoCalidad)', '_blank')"
+                                       onkeypress="window.open('@Html.DisplayFor(
+                                            modelItem => solucion.urlGestionAseguramientoCalidad)', '_blank')">
+                                        <img src="~/Content/images/thorGris.png"
+                                             class="pointer"
+                                             width="32" height="32" 
+                                             onmouseover="hoverAseguramientoCalidad(this);"
+                                             onmouseout="unhoverAseguramientoCalidad(this);"
+                                             onfocus="hoverAseguramientoCalidad(this);"
+                                             onblur="unhoverAseguramientoCalidad(this);"
+                                             title="@Recursos.Lenguaje.UrlAseguramientoCalidad"
+                                             alt="@Recursos.Lenguaje.UrlAseguramientoCalidad" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @Html.Paginador(Model.Paginador)
+
+    </div>
+    <div id="vistaPrevia" class="modal fade" role="dialog" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align: right;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="detallevistaPrevia">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>@Recursos.Lenguaje.MensajeBusquedaSinRegistro</p>
+}
+
+<script type="text/javascript">
+    $("[name=vista]").click(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var idSolucion = $(this).attr("data-id");
+        var vista =  $(this).attr("data-vista");
+        $.ajax({
+            url: '@Url.Action("Editar", "Solucion")?id=' + idSolucion +'&vista=' + vista,
+            cache: false,
+            type: "get",
+            contentType: 'application/json',
+            success: function (data) {
+                ocultarModalEspera();
+                $("#detallevistaPrevia").html(data);
+                $('#vistaPrevia').modal('show');
+             }
+         });
+     });
+</script>

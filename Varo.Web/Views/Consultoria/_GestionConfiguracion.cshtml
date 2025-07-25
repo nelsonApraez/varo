@@ -1,0 +1,99 @@
+@model Varo.Web.Models.ConsultoriaViewModel
+
+<div class="table-wrapper">
+    <div class="table-title">
+        <div class="row">
+            <div class="col m12 l12">
+                <h2><strong>@Recursos.Lenguaje.GestionConfiguracion</strong></h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="documentacion">@Recursos.Lenguaje.UrlDocumentacion</label>
+                @Html.EditorFor(model => model.UrlDocumentacion,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="urlDiseno">@Recursos.Lenguaje.UrlDiseno</label>
+                @Html.EditorFor(model => model.UrlDiseno,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="urlGestionTareas">@Recursos.Lenguaje.UrlGestionTareas</label>
+                @Html.EditorFor(model => model.UrlGestionTareas,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="urlGestionIncidentes">@Recursos.Lenguaje.UrlGestionIncidentes</label>
+                @Html.EditorFor(model => model.UrlGestionIncidentes,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="urlAseguramientoCalidad">@Recursos.Lenguaje.UrlAseguramientoCalidad</label>
+                @Html.EditorFor(model => model.UrlGestionAseguramientoCalidad,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="urlLeccionesAprendidas">@Recursos.Lenguaje.UrlLeccionesAprendidas</label>
+                @Html.EditorFor(model => model.UrlLeccionesAprendidas,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="UrlOportunidadCrm">@Recursos.Lenguaje.UrlOportunidadCrm</label>
+                @Html.EditorFor(model => model.UrlOportunidadCrm,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+        <div class="col m6 l6">
+            <div class="form-group">
+                <label for="UrlProyectoPsa">@Recursos.Lenguaje.UrlProyectoPsa</label>
+                @Html.EditorFor(model => model.UrlProyectoPsa,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        Title = Recursos.Lenguaje.UrlEjemplo +
+                   "https://company.sharepoint.com/sites/Company/VA/SitePages/Inicio.aspx" } })
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+@model Varo.Web.Models.MetricaExternoViewModel
+
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+
+<div class="ig-header">
+    <h2 class="v-titulo">@Recursos.Lenguaje.MetricasExternas</h2>
+    <div class="row">
+        @using (Html.BeginForm("Crear", "MetricaExterno", FormMethod.Post,
+            new { @id = "formularioCrearMetricas", @class = "formularioRegistrarMetricas" }))
+        {
+            @Html.Partial("_FormularioRegistrarMetricas")
+        }
+    </div>
+</div>

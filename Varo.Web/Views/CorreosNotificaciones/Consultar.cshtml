@@ -1,0 +1,83 @@
+@model Varo.Web.Models.CorreoNotificacionesViewModel
+
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+    var respuesta = TempData["MensajeCrearModulos"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       var respuesta = '@respuesta';
+    var error = '@error';
+    
+    if (error) {
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: error,
+            showConfirmButton: true
+        });
+    }
+        if (respuesta) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuesta,
+                showConfirmButton: true
+            });
+        }
+    });
+</script>
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.Notificaciones</h3>
+    @using (Html.BeginForm("Editar", "CorreosNotificaciones", FormMethod.Post,
+        new {
+            @id = "formularioCrearCorreosNotificaciones",
+            @class = "formularioCrearCorreosNotificaciones",
+            @name = "formularioCrearCorreosNotificaciones" }))
+    {
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <div class="row">
+                        @if (Model.ListaCorreosNotificaciones.Count() > 0)
+                        {
+                            foreach (var itemNotificacion in Model.ListaCorreosNotificaciones)
+                            {
+                                <div class="col m12 l12">
+                                    <div class="form-group">
+                                        <label for="@itemNotificacion.Id">@itemNotificacion.Nombre</label>
+                                        <input clas="form-control"
+                                               name="@itemNotificacion.Id"
+                                               type="text" id="@itemNotificacion.Id"
+                                               value="@itemNotificacion.Valor" />
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="right">
+                                    <button class="v-btn-principal v-btn" type="submit">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                                <div class="right">
+                                    <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                                       href="@Url.Action("Consultar", "CorreosNotificaciones")">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

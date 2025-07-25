@@ -1,0 +1,53 @@
+@model Varo.Web.Models.MetricasViewModel
+
+<div class="table-title">
+    <div class="row">
+        <div class="col m12 l12">
+            <h2><strong>@Recursos.Lenguaje.CalidadDeCodigo</strong></h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col m2 l2">
+        <label for="Bugs">@Recursos.Lenguaje.Bugs</label>
+        @Html.EditorFor(model => model.calidadCodigoViewModel.Bugs,
+            new { htmlAttributes = new { @class = "form-control validarEnteros" } })
+        @Html.ValidationMessageFor(model => model.calidadCodigoViewModel.Bugs, null, 
+            new { @class = "text-danger" })
+    </div>
+    <div class="col m2 l2">
+        <label for="Vulnerabilidades">@Recursos.Lenguaje.Vulnerabilidades</label>
+        @Html.EditorFor(model => model.calidadCodigoViewModel.Vulnerabilidades,
+            new { htmlAttributes = new { @class = "form-control validarEnteros" } })
+        @Html.ValidationMessageFor(model => model.calidadCodigoViewModel.Vulnerabilidades, null,
+            new { @class = "text-danger" })
+    </div>
+    <div class="col m2 l2">
+        <label for="DeudaTecnica">@Recursos.Lenguaje.DeudaTecnica</label>
+        @Html.TextBoxFor(model => model.calidadCodigoViewModel.DeudaTecnica,
+            new { @class = "form-control validarDecimales itemDetalleHistoriasUsuario" })
+        @Html.ValidationMessageFor(model => model.calidadCodigoViewModel.DeudaTecnica, null,
+            new { @class = "text-danger" })
+    </div>
+    <div class="col m2 l2">
+        <label for="Cobertura">@Recursos.Lenguaje.Cobertura</label>
+        @Html.TextBoxFor(model => model.calidadCodigoViewModel.Cobertura,
+            new { @class = "form-control validarDecimales itemDetalleHistoriasUsuario" })
+        @Html.ValidationMessageFor(model => model.calidadCodigoViewModel.Cobertura, null,
+            new { @class = "text-danger" })
+    </div>
+    <div class="col m2 l2">
+        <label for="Duplicado">@Recursos.Lenguaje.Duplicado</label>
+        @Html.TextBoxFor(model => model.calidadCodigoViewModel.Duplicado,
+            new { @class = "form-control validarDecimales itemDetalleHistoriasUsuario" } )
+        @Html.ValidationMessageFor(model => model.calidadCodigoViewModel.Duplicado, null,
+            new { @class = "text-danger" })
+    </div>
+    <div class="col m2 l2">
+        <label for="ObservacionesdeCalidadCodigo">@Recursos.Lenguaje.Observaciones</label>
+        @Html.EditorFor(model => model.calidadCodigoViewModel.ObservacionesdeCalidadCodigo,
+            new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.calidadCodigoViewModel.ObservacionesdeCalidadCodigo, null,
+            new { @class = "text-danger" })
+    </div>
+</div>

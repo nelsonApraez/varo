@@ -1,0 +1,16 @@
+CREATE TABLE [Gsdc]
+(
+	[Id] tinyint NOT NULL,   
+	[Nombre] varchar(50),
+	[NombreEN] VARCHAR(50) NULL
+);
+GO
+
+ALTER TABLE [Gsdc] 
+ ADD CONSTRAINT [PK_Gsdc]
+	PRIMARY KEY CLUSTERED ([Id]);
+GO
+
+ALTER TABLE [Gsdc] 
+ ADD CONSTRAINT [UK_Gsdc_Nombre] UNIQUE NONCLUSTERED ([Nombre]);
+GO

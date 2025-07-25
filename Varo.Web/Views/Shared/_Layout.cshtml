@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#317EFB" />
+    <link rel="shortcut icon" href="~/favicon.png" type="image/vnd.microsoft.icon" id="favicon">
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/Solucion.js"></script>                           <!--Modal, �conos y acciones b�sicas de soluci�n-->
+    <script src="~/Scripts/FuncionesTablas.js"></script>                    <!--Funciones modales-->
+    <script src="~/Scripts/jquery.validate.js"></script>                    <!--Funciones de validaci�n-->
+    <script src="~/Scripts/validaciones.js"></script>                       <!--Parametrizaci�n de la validaci�n-->
+
+    @Html.Partial("_ConstantesJS")
+        
+    <link rel="stylesheet" href="~/Content/css/materialIcons.css" />        <!--�conos-->
+    <link rel="stylesheet" href="~/Content/css/materialize.css" />          <!--Dise�o base-->
+    <link rel="stylesheet" href="~/Content/css/custom.css" />               <!--Dise�o personalizado-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
+    <link rel="stylesheet" href="~/Content/css/estilos.css" />              <!--Dise�o personalizado-->
+
+    <title>Varo</title>
+</head>
+<body>
+    <header class="principal">
+        <article>
+            <div class="logo">
+                <a href="/Home/Index">
+                    <img src="~/Content/images/logo.png" 
+                         width="136" height="58"
+                         alt="Logo">
+                </a>
+            </div>
+            <div class="idioma">
+                <button id="CambiarIdiomaEN"
+                        name="CambiarIdiomaEN"
+                        class="link_footer_card disabled"
+                        data-toggle="modal"
+                        onmouseover="removeClaseButton('#CambiarIdiomaEN');"
+                        onmouseout="addClaseButton('#CambiarIdiomaEN');"
+                        onBlur="addClaseButton('#CambiarIdiomaEN');"
+                        onfocus="addClaseButton('#CambiarIdiomaEN');"
+                        onclick="location.href='@Url.Action("CambiarIdioma", "Solucion",
+                            new { lenguaje = "en" })';return false;">
+                    @Recursos.Lenguaje.Ingles
+                </button>
+                <button id="CambiarIdiomaES"
+                        name="CambiarIdiomaES"
+                        class="link_footer_card disabled"
+                        data-toggle="modal"
+                        onmouseover="removeClaseButton('#CambiarIdiomaES');"
+                        onmouseout="addClaseButton('#CambiarIdiomaES');"
+                        onBlur="addClaseButton('#CambiarIdiomaES');"
+                        onfocus="addClaseButton('#CambiarIdiomaES');"
+                        onclick="location.href='@Url.Action("CambiarIdioma", "Solucion",
+                            new { lenguaje = "es" })';return false;">
+                    @Recursos.Lenguaje.Espa�ol
+                </button>
+                <input id="lenguajeActual"
+                       name="lenguajeActual"
+                       type="hidden"
+                       value=@Recursos.Lenguaje.IdiomaActual>
+            </div>
+            <div class="login">
+                <div class="display_name">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div class="name">
+                            <span>
+                                @((User.Identity as System.Security.Claims.ClaimsIdentity).FindFirst("name").Value)
+                            </span>
+                        </div>
+                        <div class="logout">
+                            <img src="~/Content/images/sign_out.svg" width="30" height="30" alt="Salir" />
+                        </div>
+                    }
+                </div>
+            </div>    
+        </article>
+    </header>
+    <section class="tableros">
+        <article>
+            <div class="contenido_tableros">
+                <div class="navegacion">
+                    <nav class="c-sidenav" id="infBI">
+                        <button class="c-sidenav__opener c-sidenav__link">
+                            <em class="material-icons">arrow_back</em>
+                        </button>
+                        <ul class="collapsible collapsibleCustom">
+                            <li>
+                                <div class="collapsible-header collapsible-headerCustom"
+                                     onclick="mostrarInformes()"
+                                     onKeyPress="mostrarInformes()">
+                                    <a class="c-sidenav__link ">
+                                        <img src="~/Content/images/Manage.svg"
+                                             width="30" height="30"
+                                             alt="Admin">
+                                        <span class="c-sidenav__description ">
+                                            @Recursos.Lenguaje.MenuAdministrar
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="collapsible-body collapsible-bodyCustom">
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                       href="/Consultoria/Consultar">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuConsultorias
+                                        </span>
+                                    </a>
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                       href="/Solucion/Consultar">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuSoluciones
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header collapsible-headerCustom"
+                                     onclick="mostrarInformes()"
+                                     onKeyPress="mostrarInformes()">
+                                    <a class="c-sidenav__link ">
+                                        <img src="~/Content/images/utilitarios.svg"
+                                             width="30" height="30"
+                                             alt="Tablero">
+                                        <span class="c-sidenav__description ">
+                                            @Recursos.Lenguaje.MenuUtilitarios
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="collapsible-body collapsible-bodyCustom">
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                       href="/ProyectoExterno/Consultar">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuMetricasExternas
+                                        </span>
+                                    </a>
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                       href="/CalificacionAuditoriaSolucion/ConsultarMultiple">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuMultiplesAuditorias
+                                        </span>
+                                    </a>
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                        href="https://forms.office.com/r/2S6D9X7s0b"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuSolicitudRevisionEstimacion
+                                        </span>
+                                    </a>
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                        href="https://forms.office.com/r/zes9yNWskM"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuSolicitudRevisionArquitectura
+                                        </span>
+                                    </a>
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                       href="https://medusa.Company.com/"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuSolicitudAnalisisSeguridad
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li style="background-color: white;">
+                                <div class="collapsible-header collapsible-headerCustom"
+                                     onclick="mostrarInformes()"
+                                     onKeyPress="mostrarInformes()">
+                                    <a class="c-sidenav__link ">
+                                        <img src="~/Content/images/statistics.svg"
+                                             width="30" height="30"
+                                             alt="Informes">
+                                        <span class="c-sidenav__description ">
+                                            @Recursos.Lenguaje.MenuReportes
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="collapsible-body collapsible-bodyCustom">
+                                    <ul class="collapsible collapsibleCustom">
+                                        <li>
+                                            <div class="collapsible-header collapsible-headerCustom">
+                                                <a class="c-sidenav__link ">
+                                                    <span class="c-sidenav__description ">
+                                                        @Recursos.Lenguaje.MenuConsultorias
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="collapsible-body collapsible-bodyCustom">
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/Consultorias">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuGeneralConsultorias
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header collapsible-headerCustom">
+                                                <a class="c-sidenav__link ">
+                                                    <span class="c-sidenav__description ">
+                                                        @Recursos.Lenguaje.MenuSoluciones
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="collapsible-body collapsible-bodyCustom">
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/Soluciones">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuGeneralSoluciones
+                                                    </span>
+                                                </a>
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/PracticasTecnicas">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuPracticasTecnicas
+                                                    </span>
+                                                </a>
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/CalidadCodigo">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuCalidadDeCodigo
+                                                    </span>
+                                                </a>
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/PruebasFuncionales">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuPruebas
+                                                    </span>
+                                                </a>
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/MetricasAgiles">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuMetricasAgiles
+                                                    </span>
+                                                </a>
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/Hitos">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuHitos
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header collapsible-headerCustom">
+                                                <a class="c-sidenav__link ">
+                                                    <span class="c-sidenav__description ">
+                                                        @Recursos.Lenguaje.MenuServicios
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="collapsible-body collapsible-bodyCustom">
+                                                <a class="c-sidenav__link c-sidenav__link__sub"
+                                                   href="/Reporte/Auditorias">
+                                                    <span class="c-sidenav__description">
+                                                        @Recursos.Lenguaje.MenuAuditorias
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header collapsible-headerCustom"
+                                     onclick="mostrarInformes()"
+                                     onKeyPress="mostrarInformes()">
+                                    <a class="c-sidenav__link ">
+                                        <img src="~/Content/images/admin.svg"
+                                             width="30" height="30"
+                                             alt="Tablero">
+                                        <span class="c-sidenav__description ">
+                                            @Recursos.Lenguaje.MenuConfiguracion
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="collapsible-body collapsible-bodyCustom">
+                                    <a class="c-sidenav__link c-sidenav__link__sub"
+                                       href="/CorreosNotificaciones/Consultar">
+                                        <span class="c-sidenav__description">
+                                            @Recursos.Lenguaje.MenuNotificaciones
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                @RenderBody()
+
+            </div>
+        </article>
+    </section>
+
+    <div class="modal fade"
+         id="wait"
+         aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true"
+         role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-correccion">
+                <div class="v-modalcontenido">
+                    <img src="~/Content/images/cargando.gif"
+                         width="200" height="200"
+                         alt="cargando">
+                    <h2>@Recursos.Lenguaje.Cargando</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/main")
+    @Scripts.Render("~/bundles/materialize")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+<script>
+    function OnChangeEvent(e) {
+        e.value = e.value.replace(/,/g, '.');
+    }
+</script>
+</body>
+</html>

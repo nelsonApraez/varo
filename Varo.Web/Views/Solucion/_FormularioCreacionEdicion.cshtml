@@ -1,0 +1,721 @@
+@model Varo.Web.Models.SolucionesViewModel
+@using Varo.Transversales.Constantes
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/Content/css/switcher.css" />
+
+@{
+    var respuesta = TempData["agregadaModificada"] ?? string.Empty;
+    var respuestaModulos = TempData["MensajeCrearModulos"] ?? string.Empty;
+    var tipoSolucion = TempData["NuevaEdicion"];
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+}
+
+<script type="text/javascript">
+    //No se puede enviar esta funcion al .js ya que contiene un decorador y
+    //estos no funcionan en los archivos .js
+    $(document).ready(function () {
+        var respuesta = '@respuesta';
+        var error = '@error';
+        var respuestaModulos = '@respuestaModulos';
+        if (error) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: error,
+                showConfirmButton: true
+            })
+        }
+        if ( respuestaModulos) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuestaModulos,
+                showConfirmButton: true
+            });
+        }
+        if (respuesta) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: respuesta,
+                showConfirmButton: true
+            }).then(() => {
+                location.href = 'Consultar';
+            });
+        }
+        var tipoSolucion = '@tipoSolucion';
+        CambiarNombreListaTriEstado(tipoSolucion);
+        disableSubmitButton('#formularioCrearSolucion');
+
+    });
+
+    $(".validarEnteros").on("keypress", function (evt) {
+        var $txtBox = $(this);
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46)
+            return false;
+        else {
+            var len = $txtBox.val().length;
+            var index = $txtBox.val().indexOf('.');
+            if (index >= 0 && charCode == 46) {
+                return false;
+            }
+            if (index > 0) {
+                var charAfterdot = (len + 1) - index;
+                if (charAfterdot >= 0) {
+                    return false;
+                }
+            }
+        }
+        return $txtBox;
+    });
+</script>
+
+<div class="v-formulario">
+    <div class="v-selector">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col m4 l4">
+                        <h2><strong>@Recursos.Lenguaje.Etiquetas</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <label for="Etiqueta"></label>
+                    <input type="text"
+                           class="bootstrap-tagsinput tag"
+                           id="Etiqueta"
+                           name="Etiqueta"
+                           value="@Model.Etiqueta"
+                           data-role="tagsinput" />
+                </div>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col m12 l12">
+                        <h2><strong>@Recursos.Lenguaje.InformacionGeneral</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="NombreProyecto">@Recursos.Lenguaje.Nombre</label>
+                        @Html.EditorFor(model => model.NombreProyecto,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="Estado">@Recursos.Lenguaje.Estado</label>
+                        @Html.DropDownListFor(model => model.Estado.Id,
+                            Model.ListaEstados.OrderBy(x => x.Text), new { @class = "form-control", @style = "height:46px" })
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="FechaCreacion">@Recursos.Lenguaje.FechaCreacion</label>
+                        @Html.TextBoxFor(model => model.FechaCreacion, "{0:yyyy-MM-dd}",
+                            new
+                                 {
+                                @class = "form-control requerido",
+                                @type = "date"
+                                 })
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="FechaCierre">@Recursos.Lenguaje.FechaDeCierre</label>
+                        @Html.TextBoxFor(model => model.FechaCierre, "{0:yyyy-MM-dd}",
+                            new
+                                 {
+                                @class = "form-control",
+                                @type = "date"
+                                 })
+                    </div>
+                    <span id="ErrorFechas" class="error" style="display:none">
+                        @Recursos.Lenguaje.MensajeErrorFechas
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="ListaConsultoria">@Recursos.Lenguaje.ConsultoriaRelacionada</label>
+                        @Html.DropDownListFor(model => model.Consultoria,
+                            Model.ListaConsultoria.OrderBy(x => x.Text),
+                            new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <label for="pais">@Recursos.Lenguaje.Pais</label>
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.Pais.Id, Model.ListaPais.OrderBy(x => x.Text),
+                            new
+                                 {
+                                @class = "form-control"
+                                 })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="Gsdc">@Recursos.Lenguaje.Gsdc</label>
+                        @Html.DropDownListFor(model => model.Gsdc.Id,
+                            Model.ListaGsdc.OrderBy(x => x.Text),
+                            new { @class = "form-control", @onChange = "consultarOficinasPorIdGsdc(this.value);" })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="Oficina">@Recursos.Lenguaje.Oficina</label>
+                        @Html.DropDownListFor(model => model.Oficina.Id,
+                            Model.ListaOficinas.OrderBy(x => x.Text),
+                            new
+                                 {
+                                @class = "form-control",
+                                @id = "DropDownListaOficinas",
+                                @name = "DropDownListaOficinas",
+                                @disabled = "disabled"
+                                 })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="UsuarioRedGerente">@Recursos.Lenguaje.UsuarioDeRedDelGerente</label>
+                        <span class="c-tooltip"
+                              style="color:darkgray"
+                              data-tooltip="@Recursos.Lenguaje.MensajeInformativoUsuarios">
+                            <em class="fa fa-info-circle" style="color:darkgray"></em>
+                        </span>
+                        <div class="row">
+                            <div class="form-group" style="display:grid;">
+                                @Html.EditorFor(model => model.UsuarioRedGerente,
+                                    new
+                                         {
+                                             htmlAttributes = new
+                                             {
+                                        @class = "col m11 l11 form-control",
+                                        @id = "UsuarioRedGerente",
+                                        @style = "margin:0px; height:35px;",
+                                        @name = "UsuarioRedGerente"
+                                             }
+                                         })
+                                <button type="button" class="col m1 l1 btn-buscar"
+                                        onclick="obtenerNombreGerentePorUsuarioRed()"
+                                        id="buscarUsuarioRedGerente"
+                                        aria-label="buscarUsuarioRedGerente"
+                                        onkeypress="obtenerNombreGerentePorUsuarioRed()">
+                                    <em class="material-icons" aria-hidden="true">search</em>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="NombreGerente">@Recursos.Lenguaje.NombreGerente</label>
+                        @Html.EditorFor(model => model.NombreGerente,
+                            new
+                                 {
+                                     htmlAttributes = new
+                                     {
+                                @class = "form-control",
+                                @style = "color: #666",
+                                @id = "NombreGerente",
+                                @name = "NombreGerente",
+                                @readonly = "readonly"
+                                     }
+                                 })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="RolGerente">@Recursos.Lenguaje.RolGerente</label>
+                        @Html.EditorFor(model => model.RolGerente,
+                            new
+                                 {
+                                     htmlAttributes = new
+                                     {
+                                @class = "form-control",
+                                @style = "color: #666",
+                                @id = "RolGerente",
+                                @name = "RolGerente",
+                                @readonly = "readonly"
+                                     }
+                                 })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="UsuarioRedResponsable">@Recursos.Lenguaje.UsuarioDeRedDelResponsable</label>
+                        <span class="c-tooltip"
+                              style="color:darkgray"
+                              data-tooltip="@Recursos.Lenguaje.MensajeInformativoUsuarios">
+                            <em class="fa fa-info-circle" style="color:darkgray"></em>
+                        </span>
+                        <div class="row">
+                            <div class="form-group" style="display:grid;">
+                                @Html.EditorFor(model => model.UsuarioRedResponsable,
+                                    new
+                                         {
+                                             htmlAttributes = new
+                                             {
+                                        @class = "col m11 l11 form-control",
+                                        @style = "margin:0px; height:35px;",
+                                        @id = "UsuarioRedResponsable",
+                                        @name = "UsuarioRedResponsable"
+                                             }
+                                         })
+                                <button type="button" class="col m1 l1 btn-buscar"
+                                        onclick="obtenerNombreResponsablePorUsuarioRed()"
+                                        id="buscarUsuarioRedResponsable"
+                                        aria-label="buscarUsuarioRedResponsable"
+                                        onkeypress="obtenerNombreResponsablePorUsuarioRed()">
+                                    <em class="material-icons" aria-hidden="true"> search</em>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="NombreResponsable">@Recursos.Lenguaje.NombreResponsableTecnico</label>
+                        @Html.EditorFor(model => model.NombreResponsable,
+                            new
+                                 {
+                                     htmlAttributes = new
+                                     {
+                                @class = "form-control",
+                                @style = "color: #666",
+                                @id = "NombreResponsable",
+                                @name = "NombreResponsable",
+                                @readonly = "readonly"
+                                     }
+                                 })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="rol">@Recursos.Lenguaje.RolResponsableTecnico</label>
+                        @Html.EditorFor(model => model.RolResponsable,
+                            new
+                                 {
+                                     htmlAttributes = new
+                                     {
+                                @class = "form-control",
+                                @style = "color: #666",
+                                @id = "Rol",
+                                @name = "Rol",
+                                @readonly = "readonly"
+                                     }
+                                 })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="UsuarioRedScrumMaster">@Recursos.Lenguaje.UsuarioDeRedDelScrumMaster</label>
+                        <span class="c-tooltip"
+                              style="color:darkgray"
+                              data-tooltip="@Recursos.Lenguaje.MensajeInformativoUsuarios">
+                            <em class="fa fa-info-circle" style="color:darkgray"></em>
+                        </span>
+                        <div class="row">
+                            <div class="form-group" style="display:grid;">
+                                @Html.EditorFor(model => model.UsuarioRedScrumMaster,
+                                    new
+                                         {
+                                             htmlAttributes = new
+                                             {
+                                        @class = "col m11 l11 form-control",
+                                        @style = "margin:0px; height:35px;",
+                                        @id = "UsuarioRedScrumMaster",
+                                        @name = "UsuarioRedScrumMaster"
+                                             }
+                                         })
+                                <button type="button" class="col m1 l1 btn-buscar"
+                                        id="buscarUsuarioRedScrumMaster"
+                                        aria-label="buscarUsuarioRedScrumMaster"
+                                        onclick="obtenerNombreScrumMasterPorUsuarioRed()"
+                                        onkeypress="obtenerNombreScrumMasterPorUsuarioRed()">
+                                    <em class="material-icons" aria-hidden="true"> search</em>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="NombreScrumMaster">@Recursos.Lenguaje.NombreScrumMaster</label>
+                        @Html.EditorFor(model => model.NombreScrumMaster,
+                            new
+                                 {
+                                     htmlAttributes = new
+                                     {
+                                @class = "form-control",
+                                @style = "color: #666",
+                                @id = "NombreScrumMaster",
+                                @name = "NombreScrumMaster",
+                                @readonly = "readonly"
+                                     }
+                                 })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="RolScrumMaster">@Recursos.Lenguaje.RolScrumMaster</label>
+                        @Html.EditorFor(model => model.RolScrumMaster,
+                            new
+                                 {
+                                     htmlAttributes = new
+                                     {
+                                @class = "form-control",
+                                @style = "color: #666",
+                                @id = "RolScrumMaster",
+                                @name = "RolScrumMaster",
+                                @readonly = "readonly"
+                                     }
+                                 })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m12 l12">
+                    <div class="form-group">
+                        <label for="Descripcion">@Recursos.Lenguaje.DescripcionProposito</label>
+                        @Html.EditorFor(model => model.Descripcion,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
+                    <div class="col m12 l12">
+                        <div class="form-group">
+                            <label for="ObjetivoNegocio">@Recursos.Lenguaje.ObjetivoNegocioAlcanzar</label>
+                            @Html.EditorFor(model => model.ObjetivoNegocio,
+                                new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>*@
+            <div class="row">
+                <div class="col m12 l12">
+                    <div class="form-group">
+                        <label for="Observacion">@Recursos.Lenguaje.Observacion </label>
+                        @Html.EditorFor(model => model.Observacion,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
+                        <h2><strong>@Recursos.Lenguaje.InformacionDelCliente</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="cliente">@Recursos.Lenguaje.Cliente</label>
+                        @Html.DropDownListFor(model => model.Cliente.Id,
+                            Model.ListaCliente.OrderBy(x => x.Text),
+                            new { @class = "form-control", @style = "height:46px;" })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="LineaDeNegocio">@Recursos.Lenguaje.LineaDeNegocio</label>
+                        @Html.DropDownListFor(model => model.LineaNegocio.Id,
+                            Model.ListaLineaNegocio.OrderBy(x => x.Text),
+                            new
+                                 {
+                                @class = "form-control",
+                                @style = "height:46px; margin-bottom: 0px;"
+                                 })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="NombreDelContacto">@Recursos.Lenguaje.NombreDelContacto</label>
+                        @Html.EditorFor(model => model.NombreContactoCliente,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="Correo">@Recursos.Lenguaje.Correo</label>
+                        @Html.EditorFor(model => model.CorreoContactoCliente,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="Telefono">@Recursos.Lenguaje.Telefono</label>
+                        @Html.EditorFor(model => model.TelefonoContactoCliente,
+                            new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
+                        <h2><strong>@Recursos.Lenguaje.Tipificacion</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="tipo">@Recursos.Lenguaje.Tipo</label>
+                        @Html.DropDownListFor(model => model.Tipo.Id,
+                            Model.ListaTipo.OrderBy(x => x.Text), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="lineatecnologica">@Recursos.Lenguaje.LineaTecnologica</label>
+                        @Html.DropDownListFor(model => model.LineaSolucion.Id,
+                            Model.ListaLineaSolucion.OrderBy(x => x.Text), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="marco">@Recursos.Lenguaje.MarcoDeTrabajo</label>
+                        @Html.DropDownListFor(model => model.MarcoTrabajo.Id,
+                            Model.ListaMarcosTrabajo.OrderBy(x => x.Text), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="ux">@Recursos.Lenguaje.UX</label>
+                        <div class="form-switcher form-switcher-lg form-switcher-sm-phone">
+                            <input type="checkbox" name="checkExperienciaUsuario" value="true"
+                                   id="checkExperienciaUsuario" @Model.UX />
+                            <label class="switcher" for="checkExperienciaUsuario"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
+                        <h2><strong>@Recursos.Lenguaje.Comercial</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m4 l4">
+                    <div class="form-group">
+                        <label for="usoComercial">@Recursos.Lenguaje.UsoComercial</label>
+                        @Html.DropDownListFor(model => model.UsoComercial.Id,
+                            Model.ListaUsoComercial.OrderBy(x => x.Text),
+                            new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class=" v-formulario">
+    <div class="v-selector">
+
+        @{
+            var claseSelector = new
+            {
+                htmlAttributes = new
+                {
+                    @class = "select-practicas"
+                }
+            };
+
+            var placeHolderNotas = new
+            {
+                htmlAttributes = new
+                {
+                    placeholder = Recursos.Lenguaje.Notas
+                }
+            };
+        }
+
+        <div id="practicas-tecnicas" class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
+                        <h2><strong>@Recursos.Lenguaje.PracticasTecnicas</strong></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="controldocumentacion">@Recursos.Lenguaje.ControlDeDocumentacion</label>
+                        @Html.EditorFor(model => model.ControlDocumentacion, claseSelector)
+                        @Html.EditorFor(model => model.notasControlDocumentacion, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="controlcodigo">@Recursos.Lenguaje.ControlDeCodigo</label>
+                        @Html.EditorFor(model => model.ControlCodigo, claseSelector)
+                        @Html.EditorFor(model => model.notasControlCodigo, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="gestiontareas">@Recursos.Lenguaje.GestionDeTareas</label>
+                        @Html.EditorFor(model => model.GestionTareas, claseSelector)
+                        @Html.EditorFor(model => model.notasGestionTareas, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="gestionerrores">@Recursos.Lenguaje.GestionDeErrores</label>
+                        @Html.EditorFor(model => model.GestionErrores, claseSelector)
+                        @Html.EditorFor(model => model.notasGestionErrores, placeHolderNotas)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="integracioncontinua">@Recursos.Lenguaje.IntegracionContinua</label>
+                        @Html.EditorFor(model => model.IntegracionContinua, claseSelector)
+                        @Html.EditorFor(model => model.notasIntegracionContinua, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="inspeccioncontinua">@Recursos.Lenguaje.InspeccionContinua</label>
+                        @Html.EditorFor(model => model.InspeccionContinua, claseSelector)
+                        @Html.EditorFor(model => model.notasInspeccionContinua, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="pruebasunitarias">@Recursos.Lenguaje.PruebasUnitariasAutomatizadas</label>
+                        @Html.EditorFor(model => model.PruebasUnitariasAutomatizadas, claseSelector)
+                        @Html.EditorFor(model => model.notasPruebasUnitariasAutomatizadas, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="pruebasfuncionales">@Recursos.Lenguaje.PruebasInterfazDeUsuarioAutomatizadas</label>
+                        @Html.EditorFor(model => model.PruebasFuncionalesAutomatizadas, claseSelector)
+                        @Html.EditorFor(model => model.notasPruebasFuncionalesAutomatizadas, placeHolderNotas)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="desplieguecontinuo">@Recursos.Lenguaje.DespliegueContinuo</label>
+                        @Html.EditorFor(model => model.DespliegueContinuo, claseSelector)
+                        @Html.EditorFor(model => model.notasDespliegueContinuo, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="monitoreocontinuo">@Recursos.Lenguaje.MonitoreoContinuo</label>
+                        @Html.EditorFor(model => model.MonitoreoContinuo, claseSelector)
+                        @Html.EditorFor(model => model.notasMonitoreoContinuo, placeHolderNotas)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="infraestructuracomocodigo">@Recursos.Lenguaje.InfraestructuraComoCodigo</label>
+                        @Html.EditorFor(model => model.InfraestructuraComoCodigo, claseSelector)
+                        @Html.EditorFor(model => model.notasInfraestructuraComoCodigo, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="seguridadcontinua">@Recursos.Lenguaje.SeguridadContinua</label>
+                        @Html.EditorFor(model => model.SeguridadContinua, claseSelector)
+                        @Html.EditorFor(model => model.notasSeguridadContinua, placeHolderNotas)
+                    </div>
+                </div>
+                <div class="col m3 l3">
+                    <div class="form-group">
+                        <label for="rendimientocontinuo">@Recursos.Lenguaje.RendimientoContinuo</label>
+                        @Html.EditorFor(model => model.RendimientoContinuo, claseSelector)
+                        @Html.EditorFor(model => model.notasRendimientoContinuo, placeHolderNotas)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            @Html.Partial("_GestionConfiguracion")
+
+            @Html.Partial("_Tecnologias")
+
+            @Html.Partial("_IntegracionesContinuas")
+
+            @Html.Partial("_DesplieguesContinuos")
+
+            @Html.Partial("_MonitoreoContinuo")
+        </div>
+    <div class="row">
+        <div class="right">
+            <div class="v-formulariobotones">
+                <div class="row">
+                    <div class="col m6 l6">
+                        @Html.ActionLink(Recursos.Lenguaje.Cancelar, "Consultar", "Solucion", null,
+                            new { @class = "v-btn-segundario v-btn", @id = "cancelar" })
+                    </div>
+                    <div class="col m6 l6">
+                        <!-- Button trigger modal -->
+                        <button class="v-btn-principal v-btn" type="submit" onclick="ValidarFechas()">
+                            @Recursos.Lenguaje.Aceptar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/FormularioEdicion.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+
+<script>
+    $('.select-practicas').change(function () {
+        let seleccion = $(this).find(":selected").text();
+
+        if (seleccion == Constantes.Cumple) {
+            $(this.nextElementSibling).prop('disabled', true)
+            $(this.nextElementSibling).val("")
+            $(this.nextElementSibling).prop('placeholder', "@Recursos.Lenguaje.Desactivado")
+        }
+        else {
+            $(this.nextElementSibling).prop('disabled', false)
+            $(this.nextElementSibling).prop('placeholder', "@Recursos.Lenguaje.Notas")
+        }
+    });
+</script>

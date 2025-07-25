@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22.595" height="22.595" viewBox="0 0 22.595 22.595">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="22.595" height="22.595" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="dashboard" clip-path="url(#clip-path)">
+    <path id="Trazado_1" data-name="Trazado 1" d="M8.708,0H1.647A1.649,1.649,0,0,0,0,1.647V5.884A1.649,1.649,0,0,0,1.647,7.532H8.708a1.649,1.649,0,0,0,1.648-1.648V1.647A1.649,1.649,0,0,0,8.708,0Zm0,0" fill="#0093ca"/>
+    <path id="Trazado_2" data-name="Trazado 2" d="M8.708,213.332H1.647A1.649,1.649,0,0,0,0,214.98v9.885a1.649,1.649,0,0,0,1.647,1.648H8.708a1.649,1.649,0,0,0,1.648-1.648V214.98A1.649,1.649,0,0,0,8.708,213.332Zm0,0" transform="translate(0 -203.917)" fill="#0093ca"/>
+    <path id="Trazado_3" data-name="Trazado 3" d="M286.041,341.332H278.98a1.649,1.649,0,0,0-1.648,1.648v4.237a1.649,1.649,0,0,0,1.648,1.647h7.061a1.649,1.649,0,0,0,1.648-1.647V342.98A1.649,1.649,0,0,0,286.041,341.332Zm0,0" transform="translate(-265.093 -326.269)" fill="#0093ca"/>
+    <path id="Trazado_4" data-name="Trazado 4" d="M286.041,0H278.98a1.649,1.649,0,0,0-1.648,1.647v9.885a1.649,1.649,0,0,0,1.648,1.648h7.061a1.649,1.649,0,0,0,1.648-1.648V1.647A1.649,1.649,0,0,0,286.041,0Zm0,0" transform="translate(-265.093)" fill="#0093ca"/>
+  </g>
+</svg>

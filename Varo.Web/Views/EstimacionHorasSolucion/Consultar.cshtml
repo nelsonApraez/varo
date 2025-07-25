@@ -1,0 +1,243 @@
+@model Varo.Web.Models.EstimacionHorasSolucionViewModel
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(false);
+}
+
+<script type="text/template" id="htmlEstimacionHoras">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.EstimacionHorasSolucion.Concepto,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.EstimacionHorasSolucion.HorasEstimadas,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.EstimacionHorasSolucion.HorasEjecutadas,
+                new { htmlAttributes = new { @class = "form-control", @readOnly = true } })
+        </div>
+    </td>
+</script>
+
+<script type="text/template" id="htmlAccionesEstimacionHoras">
+    <td hidden>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IdSolucion)
+        </div>
+    </td>
+    <td>
+        <a class="edit"
+           title=@Recursos.Lenguaje.Editar
+           data-toggle="tooltip"
+           id="btnEditar"
+           onclick="cargarFilaEditarEstimacionHoras(this,'#ModalEstimacionHoras')">
+            <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+        </a>
+        <a class="delete"
+           title=@Recursos.Lenguaje.Eliminar
+           data-toggle="tooltip" id="btnEliminar"
+           onclick="EliminarFila(this, '#tablaEstimacionHoras')">
+            <em class="material-icons" aria-hidden="true">&#xE872;</em>
+        </a>
+    </td>
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function InsertarHtmlEstimacionHoras() {
+            var htmlCampos = document.getElementById('htmlEstimacionHoras').innerHTML;
+            var htmlAccion = document.getElementById('htmlAccionesEstimacionHoras').innerHTML;
+            $("#trParaCrearEstimacionHoras").append(htmlCampos);
+            $("#trParaCrearEstimacionHoras").append(htmlAccion);
+        }
+        @if (Model.EstimacionHorasSolucion.ListaEstimacionHorasSolucion.Count == 0)
+        {
+            @:InsertarHtmlEstimacionHoras();
+        }
+    });
+</script>
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.EstimacionHoras</h3>
+    @using (Html.BeginForm("Crear", "EstimacionHorasSolucion", FormMethod.Post,
+        new
+        {
+            @id = "formularioCrearEstimacionHoras",
+            @class = "formularioCrearEstimacionHoras",
+            @name = "formularioCrearEstimacionHoras"
+        }))
+    {
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <table class="table table-bordered" id="tablaEstimacionHoras">
+                        <caption hidden>@Recursos.Lenguaje.EstimacionHoras</caption>
+                        <thead>
+                            <tr>
+                                <th id="" hidden>Id</th>
+                                <th id="">@Recursos.Lenguaje.Concepto</th>
+                                <th id="" style="width:15%;">@Recursos.Lenguaje.HorasEstimadas</th>
+                                <th id="" style="width:15%;">@Recursos.Lenguaje.HorasEjecutadas</th>
+                                <th id="">@Recursos.Lenguaje.Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.EstimacionHorasSolucion.ListaEstimacionHorasSolucion.Count > 0)
+                            {
+                                foreach (var itemEstimacionHoras in Model.EstimacionHorasSolucion.ListaEstimacionHorasSolucion)
+                                {
+                                    <tr>
+                                        <td hidden>@itemEstimacionHoras.Id</td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemIdSolucion", Model.IdSolucion)
+                                                @Html.EditorFor(model => model.IdSolucion,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemConcepto", itemEstimacionHoras.Concepto,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemHorasEstimadas", itemEstimacionHoras.HorasEstimadas,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemHorasEjecutadas", 
+                                                    itemEstimacionHoras.HorasEjecutadas,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a class="edit" title=@Recursos.Lenguaje.Editar data-toggle="tooltip"
+                                               id="btnEditar" onclick="cargarFilaEditarEstimacionHoras(this)">
+                                                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                                            </a>
+                                            <a class="delete" title=@Recursos.Lenguaje.Eliminar data-toggle="tooltip"
+                                               id="btnEliminar" onclick="EliminarFila(this,'#tablaEstimacionHoras')">
+                                                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="trParaCrearEstimacionHoras"></tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="right">
+                            <button type="button"
+                                    class="btn add-new"
+                                    id="btnAdicionarEstimacionHoras"
+                                    onclick="clearTextBox('#ModalEstimacionHoras');"
+                                    data-toggle="modal"
+                                    data-target="#ModalEstimacionHoras">
+                                @Recursos.Lenguaje.Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 l6">
+                                    <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                                       href="@Url.Action("Editar", "Solucion",
+                                            new {id = Model.IdSolucion, vista = "_FormularioCreacionEdicion" })">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+
+                                <div class="col m6 l6">
+                                    <button class="v-btn-principal v-btn" type="submit">
+                                        @Recursos.Lenguaje.Aceptar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade"
+                 id="ModalEstimacionHoras"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.EstimacionHoras</h4>
+                            <input id="fila" hidden>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="Concepto">@Recursos.Lenguaje.Concepto</label>
+                                <input type="text" class="form-control requerido" id="Concepto" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="HorasEstimadas">@Recursos.Lenguaje.HorasEstimadas</label>
+                                <input type="number" class="form-control requerido" id="HorasEstimadas" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="HorasEjecutadas">@Recursos.Lenguaje.HorasEjecutadas</label>
+                                <input type="number" class="form-control requerido" id="HorasEjecutadas" required />
+                            </div>
+                            <div id="msgError">
+                                <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                            </div>
+                            <div id="msgError">
+                                <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col m6 l6">
+                                        <a class="v-btn-segundario v-btn"
+                                           data-dismiss="modal"
+                                           aria-label="Close">
+                                            @Recursos.Lenguaje.Cancelar
+                                        </a>
+                                    </div>
+                                    <div class="col m6 l6">
+                                        <button class="v-btn-principal v-btn"
+                                                type="button"
+                                                id="btnAdd"
+                                                onclick="AgregarElementoEstimacionHoras(
+                                                        '#ModalEstimacionHoras',
+                                                        '#tablaEstimacionHoras')">
+                                            @Recursos.Lenguaje.Aceptar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

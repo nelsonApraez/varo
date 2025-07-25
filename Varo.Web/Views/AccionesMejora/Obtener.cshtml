@@ -1,0 +1,342 @@
+@model Varo.Web.Models.SeguimientoViewModel
+
+@{
+    int estadoCerrado = Convert.ToInt32(TempData["estadoCerrado"]);
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+<script type="text/template" id="htmlSeguimiento">
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Observacion,
+                new
+                     {
+                         htmlAttributes = new
+                         {
+                    @class = "form-control",
+                    @readOnly = true,
+                    @name = "itemObservacion",
+                    @id = "itemObservacion"
+                         }
+                     })
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Fecha,
+               new { htmlAttributes = new { @readonly = true, @name = "itemFecha", @id = "itemFecha" } })
+        </div>
+    </td>
+
+    <td>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Usuario,
+                 new { htmlAttributes = new { @readonly = true, @name = "itemUsuario", @id = "itemUsuario" } })
+        </div>
+    </td>
+</script>
+
+<script type="text/template" id="htmlAccionesSeguimiento">
+    <td hidden>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IdAccionesMejora)
+        </div>
+    </td>
+    <td hidden>
+        <div class="form-group">
+            @Html.EditorFor(model => model.IdSolucion)
+        </div>
+    </td>
+    <td>
+        @if (@estadoCerrado == 0)
+        {
+            <a class="edit"
+               title=@Recursos.Lenguaje.Editar
+               data-toggle="tooltip" id="btnEditar"
+               onclick="cargarFilaEditaSeguimientoAcciones(this,'#ModalSeguimientoAcciones')">
+                <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+            </a>
+            <a class="delete"
+               title=@Recursos.Lenguaje.Eliminar
+               data-toggle="tooltip" id="btnEliminar"
+               onclick="EliminarFila(this, '#tablaSeguimiento')">
+                <em class="material-icons" aria-hidden="true">&#xE872;</em>
+            </a>
+        }
+        else
+        {
+            <a class="edit"
+               title=@Recursos.Lenguaje.VerDetalle
+               data-toggle="tooltip" id="btnVerDetalle"
+               onclick="cargarFilaEditaSeguimientoAcciones(this,'#ModalSeguimientoAcciones')">
+                <img src="~/Content/images/verdetalleGris.png"
+                     title=@Recursos.Lenguaje.VerDetalle
+                     width="20"
+                     height="20">
+            </a>
+        }
+    </td>
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function InsertarhtmlSeguimiento() {
+            var htmlCampos = document.getElementById('htmlSeguimiento').innerHTML;
+            var htmlAcciones = document.getElementById('htmlAccionesSeguimiento').innerHTML;
+            $("#trParaCrearSeguimiento").append(htmlCampos);
+            $("#trParaCrearSeguimiento").append(htmlAcciones);
+        }
+        @if (Model.seguimiento.ListaSeguimiento.Count == 0)
+        {
+            @:InsertarhtmlSeguimiento();
+        }
+    });
+</script>
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.Seguimientos</h3>
+    @using (Html.BeginForm("Crear", "AccionesMejora", FormMethod.Post,
+        new
+        {
+            @id = "formularioSeguimiento",
+            @class = "formularioSeguimiento",
+            @name = "formularioSeguimiento"
+        }))
+    {
+        <div class="v-formulario">
+            <div class="v-selector">
+                <div class="table-wrapper">
+                    <table class="table table-bordered" id="tablaSeguimiento">
+                        <caption hidden>@Recursos.Lenguaje.Seguimientos</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden>@Recursos.Lenguaje.Id</th>
+                                <th scope="col">@Recursos.Lenguaje.Observacion</th>
+                                <th scope="col">@Recursos.Lenguaje.Fecha</th>
+                                <th scope="col">@Recursos.Lenguaje.Usuario</th>
+                                <th scope="col" hidden>@Recursos.Lenguaje.IdAccionesMejora</th>
+                                <th scope="col" hidden>@Recursos.Lenguaje.IdSolucion</th>
+                                <th scope="col">@Recursos.Lenguaje.Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.seguimiento.ListaSeguimiento.Count > 0)
+                            {
+                                foreach (var itemSeguimiento in Model.seguimiento.ListaSeguimiento)
+                                {
+                                    <tr>
+                                        <td hidden>@itemSeguimiento.Id</td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.Hidden("itemId", Model.Id = itemSeguimiento.Id)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemObservacion", itemSeguimiento.Observacion,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemFecha",
+                                                    itemSeguimiento.Fecha.ToString("MM/dd/yyyy"),
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @Html.TextBox("itemUsuario", itemSeguimiento.Usuario,
+                                                    new { @class = "form-control", @readonly = true })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.IdAccionesMejora,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td hidden>
+                                            <div class="form-group">
+                                                @Html.EditorFor(model => model.IdSolucion,
+                                                    new { htmlAttributes = new { @class = "form-control" } })
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                @if (@estadoCerrado == 0)
+                                                {
+                                                    <a class="edit"
+                                                       title=@Recursos.Lenguaje.Editar
+                                                       data-toggle="tooltip"
+                                                       id="btnEditar"
+                                                       onclick="cargarFilaEditaSeguimientoAcciones(
+                                                                this, '#ModalSeguimientoAcciones')">
+                                                        <em class="material-icons" aria-hidden="true">&#xE3C9;</em>
+                                                    </a>
+                                                    <a class="delete"
+                                                       title=@Recursos.Lenguaje.Eliminar
+                                                       data-toggle="tooltip" id="btnEliminar"
+                                                       onclick="EliminarFila(this, '#tablaSeguimiento')">
+                                                        <em class="material-icons" aria-hidden="true">&#xE872;</em>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="edit"
+                                                       title=@Recursos.Lenguaje.VerDetalle
+                                                       data-toggle="tooltip"
+                                                       id="btnVerDetalle"
+                                                       onclick="cargarFilaEditaSeguimientoAcciones(this,
+                                                                '#ModalSeguimientoAcciones')">
+                                                        <img src="~/Content/images/verdetalleGris.png"
+                                                             alt=@Recursos.Lenguaje.VerDetalle
+                                                             title=@Recursos.Lenguaje.VerDetalle
+                                                             width="20" height="20">
+                                                    </a>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="trParaCrearSeguimiento"></tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (@estadoCerrado == 0)
+                    {
+                        <div class="row">
+                            <div class="right">
+                                <button type="button"
+                                        class="btn add-new"
+                                        id="btnAdicionarSeguimiento"
+                                        onclick="clearTextBox('#ModalSeguimientoAcciones');"
+                                        data-toggle="modal"
+                                        data-target="#ModalSeguimientoAcciones">
+                                    @Recursos.Lenguaje.Adicionar
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="right">
+                        <div class="v-formulariobotones">
+                            <div class="row">
+                                <div class="col m6 l6">
+                                    <a class="v-btn-segundario v-btn"
+                                       data-dismiss="modal"
+                                       aria-label="Close"
+                                       href="@Url.Action("Consultar", "AccionesMejora",
+                                            new {
+                                                idSolucion = Model.IdSolucion,
+                                                vista = "Consultar" })">
+                                        @Recursos.Lenguaje.Cancelar
+                                    </a>
+                                </div>
+                                @if (@estadoCerrado == 0)
+                                {
+                                    <div class="col m6 l6">
+                                        <button class="v-btn-principal v-btn" type="submit">
+                                            @Recursos.Lenguaje.Aceptar
+                                        </button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade"
+                 id="ModalSeguimientoAcciones"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">@Recursos.Lenguaje.Seguimientos</h4>
+                            <input id="fila" hidden>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="Observacion">@Recursos.Lenguaje.Observacion</label>
+                                @if (@estadoCerrado == 0)
+                                {
+                                    <textarea class="form-control requerido"
+                                              id="Observacion"
+                                              name="Observacion"
+                                              maxlength="500"></textarea>
+                                }
+                                else
+                                {
+                                    <textarea class="form-control requerido"
+                                              id="Observacion"
+                                              name="Observacion"
+                                              maxlength="500"
+                                              readonly></textarea>
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label for="Fecha">@Recursos.Lenguaje.Fecha</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="Fecha"
+                                       name="Fecha"
+                                       readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="Usuario">@Recursos.Lenguaje.Usuario</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="Usuario"
+                                       name="Usuario"
+                                       readonly />
+                            </div>
+                            <div id="msgError">
+                                <span id="Error" class="error" hidden>@Recursos.Lenguaje.CampoRequerido</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="v-formulariobotones">
+                                <div class="row">
+                                    <div class="col m6 l6">
+                                        <a class="v-btn-segundario v-btn"
+                                           data-dismiss="modal"
+                                           aria-label="Close">
+                                            @Recursos.Lenguaje.Cancelar
+                                        </a>
+                                    </div>
+                                    @if (@estadoCerrado == 0)
+                                    {
+                                        <div class="col m6 l6">
+                                            <button class="v-btn-principal v-btn"
+                                                    type="button"
+                                                    id="btnAdd"
+                                                    onclick="AgregarElementoSeguimientoAcciones(
+                                                            '#ModalSeguimientoAcciones',
+                                                            '#tablaSeguimiento')">
+                                                @Recursos.Lenguaje.Aceptar
+                                            </button>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}

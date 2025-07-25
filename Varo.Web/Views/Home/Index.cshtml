@@ -1,0 +1,218 @@
+﻿@model  HomeViewModel
+
+<link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+
+<div class="row items_tableros">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <img src="~/Content/images/header.png"
+                 class="img-fluid"
+                 alt="header"
+                 title="header"
+                 width="100%" height="auto">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <label class="v-activos-font"> @Recursos.Lenguaje.TituloAdvisories</label>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/APACa.svg" class="figure-img img-fluid rounded" alt="apac" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.ConsultoriasAPAC</figcaption>
+                                <figcaption class="v-activos-font2">APAC</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/EMEAa.svg" class="figure-img img-fluid rounded" alt="emea" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.ConsultoriasEMEA</figcaption>
+                                <figcaption class="v-activos-font2">EMEA</figcaption>
+                            </figure>
+
+                        </div>
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/LATAMa.svg" class="figure-img img-fluid rounded" alt="latam" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.ConsultoriasLATAM</figcaption>
+                                <figcaption class="v-activos-font2">LATAM</figcaption>
+                            </figure>
+
+                        </div>
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/NORAMa.svg" class="figure-img img-fluid rounded" alt="noram" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.ConsultoriasNORAM</figcaption>
+                                <figcaption class="v-activos-font2">NORAM</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-2">
+                            <a class="v-activos-button" href="@Url.Action("Consultar", "Consultoria")">@Recursos.Lenguaje.TextoVerTodo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <label class="v-activos-font">@Recursos.Lenguaje.TituloSolutions</label>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/APACv.svg" class="figure-img img-fluid rounded" alt="apac" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.SolucionesAPAC</figcaption>
+                                <figcaption class="v-activos-font2">APAC</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/EMEAv.svg" class="figure-img img-fluid rounded" alt="emea" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.SolucionesEMEA</figcaption>
+                                <figcaption class="v-activos-font2">EMEA</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/LATAMv.svg" class="figure-img img-fluid rounded" alt="latam" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.SolucionesLATAM</figcaption>
+                                <figcaption class="v-activos-font2">LATAM</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-3">
+                            <figure class="figure">
+                                <img src="~/Content/images/NORAMv.svg" class="figure-img img-fluid rounded" alt="noram" width="43.25px" height="43.25px">
+                                <figcaption class="v-activos-font">@Model.SolucionesNORAM</figcaption>
+                                <figcaption class="v-activos-font2">NORAM</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-2">
+                            <a class="v-activos-button" href="@Url.Action("Consultar", "Solucion")">@Recursos.Lenguaje.TextoVerTodo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <label class="v-titulo-font">@Recursos.Lenguaje.TituloNovedades</label>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/Content/images/arnold-francisca-f77Bh3inUpE-unsplash.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title v-novedad-font"> <strong> @Recursos.Lenguaje.TituloNovedad1 </strong></h5>
+                            <p class="card-text v-novedad-font2">@Recursos.Lenguaje.TextoNovedad1</p>
+                            <div class="container">
+                                <div class="row justify-content-end">
+                                    <div class="col-4">
+                                        <a class="v-activos-button" target="_blank" href="https://Company.sharepoint.com/sites/ApplicationServicesTechLearning/SitePages/DevOps/DevOps-iac.aspx" rel="noopener">@Recursos.Lenguaje.TextoVerMas</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/Content/images/fly-d-C5pXRFEjq3w-unsplash.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title v-novedad-font"><strong> @Recursos.Lenguaje.TituloNovedad2 </strong></h5>
+                            <p class="card-text v-novedad-font2">@Recursos.Lenguaje.TextoNovedad2</p>
+                            <div class="container">
+                                <div class="row justify-content-end">
+                                    <div class="col-4">
+                                        <a class="v-activos-button" target="_blank" href="https://Company.sharepoint.com/sites/ApplicationServicesTechLearning/SitePages/Security/Security.aspx" rel="noopener">@Recursos.Lenguaje.TextoVerMas</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/Content/images/joshua-sortino-LqKhnDzSF-8-unsplash.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title v-novedad-font"><strong> @Recursos.Lenguaje.TituloNovedad3 </strong></h5>
+                            <p class="card-text v-novedad-font2">@Recursos.Lenguaje.TextoNovedad3</p>
+                            <div class="container">
+                                <div class="row justify-content-end">
+                                    <div class="col-4">
+                                        <a class="v-activos-button" target="_blank" href="https://Company.sharepoint.com/sites/ApplicationServicesTechLearning/SitePages/Standards/DevSecOps.aspx" rel="noopener">@Recursos.Lenguaje.TextoVerMas</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <label class="v-titulo-font">@Recursos.Lenguaje.TituloAccesos</label>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/Content/images/veri-ivanova-p3Pj7jOYvnM-unsplash.png" alt="Card image cap">
+                        <div class="card-body">
+                            <a class="v-activos-button" target="_blank" href="https://forms.office.com/r/2S6D9X7s0b"rel="noopener">
+                                <p class="card-text v-acceso-font">@Recursos.Lenguaje.MenuSolicitudRevisionEstimacion</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/Content/images/kelly-sikkema-lFtttcsx5Vk-unsplash.png" alt="Card image cap">
+                        <div class="card-body">
+                            <a class="v-activos-button" target="_blank" href="https://forms.office.com/r/zes9yNWskM" rel="noopener">
+                                <p class="card-text v-acceso-font">@Recursos.Lenguaje.MenuSolicitudRevisionArquitectura</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="row">
+        <div class="col-lg-6">
+            <label class="v-titulo-font">@Recursos.Lenguaje.TituloAplicaciones</label>
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <img class="v-red" src="~/Content/images/LeccionesAprendidasGris.png" class="figure-img img-fluid rounded" width="64px" height="64px">
+                </div>
+                <div class="col-lg-2">
+                    <img class="v-red" src="~/Content/images/thorGris.png" class="figure-img img-fluid rounded" width="64px" height="64px">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    -->
+</div>

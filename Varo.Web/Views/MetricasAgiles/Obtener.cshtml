@@ -1,0 +1,179 @@
+@model Varo.Web.Models.MetricasViewModel
+
+@{
+    var respuestaModulos = TempData["MensajeCrearModulos"] ?? string.Empty;
+    var error = TempData["MensajeNegocio"] ?? string.Empty;
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(false);
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>@Recursos.Lenguaje.Sprint @ViewBag.sprint</title>
+</head>
+<body onload="functionReemplazarcoma()">
+    <div class="ig-header">
+        <h3 class="v-titulo">@Recursos.Lenguaje.Sprint @ViewBag.sprint</h3>
+        @using (Html.BeginForm("Actualizar", "MetricasAgiles", FormMethod.Post,
+            new {
+                @id = "formularioHistoriasyEsfuerzos",
+                @class = "formularioHistoriasyEsfuerzos",
+                @name = "formularioHistoriasyEsfuerzos" }))
+        {
+            <div class="form-group">
+                <div class="v-formulario">
+                    <div class="v-selector">
+                        <div class="table-wrapper">
+                            <div class="row">
+                                <div class="col m12 l12">@Html.Partial("_HistoriasyEsfuerzo")</div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <div class="row">
+                                <div class="col m12 l12">@Html.Partial("_DetalledeHistoriasdeUsuario")</div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <div class="row">
+                                <div class="col m12 l12">@Html.Partial("_DefectosInternos")</div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <div class="row">
+                                <div class="col m12 l12">@Html.Partial("_DefectosExternos")</div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper", hidden=@Model.mostrarIncendios>
+                            <div class="row">
+                                <div class="col m12 l12">@Html.Partial("_Incendios")</div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <div class="row">
+                                <div class="col m12 l12">@Html.Partial("_CalidadCodigo")</div>
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
+                            <div class="row">
+                                <div class="col m12 l12">@Html.Partial("_AccionesMejora")</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="right">
+                                <div class="v-formulariobotones">
+                                    <div class="row">
+                                        <div hidden>
+                                            @Html.EditorFor(model => model.sprint)
+                                        </div>
+                                        <div class="col m6 l6">
+                                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                                               href="@Url.Action("Consultar", "MetricasAgiles",
+                                                    new { 
+                                                        idSolucion = Model.historiasyEsfuerzosViewModel.IdSolucion,
+                                                        vista = "Consultar" })">
+                                                @Recursos.Lenguaje.Cancelar
+                                            </a>
+                                        </div>
+                                        <div class="col m6 l6">
+                                            <button class="v-btn-principal v-btn" type="submit">
+                                                @Recursos.Lenguaje.Aceptar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @section Scripts {
+
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/custom-validator")
+
+        <script type="text/javascript">
+            jQuery.extend(jQuery.validator.methods, {
+                number: function (value, element) {
+                    var value = value.replace(',', '.');
+                    return this.optional(element)
+                        || /^-?(?:\d+|\d{0,5}(?:\.\d{2})+)(?:,\d+)?$/.test(value);
+                }
+            });
+
+            function OnChangeEvent(e) {
+                e.value = e.value.replace(/,/g, '.');
+            }
+
+            var item = document.getElementsByClassName("itemDetalleHistoriasUsuario");
+
+            function functionReemplazarcoma() {
+                for (i = 0; i <= item.length - 1; i++) {
+                    item[i].value = item[i].value.replace(/,/g, '.');
+                }
+            }
+
+            $(".validarDecimales").on("keypress", function (evt) {
+                var $txtBox = $(this);
+                var charCode = (evt.which) ? evt.which : evt.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46)
+                    return false;
+                else {
+                    var len = $txtBox.val().length;
+                    var index = $txtBox.val().indexOf('.');
+                    if (index > 0 && charCode == 46) {
+                        return false;
+                    }
+                    if (index > 0) {
+                        var charAfterdot = (len + 1) - index;
+                        if (charAfterdot > 3) {
+                            return false;
+                        }
+                    }
+                }
+                return $txtBox;
+            });
+
+            $(".validarEnteros").on("keypress", function (evt) {
+                var $txtBox = $(this);
+                var charCode = (evt.which) ? evt.which : evt.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46)
+                    return false;
+                else {
+                    var len = $txtBox.val().length;
+                    var index = $txtBox.val().indexOf('.');
+                    if (index >= 0 && charCode == 46) {
+                        return false;
+                    }
+                    if (index > 0) {
+                        var charAfterdot = (len + 1) - index;
+                        if (charAfterdot >= 0) {
+                            return false;
+                        }
+                    }
+                }
+                return $txtBox;
+            });
+
+            function validarAlfanumericos(e) {
+                var code = ('charCode' in e) ? e.charCode : e.keyCode;
+                if (!(code == 32) &&                // Espacio ( )
+                    !(code > 47 && code < 58) &&    // Números (0-9)
+                    !(code > 64 && code < 91) &&    // Mayúsculas (A-Z)
+                    !(code > 96 && code < 123) &&   // Minúsculas (a-z)
+                    !(code != 44)) {                // Coma (,)
+                    e.preventDefault();
+                }
+            }
+
+            $(document).ready(function () {
+                $('.deshabilitarPegar').bind('copy paste cut', function (e) {
+                    e.preventDefault();             //disable cut,copy,paste
+                });
+            });
+        </script>
+    }
+</body>
+</html>

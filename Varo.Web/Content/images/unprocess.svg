@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="unprocess.svg"
+   id="svg15"
+   version="1.1"
+   viewBox="0 0 119.766 39"
+   height="39"
+   width="119.766">
+  <metadata
+     id="metadata21">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs19" />
+  <sodipodi:namedview
+     inkscape:current-layer="svg15"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="19.5"
+     inkscape:cx="59.882999"
+     inkscape:zoom="8.9758363"
+     showgrid="false"
+     id="namedview17"
+     inkscape:window-height="715"
+     inkscape:window-width="1366"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <g
+     style="fill:#aa0000"
+     transform="translate(-315 -243)"
+     data-name="Grupo 73"
+     id="Grupo_73">
+    <g
+       style="fill:#aa0000"
+       transform="translate(438 236) rotate(90)"
+       data-name="Polígono 1"
+       id="Polígono_1">
+      <path
+         style="fill:#aa0000"
+         fill="red"
+         d="M39.978,30.5H13.023a5.462,5.462,0,0,1-3.063-.914,5.6,5.6,0,0,1-2.413-5.238,5.461,5.461,0,0,1,1.3-2.922L22.319,5.66a5.5,5.5,0,0,1,8.361,0L44.158,21.426a5.463,5.463,0,0,1,1.3,2.922,5.6,5.6,0,0,1-2.413,5.238A5.462,5.462,0,0,1,39.978,30.5Z"
+         data-name="Trazado 249"
+         id="Trazado_249" />
+      <path
+         style="fill:#aa0000"
+         fill="#fff"
+         d="M26.5,4.234a4.994,4.994,0,0,0-3.8,1.751L9.222,21.751a4.963,4.963,0,0,0-1.179,2.655,5.1,5.1,0,0,0,2.2,4.765A4.963,4.963,0,0,0,13.023,30H39.978a4.963,4.963,0,0,0,2.784-.829,5.1,5.1,0,0,0,2.2-4.765,4.964,4.964,0,0,0-1.179-2.655L30.3,5.985a4.994,4.994,0,0,0-3.8-1.751m0-1a5.973,5.973,0,0,1,4.561,2.1L44.538,21.1A6,6,0,0,1,39.978,31H13.023a6,6,0,0,1-4.561-9.9L21.939,5.335A5.973,5.973,0,0,1,26.5,3.234Z"
+         data-name="Trazado 250"
+         id="Trazado_250" />
+    </g>
+    <rect
+       style="fill:#aa0000"
+       fill="red"
+       transform="translate(315 243)"
+       height="39"
+       width="99"
+       data-name="Rectángulo 12"
+       id="Rectángulo_12" />
+  </g>
+</svg>

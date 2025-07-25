@@ -1,0 +1,79 @@
+@model Varo.Web.Models.MetricaExternoViewModel
+
+<script src="~/Scripts/sweetalert2.all.js"></script>                    <!--Función mensajes solución-->
+
+<div class="ig-header">
+    <h3 class="v-titulo">@Recursos.Lenguaje.HistoricoMetricasExternas</h3>
+    <div class="v-formulario">
+        <div class="v-selector">
+            <div class="table-wrapper">
+                <table class="table table-bordered" id="tablaHistoricoValorMetrica">
+                    <caption hidden>@Recursos.Lenguaje.HistoricoMetricasExternas</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">@Recursos.Lenguaje.Año</th>
+                            <th scope="col">@Recursos.Lenguaje.Mes</th>
+                            <th scope="col">@Recursos.Lenguaje.Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ListadoValorMetricasFechas.Count > 0)
+                        {
+                            foreach (var itemValorMetrica in Model.ListadoValorMetricasFechas)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="@itemValorMetrica.Ano" hidden>@Recursos.Lenguaje.Año</label>
+                                            @Html.TextBox("itemAno", itemValorMetrica.Ano,
+                                                new { @class = "form-control", @readonly = true })
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <label for="@itemValorMetrica.Mes" hidden>@Recursos.Lenguaje.Mes</label>
+                                            @Html.TextBox("itemMes", itemValorMetrica.Mes,
+                                                new { @class = "form-control", @readonly = true })
+                                        </div>
+                                    </td>
+                                    <td class="form-group" style="width:auto">
+                                        <a data-vista="_VistaDetalleHistorico"
+                                           data-toggle="modal"
+                                           data-target="#vistaHistorico">
+                                            <img src="~/Content/images/verdetalleGris.png"
+                                                 class="pointer"
+                                                 alt="@Recursos.Lenguaje.VerDetalle"
+                                                 title="@Recursos.Lenguaje.VerDetalle"
+                                                 width="20" height="20"
+                                                 onclick="location.href = '@Url.Action("VerDetalle", "MetricaExterno",
+                                                    new { idProyecto = Model.IdProyecto,
+                                                          mes = itemValorMetrica.Mes,
+                                                          ano = itemValorMetrica.Ano})'; return false;"
+                                                 onmouseover="hoverVistaPrevia(this);"
+                                                 onkeypress="hoverVistaPrevia(this);"
+                                                 onmouseout="unhoverVistaPrevia(this);"
+                                                 onfocus="hoverVistaPrevia(this);"
+                                                 onblur="unhoverVistaPrevia(this);" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col m4 l4 offset-m8">
+                <div class="v-formulariobotones">
+                    <div class="row">
+                        <div class="right">
+                            <a class="v-btn-segundario v-btn" data-dismiss="modal" aria-label="Close"
+                               onclick="location.href = '@Url.Action("Consultar", "ProyectoExterno")'; return false;">
+                                @Recursos.Lenguaje.Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

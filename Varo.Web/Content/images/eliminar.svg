@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="eliminar_item.svg"
+   id="svg883"
+   version="1.1"
+   viewBox="0 0 32.151 32.151"
+   height="32.151"
+   width="32.151">
+  <metadata
+     id="metadata887">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:current-layer="svg883"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="9.0351353"
+     inkscape:cx="7.7444017"
+     inkscape:zoom="17.04457"
+     showgrid="false"
+     id="namedview885"
+     inkscape:window-height="715"
+     inkscape:window-width="1366"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <defs
+     id="defs878">
+    <clipPath
+       id="clip-path">
+      <rect
+         id="rect875"
+         fill="none"
+         height="32.151"
+         width="32.151" />
+    </clipPath>
+  </defs>
+  <g
+     id="g903">
+    <rect
+       y="0"
+       x="0"
+       fill="#ffffff"
+       rx="4"
+       height="32.151001"
+       width="32.151001"
+       data-name="Rectángulo 18"
+       id="Rectángulo_18" />
+    <path
+       fill="#d80000"
+       d="m 7.6593942,25.893538 a 2.8129061,2.8129061 0 0 0 2.8053678,2.805368 h 11.221476 a 2.8129061,2.8129061 0 0 0 2.811398,-2.805368 V 9.0628324 H 7.6593942 Z M 25.893537,4.8540258 H 20.985271 L 19.581834,3.4520951 h -7.012668 l -1.40193,1.4019307 H 6.2574637 V 7.6593945 H 25.893537 Z"
+       data-name="Trazado 13"
+       id="Trazado_13"
+       style="stroke-width:1.50746" />
+  </g>
+</svg>
